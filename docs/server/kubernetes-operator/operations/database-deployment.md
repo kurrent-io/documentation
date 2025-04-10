@@ -118,6 +118,65 @@ kubectl apply -f cluster.yaml
 
 Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
 
+## Three Node Insecure Cluster with Two Read-Only Replicas
+
+Note that read-only replicas are only supported by KurrentDB in clustered configurations, that is,
+with multiple primary nodes.
+
+The following `KurrentDB` resource type defines a three node cluster with the following properties:
+- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
+- Security is not enabled
+- KurrentDB version 25.0.0 will be used
+- 1vcpu will be requested as the minimum (upper bound is unlimited) per node
+- 1gb of memory will be used per primary node, but read-only replicas will have 2gb of memory
+- 512mb of storage will be allocated for the data disk per node
+- The main KurrentDB instances that are provisioned will be exposed as `kurrentdb-{idx}.kurrentdb-cluster.kurrent.test`
+- The read-only replicas that are provisioned will be exposed as `kurrentdb-replica-{idx}.kurrentdb-cluster.kurrent.test`
+
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDB
+metadata:
+  name: kurrentdb-cluster
+  namespace: kurrent
+spec:
+  replicas: 3
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  storage:
+    volumeMode: "Filesystem"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 512Mi
+  network:
+    domain: kurrentdb-cluster.kurrent.test
+    loadBalancer:
+      enabled: true
+  readOnlyReplicas:
+    replicas: 2
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 1Gi
+
+```
+
+This can be deployed using the following steps:
+- Copy the YAML snippet above to a file called `cluster.yaml`
+- Ensure that the `kurrent` namespace has been created
+- Run the following command:
+
+```bash
+kubectl apply -f cluster.yaml
+```
+
+Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
+
 ## Single Node Secure Cluster (using self-signed certificates)
 
 The following `KurrentDB` resource type defines a single node cluster with the following properties:
@@ -152,6 +211,8 @@ spec:
   dnsNames:
     - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
     - '*.kurrentdb-cluster.kurrent.test'
+    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
+    - '*.kurrentdb-cluster-replica.kurrent.test'
   privateKey:
     algorithm: RSA
     encoding: PKCS1
@@ -240,6 +301,8 @@ spec:
   dnsNames:
     - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
     - '*.kurrentdb-cluster.kurrent.test'
+    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
+    - '*.kurrentdb-cluster-replica.kurrent.test'
   privateKey:
     algorithm: RSA
     encoding: PKCS1
@@ -328,6 +391,8 @@ spec:
   dnsNames:
     - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
     - '*.kurrentdb-cluster.kurrent.test'
+    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
+    - '*.kurrentdb-cluster-replica.kurrent.test'
   privateKey:
     algorithm: RSA
     encoding: PKCS1
@@ -411,6 +476,8 @@ spec:
   dnsNames:
     - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
     - '*.kurrentdb-cluster.kurrent.test'
+    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
+    - '*.kurrentdb-cluster-replica.kurrent.test'
   privateKey:
     algorithm: RSA
     encoding: PKCS1
@@ -463,6 +530,58 @@ kubectl apply -f cluster.yaml
 Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
 
 
+## Deploying With Scheduling Constraints
+
+The pods created for a KurrentDB resource can be configured with any of the constraints commonly applied to pods:
+
+- [Node Selectors](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector)
+- [Affinity and Anti-Affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity)
+- [Topology Spread Constraints](https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/)
+- [Tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/)
+- [Node Name](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodename)
+
+For example, the following KurrentDB resource would schedule KurrentDB pods onto nodes labeled with `machine-size:large`, preferring to spread the replicas each in their own availability zone:
+
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDB
+metadata:
+  name: my-kurrentdb-cluster
+  namespace: kurrent
+spec:
+  replicas: 3
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  storage:
+    volumeMode: "Filesystem"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 512Mi
+  network:
+    domain: kurrentdb-cluster.kurrent.test
+    loadBalancer:
+      enabled: true
+  nodeSelector:
+    machine-size: large
+  topologySpreadConstraints:
+    maxSkew: 1
+    topologyKey: zone
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/part-of: kurrentdb-operator
+        app.kubernetes.io/name: my-kurrentdb-cluster
+    whenUnsatisfiable: DoNotSchedule
+
+```
+
+If no scheduling constraints are configured, the operator sets a default soft constraint configuring pod anti-affinity such that multiple replicas will prefer to run on different nodes, for better fault tolerance.
+
+
 ## Viewing Deployments
 
 Using the k9s tool, navigate to the namespaces list using the command `:namespaces`, it should show a screen similar to:
@@ -488,7 +607,7 @@ Scrolling further will also show the events related to the deployment, such as:
 
 ### External
 
-The Operator will create services of type `LoadBalancer` to access a KurrentDB cluster (for each node) when the `spec.network.loadBalancer.enabled` flag is set to `true`. 
+The Operator will create services of type `LoadBalancer` to access a KurrentDB cluster (for each node) when the `spec.network.loadBalancer.enabled` flag is set to `true`.
 
 Each service is annotated with `external-dns.alpha.kubernetes.io/hostname: {external cluster endpoint}` to allow the third-party tool [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) to configure external access.
 
