@@ -138,7 +138,7 @@ You will examine how this pattern is applied to the Postgres projection applicat
    ::: info Understanding Checkpoint
    A projection often uses a checkpoint to recover the position of the last processed event. This way, when an application unexpectedly crashes mid-process, the projection does not have to process all the previously processed events.
 
-   For more information about checkpoints, [click here](../best-practices/checkpoint.md)
+   For more information about checkpoints, [click here](../../best-practices/checkpoint.md)
 
    :::
 
@@ -220,7 +220,7 @@ You will examine how this pattern is applied to the Postgres projection applicat
    ::: info Exactly-once processing
    This implementation ensures exactly-once processing by using KurrentDB for reliable persistence, idempotent projection logic, and transactional updates. The read model and checkpoint are updated atomically, preventing duplicates or inconsistencies, unlike traditional message brokers that rely on at-least-once or at-most-once delivery.
 
-   For more information about exactly-once processing with catch-up subscription and transactional checkpoints, [click here](../best-practices/exactly-once-processing.md)
+   For more information about exactly-once processing with catch-up subscription and transactional checkpoints, [click here](../../best-practices/exactly-once-processing.md)
 
    :::
 
