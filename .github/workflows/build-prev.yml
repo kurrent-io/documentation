@@ -78,9 +78,9 @@ jobs:
           # list each changed file as a page link
           while IFS= read -r f; do
             [ -z "$f" ] && continue
-            NAME=$(basename "${f%.*}")
-            # assume Cloudflare preview serves pages at .html
-            URL="${PREVIEW_URL}/${f%.*}.html"
+            REL_PATH="${f#docs/}"
+            NAME=$(basename "${REL_PATH%.*}")
+            URL="${PREVIEW_URL}/${REL_PATH%.*}.html"
             BODY="${BODY}
           - [${NAME}](${URL})"
                     done <<< "${{ steps.changes.outputs.files }}"
