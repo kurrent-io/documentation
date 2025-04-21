@@ -68,7 +68,7 @@ You can see the list of supported regions when you create a new cluster or netwo
 
 ::: note
 
-For AWS, we offer the regions that are enabled by default. We can enable [opt-in regions](https://docs.aws.amazon.com/controltower/latest/userguide/opt-in-region-considerations.html) for an organization on request.
+For AWS, we offer the regions that are enabled by default. We can enable [opt-in regions](https://docs.aws.amazon.com/controltower/latest/userguide/opt-in-region-considerations.html) for an organization on request. abasdasdsa
 
 :::
 
