@@ -108,9 +108,13 @@ export default defineUserConfig({
             'data-project-logo': '/logo-white.png'
         }],
 
+        // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `
-            #redirect-modal-mask { display: none !important; }
-          `],
+          .redirect-modal-mask,
+          .redirect-modal-wrapper {
+            display: none !important;
+          }
+        `],
     ],   
     // add our own components for blog theme (Tutorials & Guides)
     alias: {
