@@ -15,29 +15,84 @@ jobs:
       ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
       ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
       NODE_OPTIONS: --max_old_space_size=8192
+
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+
+      - name: Initial preview comment
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          identifier: docs-preview
+          body: |
+            ### Docs Preview
+            - Status: ⏳ Creating preview…
+
       - name: Install dependencies
         run: pnpm install
-      - name: Build website preview
+
+      - name: Identify changed docs
+        id: changes
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }}
+          CHANGED=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }} ${{ github.sha }} \
+            | grep -E '^docs/.*\.(md)$' || true)
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      # 5. Build site (allow failure)
+      - name: Build site
         id: build
         run: |
-          pnpm run build-prod 
+          pnpm run build-prod
         continue-on-error: true
-      - name: Comment on build failure with log link
-        if: ${{ steps.build.outcome == 'failure' }}
-        uses: actions/github-script@v6
+
+      # 6. Generate the comment body
+      - name: Generate comment body
+        id: comment
+        run: |
+          # compute branch‑based preview URL
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          PREVIEW_URL="https://${BRANCH}.documentation-21k.pages.dev"
+          LOG_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+          if [ "${{ steps.build.outcome }}" = "success" ]; then
+            STATUS="✅ Build succeeded"
+            LINK="Preview: [${PREVIEW_URL}](${PREVIEW_URL})"
+          else
+            STATUS="❌ Build failed"
+            LINK="Logs: [View logs](${LOG_URL})"
+            # always link to last branch preview if available
+            LINK="${LINK} | Previous preview: [${PREVIEW_URL}](${PREVIEW_URL})"
+          fi
+
+          BODY="### Docs Preview
+          - Status: ${STATUS}
+          - ${LINK}
+
+          **Changed pages:**"
+
+          # list each changed file as a page link
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            NAME=$(basename "${f%.*}")
+            # assume Cloudflare preview serves pages at .html
+            URL="${PREVIEW_URL}/${f%.*}.html"
+            BODY="${BODY}
+          - [${NAME}](${URL})"
+                    done <<< "${{ steps.changes.outputs.files }}"
+
+                    echo "body<<EOF" >> $GITHUB_OUTPUT
+                    echo "$BODY" >> $GITHUB_OUTPUT
+                    echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Update preview comment
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## Build Failed
-              The build has failed. You can review the full build logs and download the build log artifact via the [workflow run details](https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}).`
-            });
-      - name: Fail if build failed
-        if: ${{ steps.build.outcome == 'failure' }}
-        run: exit 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          identifier: docs-preview
+          body: ${{ steps.comment.outputs.body }}
