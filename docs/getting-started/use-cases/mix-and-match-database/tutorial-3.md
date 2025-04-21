@@ -1,96 +1,104 @@
 ---
-title: Section 3 - Project KurrentDB Events in Real-Time 
+title: Section 3 - Project KurrentDB Events to Redis
 ---
 
-# Section 3: Project KurrentDB Events in Real-Time 
+# Section 3: Project KurrentDB Events to Redis
 
-Now that the read models on the databases are synchronized with events on KurrentDB, you will learn how to synchronize the read models in real time.
+#### Introducing the Redis Projection Application
+This application projects KurrentDB events to Redis sorted sets to calculate the top 10 products across all carts over the past 24 hours.
 
-## Step 9: Browse the Demo Web Page
+To do this, it subscribes to the shopping cart events. Each item added or removed event the application receives will increment/decrement the product's quantity in a Redis sorted set for the current hour.
 
-1. Run the following command in the terminal to start the Demo Web Page application:
+## Step 7: Review the Projected Read Models in Redis
 
+In this step, you will review the top 10 products that were recorded in Redis from executing the applications in a previous step:
+
+1. Run the following command in the terminal to start Redis CLI:
+   
    ```sh
-   ./scripts/3-start-demo-web-page.sh
+   docker exec -it redis redis-cli
    ```
 
-   You will see the following message printed in the terminal:
+   You will see a message, like below, printed in the terminal:
 
    ```
-   URL to the Demo web UI 👉: https://XXXXXXXXX.XXX
+   127.0.0.1:6379>
    ```
 
-1. Open a new browser tab.
-
-2. In the address bar of the new tab, paste the URL and navigate to it.
-
-3. This will display a demo web app for this sample. This page displays the top 10 products added to carts in the past 24 hours. This table is retrieved with data from Redis generated from the Redis projection.
-
-4. Click `Carts Table (Postgres)` in the header.
-
-5. This page displays the contents of the cart and items tables in Postgres, which were generated from the Postgres projection.
-
-::: info Quick Quiz
-
-Do the products and quantity in the carts match what you calculated and queried in previous Quick Quizzes?
-
-:::
-
-::: info Quick Quiz
-
-Are the contents of the Top 10 Products (Redis) table and the Carts Table (Postgres) in sync?
-
-:::
-
-## Step 10: Start the Live Data Generator
-
-1. Run the following command in the terminal to start a live data generator:
-
-   ```sh
-   ./scripts/4-start-live-data-gen.sh
-   ```
-
-   You will see the following message printed in the terminal:
+2. Run the following command in the Redis CLI to list all keys in Redis:
 
    ```
-   URL to the KurrentDB Admin UI 👉: https://XXXXXXXXX.XXX
+   KEYS *
+   ``` 
 
-   URL to the Demo Web Page 👉: https://XXXXXXXXX.XXX
+   You will see a list that is similar to this:
 
-
-   10:10:33 info: edb-commerce[0] Executing command 'live-data-set' with settings {"ConfigurationFile":"./data/datagen.live.config","ConnectionString":"esdb://localhost:2113?tls=false"}
-   10:10:34 info: edb-commerce[0] Generating 12 products
-   10:10:35 info: edb-commerce[0] Generating 640 carts
-   10:10:35 info: edb-commerce[0] With 399 carts concurrently
+   ```
+   1) "checkpoint"
+   2) "product-names"
+   3) "top-10-products:2025041508"
    ```
 
-   The tool is now running in the background.
+3. Run the following command in the Redis CLI to list the most popular products added to a cart. Replace top-10-product:YYYYMMDDHH with the actual top-10-products key listed in the previous step.
 
-## Step 11: Watch the Read Models Update in Real-Time
+   ```
+   ZREVRANGE ***REPLACES THIS WITH top-10-products:YYYYMMDDHH KEY FOUND ABOVE*** 0 9 WITHSCORES
+   ```
 
-1. Navigate to the KurrentDB Admin UI
+   You will see a list that is similar to this:
 
-2. Click the `Stream Browser` link from the top navigation bar.
+   ```   
+   1) "5449310139799"
+   2) "9"
+   3) "4291118428480"
+   4) "6"
+   5) "0563658703704"
+   6) "4"
+   7) "2256276792349"
+   8) "1"
+   ```
 
-3. Under `Recently Changed Streams`, click `$ce-cart` link. 
- 
-4. Notice how new events are being appended to the stream in real time
+   The 13-digit number is the product ID, followed by its quantity across all shopping carts. In this case, `5449310139799` is the most popular product with 9 of them across all carts.
 
-5. Return to the Demo Web Page and click on the `Top 10 Products` link from the top navigation bar. Notice how the Top 10 products are being updated in real-time.
+   ::: info Quick Quiz
+   Given that the quantity for a product above is the total added minus the total removed from a cart, pick one of the products above and confirm it matches what the events in step 3 from the previous section indicate.
+   :::
 
-6. Click on the `Carts Table` link from the top navigation bar. Notice how the data is updated and that new carts are available in the Postgres tables. Click the `Refresh` button to see the most recent data.
+4. Exit the Redis CLI by running the command:
 
-7. Return to the terminal and stop the live data generator tool by typing Ctrl + C.
+   ```
+   exit
+   ```
 
-## Step 12: Understanding Catch-up Subscription and Real-Time Processing
+## Step 8. Examine the Redis Projection Application Codebase
+
+Similar to step 6, projecting KurrentDB events to read models in another database like Redis can also follow the same pattern:
+1. Retrieve the last checkpoint
+2. Subscribe to events in a stream from the checkpoint
+3. Process each event by updating the read model and checkpoint in the database
+
+You will examine how this pattern is applied to the Redis projection application.
 
 1. Run the following command in the terminal to open the main program for the Postgres projection application:
 
    ```sql
-   code ./PostgresProjection/program.cs
+   code ./RedisProjection/Program.cs
    ```
 
-2. Locate and examine the code that subscribes to stream
+   Most of the code snippets included in this step can be found in this file.
+
+2. Locate and examine the code that retrieves the last checkpoint:
+
+   ```cs
+   var checkpointValue = redis.StringGet("checkpoint");                     // Get the checkpoint value from redis
+   var streamPosition = long.TryParse(checkpointValue, out var checkpoint)  // Check if it exists and convertible to long
+      ? FromStream.After(StreamPosition.FromInt64(checkpoint))             // If so, set var to subscribe events from stream after checkpoint
+      : FromStream.Start;                                                  // Otherwise, set var to subscribe to events from the stream from the start.
+   ```
+
+   The `redis.StringGet()` statement can retrieve the checkpoint. If no checkpoint is found or it is the first time the application is executed, we can retrieve the default start position.
+
+3. Locate and examine the code that subscribes to stream:
 
    ```cs
    await using var subscription = esdb.SubscribeToStream(                   // Subscribe events..
@@ -99,14 +107,76 @@ Are the contents of the Top 10 Products (Redis) table and the Carts Table (Postg
       true);                                                               // with linked events automatically resolved (required for system projections)
    ```
 
-   The subscription will only retrieve events starting from `streamPosition` in the stream.
+   A catch-up subscription is created that subscribes to events from the `$ce-carts` stream. The subscription will only retrieve events starting from `streamPosition` in the stream (i.e., the checkpoint retrieved from the previous step).
 
-   If `streamPosition` is not at the end of the stream, the subscription will first return all the events from that position to the end of the stream. Afterwards, it will listen for any new events appended in real time.
+4. Locate and examine the code that processes each event:
 
-   If `streamPosition` is at the end of the stream, then the subscription will automatically listen to new events in real time.
+   ```cs
+   await foreach (var message in subscription.Messages)                     // Iterate through the messages in the subscription
+   {                                                                       
+      if (message is not StreamMessage.Event(var e)) continue;             // Skip if message is not an event
 
-   ::: info 
+      var txn = redis.CreateTransaction();                                 // Create a transaction for Redis
 
-   For more info on subscribing to a stream for live updates, [click here](https://docs.kurrent.io/clients/grpc/subscriptions.html#subscribing-to-a-stream-for-live-updates)
+      if (!CartProjection.TryProject(txn, e)) continue;                    // Project the event into Redis
 
-   :::
+      txn.StringSetAsync("checkpoint", e.OriginalEventNumber.ToInt64());   // Set the checkpoint to the current event number
+      
+      txn.Execute();                                                       // Execute the transaction
+   }
+   ```
+
+   For each event, the projection will:
+   - Start a Redis transaction,
+   - Save the appropriate key-value pairs in the database,
+   - Update the `checkpoint` key in the database,
+   - Commit the Redis transaction
+
+
+   The `CartProjection.TryProject()` function above will try to project the event into the appropriate key-value pair in Redis. 
+
+5. Run the following command in the terminal to open the code that performs the Redis projection:
+
+   ```sql
+   code ./RedisProjection/CartProjection.cs
+   ```
+
+6. Locate and examine the code that handles the projection for the `ItemGotAdded` event:
+
+   ```cs
+   public static void Project(ITransaction txn, ItemGotAdded addedEvent)
+   {
+      var hourKey = $"top-10-products:{addedEvent.at:yyyyMMddHH}";            // Create a key for the current hour
+      var productKey = addedEvent.productId;                                  // Use the product ID as the member in the sorted set
+      var productName = addedEvent.productName;                               // Assuming `productName` is part of the event
+
+      txn.SortedSetIncrementAsync(hourKey, productKey, addedEvent.quantity);  // Increment the quantity of the product in the sorted set
+      txn.HashSetAsync("product-names", productKey, productName);             // Store product name in a hash;
+
+      Console.WriteLine($"Incremented product {addedEvent.productId} in " +
+                        $"{hourKey} by {addedEvent.quantity}");
+   }
+   ```
+
+   If the event is `ItemGotAdded`, then a Redis sort set is incremented with the product key for that particular hour.
+
+   A hash set is also used to map product IDs to product names (this is used later in the Demo Web Page to construct a table of the top 10 products).
+
+
+7. Locate and examine the code that handles the projection for the `ItemGotRemoved` event:
+
+   ```cs
+   public static void Project(ITransaction txn, ItemGotRemoved removedEvent)
+   {
+      var hourKey = $"top-10-products:{removedEvent.at:yyyyMMddHH}";          // Create a key for the current hour
+      var productKey = removedEvent.productId;                                // Use the product ID as the member in the sorted set
+
+      txn.SortedSetDecrementAsync(hourKey, productKey,                        // Decrement the quantity of the product in the sorted set
+         removedEvent.quantity); 
+
+      Console.WriteLine($"Decremented product {removedEvent.productId} in " +
+                        $"{hourKey} by {removedEvent.quantity}");
+   }
+   ```
+
+   If the event is `ItemGotRemoved`, then a Redis sort set is decremented with the product key for that particular hour.
