@@ -14,21 +14,21 @@ You will then initialize KurrentDB by appending sample events that mimic an e-co
 
 ## Step 1: Set up Your Codespaces
 
-1. Click the button below to initiate Codespaces, then follow steps 2-5 to configure and start your environment:
+1. Click the button below to initiate Codespaces and ensure following values are selected:
    
    [![](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=951198039&skip_quickstart=true)
 
+
+   | Configuration Option           | Selection            |
+   |--------------------------------|----------------------|
+   | Branch                        | `main`   |
+   | Dev container configuration   | `Mix-and-Match Database` |
+   | Region   | Any value |
+   | Machine type   | Any value |
+
    Log in to GitHub if required.
 
-2. For `Branch`, select `polyglot-tutorial`
-   
-3. For `Dev container configuration`, select `polyglot-persistence`
-   
-4. For `Region`, select `Southeast Asia`
-
-4. Click `Create codespace`
-
-5. Wait for your Codespace to build. This can take up to a few minutes. 
+2. Wait for your Codespace to build. This can take up to a few minutes. 
 
 ::: tip
 For this quickstart, you can safely ignore and close any Codespaces notifications that appear on the bottom right of the page.

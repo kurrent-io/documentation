@@ -45,7 +45,8 @@ export const sidebarEn: EsSidebarOptions = {
                 "/getting-started/use-cases/mix-and-match-database/tutorial-intro.md",
                 "/getting-started/use-cases/mix-and-match-database/tutorial-1.md",
                 "/getting-started/use-cases/mix-and-match-database/tutorial-2.md",
-                "/getting-started/use-cases/mix-and-match-database/tutorial-3.md"
+                "/getting-started/use-cases/mix-and-match-database/tutorial-3.md",
+                "/getting-started/use-cases/mix-and-match-database/tutorial-4.md"
               ]
             }
           ]
