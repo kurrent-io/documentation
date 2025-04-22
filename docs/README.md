@@ -17,7 +17,7 @@ highlights:
     - title: Start immediately with Kurrent Cloud
       details: Sign in to Kurrent Cloud and spin up a cluster in AWS, Azure, or GCP.
       icon: hugeicons:cloud
-      link: https://www.kurrent.io/kurrent-cloud
+      link: https://console.kurrent.cloud/
     - title: Start KurrentDB in a container
       details: Run <code>docker run kurrentplatform/kurrentdb:latest --dev</code> to start KurrentDB in developers mode.
       icon: simple-icons:docker
@@ -33,22 +33,22 @@ highlights:
       - title: AWS
         icon: skill-icons:aws-dark
         details: Spin up a managed deployment in Amazon Web Services for free, in less than 10 minutes.
-        link: https://www.kurrent.io/kurrent-cloud
+        link: https://console.kurrent.cloud/
 
       - title: Azure
         icon: devicon:azure
         details: Kurrent Cloud allows you to provision a KurrentDB cluster in Azure.
-        link: https://www.kurrent.io/kurrent-cloud
+        link: https://console.kurrent.cloud/
 
       - title: GCP
         icon: devicon:googlecloud
         details: Kurrent Cloud allows you to provision a KurrentDB cluster in GCP.
-        link: https://www.kurrent.io/kurrent-cloud
+        link: https://console.kurrent.cloud/
 
       - title: Linux
         icon: devicon:linux
         details: Use Kurrent package feeds for Ubuntu, Debian, CentOS, and Red Hat Enterprise Linux.
-        link: /latest/quick-start/installation.html#install-from-packagecloud
+        link: /latest/quick-start/installation.html#linux
 
       - title: Windows
         icon: devicon:windows8
@@ -58,7 +58,7 @@ highlights:
       - title: Docker
         icon: logos:docker-icon
         details: Use Docker Compose to pull images from Cloudsmith and run KurrentDB in containers.
-        link: /latest/quick-start/installation.html#use-docker-compose
+        link: /latest/quick-start/installation.html#docker
 
   - header: Develop in your language
     description: Use one of our client libraries to start building your application.
@@ -96,7 +96,7 @@ highlights:
     - title: HTTP API
       icon: catppuccin:http
       details: Use KurrentDB's HTTP API to interact with the database using any language or stack.
-      link: https://docs.kurrent.io/http-api/v24.10/introduction.html
+      link: /http-api/v25.0/introduction.html
 
 footer: Copyright © 2025 Kurrent, Inc
 ---
