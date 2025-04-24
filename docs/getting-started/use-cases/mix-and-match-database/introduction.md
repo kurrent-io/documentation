@@ -24,7 +24,7 @@ This is also popularly known as **Polyglot Persistence**.
 
 ## Traditional Approach
 
-Traditionally, systems use a single relational database for all operations and it is not simple or reliable to push updates to other data stores.
+Traditionally, systems use a single relational database for all operations, and pushing updates to other data stores is not reliable or straightforward.
 
 To distribute data across multiple databases, developers typically implement synchronization mechanisms like:
 
@@ -42,7 +42,7 @@ Such complexities increase the developers' workload to maintain synchronization 
 
 ## Mix-and-Match Database Effectively with KurrentDB
 
-KurrentDB captures all changes (events) immutablly within your system, which can be consumed by any number of downstream systems or databases in real time. This means you can reliably synchronize a variety of databases or data models, each optimized for a specific use case, without the complexity, risks, or delays of traditional batch jobs or external messaging systems.
+KurrentDB captures all changes (events) immutably within your system, which can be consumed by any number of downstream systems or databases in real time. This means you can reliably synchronize a variety of databases or data models, each optimized for a specific use case, without the complexity, risks, or delays of traditional batch jobs or external messaging systems.
 
 ### Benefits include:
 
