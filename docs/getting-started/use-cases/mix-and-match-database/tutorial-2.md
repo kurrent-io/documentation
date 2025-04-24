@@ -23,6 +23,7 @@ The schemas of the tables are as follows:
       status TEXT NOT NULL DEFAULT 'STARTED',
       created_at TIMESTAMP NOT NULL,
       updated_at TIMESTAMP NOT NULL
+   )
    ```
 
    #### `cart_items` Table
@@ -38,6 +39,7 @@ The schemas of the tables are as follows:
       updated_at TIMESTAMP NOT NULL,
       PRIMARY KEY (cart_id, product_id),
       FOREIGN KEY (cart_id) REFERENCES carts(cart_id) ON DELETE CASCADE
+   )
    ```
 
 ## Step 4: Execute Projection Application
