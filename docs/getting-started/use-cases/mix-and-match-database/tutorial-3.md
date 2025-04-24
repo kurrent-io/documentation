@@ -1,8 +1,8 @@
 ---
-title: Section 3 - Project KurrentDB Events to Redis
+title: Part 3 - Project KurrentDB Events to Redis
 ---
 
-# Section 3: Project KurrentDB Events to Redis
+# Part 3: Project KurrentDB Events to Redis
 
 #### Introducing the Redis Projection Application
 This application projects KurrentDB events to Redis sorted sets to calculate the top 10 products across all carts over the past 24 hours.
@@ -61,7 +61,7 @@ In this step, you will review the top 10 products that were recorded in Redis fr
    The 13-digit number is the product ID, followed by its quantity across all shopping carts. In this case, `5449310139799` is the most popular product with 9 of them across all carts.
 
    ::: info Quick Quiz
-   Given that the quantity for a product above is the total added minus the total removed from a cart, pick one of the products above and confirm it matches what the events in step 3 from the previous section indicate.
+   Given that the quantity for a product above is the total added minus the total removed from a cart, pick one of the products above and confirm it matches what the events in step 3 from the previous part indicate.
    :::
 
 4. Exit the Redis CLI by running the command:

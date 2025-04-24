@@ -1,8 +1,8 @@
 ---
-title: Section 4 - Project KurrentDB Events in Real-Time 
+title: Part 4 - Project KurrentDB Events in Real-Time 
 ---
 
-# Section 4: Project KurrentDB Events in Real-Time 
+# Part 4: Project KurrentDB Events in Real-Time 
 
 Now that the read models on the databases are synchronized with events on KurrentDB, you will learn how to synchronize the read models in real time.
 

@@ -1,12 +1,12 @@
 ---
-title: Section 2 - Project KurrentDB Events to Postgres
+title: Part 2 - Project KurrentDB Events to Postgres
 ---
 
-# Section 2: Project KurrentDB Events to Postgres
+# Part 2: Project KurrentDB Events to Postgres
 
 Now that KurrentDB is filled with shopping cart events, you will learn how to project these events to other databases as read models.
 
-You will do this by executing a few sample applications written for this section.
+You will do this by executing a few sample applications written for this part.
 
 #### Introducing the Postgres Projection Application
 This application projects KurrentDB events to Postgres relational tables. The tables can be queried for reporting using standard SQL queries.
@@ -76,7 +76,7 @@ In this step, you will review the records in the `carts` and `cart_items` tables
    You should see two carts in the table.
 
    ::: info Quick Quiz
-   The carts' status should be checked out or abandoned. Do the cart statuses match those you saw when manually calculating the number of events in each cart during step 3 in the last section?
+   The carts' status should be checked out or abandoned. Do the cart statuses match those you saw when manually calculating the number of events in each cart during step 3 in the last part?
    :::
 
 
@@ -92,7 +92,7 @@ In this step, you will review the records in the `carts` and `cart_items` tables
 
    ::: info Quick Quiz
 
-   Do the products and their quantities in the carts match the totals calculated in step 3 in the last section?
+   Do the products and their quantities in the carts match the totals calculated in step 3 in the last part?
 
    :::
 

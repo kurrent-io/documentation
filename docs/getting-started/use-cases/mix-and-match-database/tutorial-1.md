@@ -1,10 +1,10 @@
 ---
-title: Section 1 - Setup and Initialize KurrentDB
+title: Part 1 - Setup and Initialize KurrentDB
 ---
 
-# Section 1: Setup and Initialize KurrentDB
+# Part 1: Setup and Initialize KurrentDB
 
-In this section, you will start a GitHub Codespaces session in your browser.
+In this part, you will start a GitHub Codespaces session in your browser.
 
    ::: info
    GitHub Codespaces provides an instant and preconfigured development environment all within your browser. This environment contains all the tools and code to complete this tutorial. To learn more about Github Codespaces, [click here](https://github.com/features/codespaces).
