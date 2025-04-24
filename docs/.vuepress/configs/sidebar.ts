@@ -35,7 +35,7 @@ export const sidebarEn: EsSidebarOptions = {
           expanded: false,
           group: "Mix-and-Match Database",
           children: [
-            "/getting-started/use-cases/mix-and-match-database/explanation.md",
+            "/getting-started/use-cases/mix-and-match-database/introduction.md",
             {
               text: "Tutorial",
               collapsible: true,
@@ -52,9 +52,8 @@ export const sidebarEn: EsSidebarOptions = {
           ]
         },
         "/getting-started/use-cases/outbox-out-of-the-box.md",
-        "/getting-started/use-cases/kurrentdb-in-microservices.md",
-        "/getting-started/use-cases/operational-audit-log.md",
-        "/getting-started/use-cases/temporal-query.md",
+        "/getting-started/use-cases/microservices.md",
+        "/getting-started/use-cases/time-traveling.md",
         "/getting-started/use-cases/business-workflow.md",
       ]
     },

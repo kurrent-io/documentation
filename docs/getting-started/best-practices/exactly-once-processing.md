@@ -1,7 +1,5 @@
 ---
-title: Exactly Once Procesing
+title: 🚧 Exactly Once Procesing
 ---
 
-#  Exactly Once Procesing 
-
-(Work In Progress)
+## 🚧 Coming soon! 🚧

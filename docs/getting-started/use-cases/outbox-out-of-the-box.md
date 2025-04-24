@@ -1,5 +1,5 @@
 ---
-title: Outbox Out of the Box
+title: 🚧 Outbox Out of the Box
 ---
 
-#  Outbox Out of the Box
+## 🚧 Coming soon! 🚧

@@ -1,5 +1,5 @@
 ---
-title: 🚧 Checkpoint
+title: 🚧 Time Traveling
 ---
 
 ## 🚧 Coming soon! 🚧
