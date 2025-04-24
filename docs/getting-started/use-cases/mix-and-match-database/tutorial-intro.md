@@ -8,7 +8,7 @@ This tutorial will guide you through the Mix-and-Match Database sample with Kurr
 
 ## Objectives
 
-In this quickstart, you will:
+In this tutorial, you will:
 
 - Learn how to project events from KurrentDB into read models in different databases
 - Experience how to update read models catch-up subscription and checkpoints
