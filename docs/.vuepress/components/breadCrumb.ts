@@ -71,19 +71,22 @@ export default defineComponent({
           if (notFound || meta.breadcrumbExclude) return null;
 
           // Get the original title from metadata or name
-          let title = meta.shortTitle || meta.title || name;
+          let title = meta.shortTitle || meta.title;
+          if (!title) {
+            // Generate a title using the name
+            title = name;
+            // Remove dashes, remove file extensions, and capitalize first letter
+            title = title.replace(/-/g, " ");
+            title = title.replace(/\..*$/, "");
+            title = title.trim();
+            title = title.charAt(0).toUpperCase() + title.slice(1);
+          }
 
           // Check if the title should be replaced
           const replacement = breadcrumbReplacements[title.toLowerCase()];
           if (replacement) {
             title = replacement;
           }
-
-          // Remove dashes, remove file extensions, and capitalize first letter
-          title = title.replace(/-/g, " ");
-          title = title.replace(/\..*$/, "");
-          title = title.trim();
-          title = title.charAt(0).toUpperCase() + title.slice(1);
 
           return {
             title,

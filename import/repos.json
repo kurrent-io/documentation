@@ -106,7 +106,7 @@
     "branches": [
       {
         "version": "23.3.8",
-        "name":"master-old"
+        "name":"release/v23"
       }
     ]
   },

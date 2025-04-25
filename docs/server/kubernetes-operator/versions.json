@@ -5,7 +5,12 @@
     "group": "Kubernetes Operator",
     "versions": [
       {
-        "path": "kubernetes-operator",
+        "path": "kubernetes-operator/v1.1.0",
+        "version": "v1.1.0",
+        "startPage": "getting-started/"
+      },
+      {
+        "path": "kubernetes-operator/v1.0.0",
         "version": "v1.0.0",
         "startPage": "getting-started/"
       }
