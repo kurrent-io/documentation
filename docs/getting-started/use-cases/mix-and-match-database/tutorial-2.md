@@ -89,7 +89,7 @@ In this step, you will review the records in the `carts` and `cart_items` tables
    You will see a few items in each cart.
 
    ::: tip
-   If you're stuck with the output and can't exit, press `q` to exit. You're likely paging mode because the output has overflowed.
+   If you're stuck with the output and can't exit, press `q` to exit. You're likely in paging mode because the output has overflowed.
    :::
 
    ::: info Quick Quiz
@@ -135,7 +135,7 @@ You will examine how this pattern is applied to the Postgres projection applicat
       : FromStream.Start;                                                   // otherwise, subscribe from the start of the stream
    ```
 
-   A `SELECT` is statement used retrieve the checkpoint. If no checkpoint is found or it is the first time the application is executed, we can retrieve the default start position:
+   A `SELECT` is statement used retrieve the checkpoint. If no checkpoint is found or it is the first time the application is executed, we can retrieve the default start position.
 
    ::: info Understanding Checkpoint
    A projection often uses a checkpoint to recover the position of the last processed event. This way, when an application unexpectedly crashes mid-process, the projection does not have to process all the previously processed events.
@@ -173,10 +173,6 @@ You will examine how this pattern is applied to the Postgres projection applicat
    For more information about catch-up subscriptions, [click here](https://docs.kurrent.io/clients/grpc/subscriptions.html).
    For more information about persistent subscriptions, [click here](https://docs.kurrent.io/clients/grpc/persistent-subscriptions.html). 
    For more information about connectors, [click here](https://docs.kurrent.io/server/v24.10/features/connectors/)
-   :::
-
-   ::: info Understanding Category System Projection
-   The `$ce-cart` stream contains events from all the carts in KurrentDB. This uses the category system projection stream feature. For more information, [click here](https://docs.kurrent.io/server/v24.10/features/projections/system.html#by-category).
    :::
 
 4. Locate and examine the code that processes each event:
