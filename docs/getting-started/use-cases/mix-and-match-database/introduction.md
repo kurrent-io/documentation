@@ -3,7 +3,9 @@ title: Introduction
 next: ./tutorial-intro.md
 ---
 
-![](./images/use-the-right-database-for-the-job.png)
+![](./images/use-the-right-database-for-the-job.png#light)
+
+![](./images/use-the-right-database-for-the-job-dark.png#dark)
 
 ## Mix-and-Match Database
 
