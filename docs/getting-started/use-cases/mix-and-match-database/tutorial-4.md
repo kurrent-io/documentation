@@ -87,7 +87,7 @@ Are the contents of the Top 10 Products (Redis) table and the Carts Table (Postg
 1. Run the following command in the terminal to open the main program for the Postgres projection application:
 
    ```sql
-   code ./PostgresProjection/program.cs
+   code ./PostgresProjection/Program.cs
    ```
 
 2. Locate and examine the code that subscribes to stream

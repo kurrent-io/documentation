@@ -89,7 +89,7 @@ In this step, you will review the records in the `carts` and `cart_items` tables
    You will see a few items in each cart.
 
    ::: tip
-   If you're stuck with the output and can't exit, press `q` to exit. You're likely paging mode because the output has overflowed.
+   If you're stuck with the output and can't exit, press `q` to exit. You're likely in paging mode because the output has overflowed.
    :::
 
    ::: info Quick Quiz
@@ -135,7 +135,7 @@ You will examine how this pattern is applied to the Postgres projection applicat
       : FromStream.Start;                                                   // otherwise, subscribe from the start of the stream
    ```
 
-   A `SELECT` is statement used retrieve the checkpoint. If no checkpoint is found or it is the first time the application is executed, we can retrieve the default start position:
+   A `SELECT` is statement used retrieve the checkpoint. If no checkpoint is found or it is the first time the application is executed, we can retrieve the default start position.
 
    ::: info Understanding Checkpoint
    A projection often uses a checkpoint to recover the position of the last processed event. This way, when an application unexpectedly crashes mid-process, the projection does not have to process all the previously processed events.

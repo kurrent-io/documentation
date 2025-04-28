@@ -48,7 +48,7 @@ KurrentDB captures all changes (events) immutably within your system, which can 
 ### Benefits include:
 
 - **Reliable and Simple Synchronization**:
-  - Events stored immutably in sequential order prevent typical synchronization issues like message loss or duplication.
+  - Events stored immutably in sequential order help detect and deal with typical synchronization issues like message loss or duplication.
 
 - **Real-time Updates**:
   - KurrentDB allows real-time event stream subscriptions, enabling instant updates across data stores like Redis and MongoDB.
