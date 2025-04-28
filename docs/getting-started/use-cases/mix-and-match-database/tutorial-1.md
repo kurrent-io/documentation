@@ -71,7 +71,7 @@ For this quickstart, you can safely ignore and close any Codespaces notification
 2. Under `Recently Changed Streams`, click the `$ce-cart` link. 
 
    ::: info Understanding Category System Projection
-   The `$ce-cart` stream contains events from all the carts in KurrentDB. This uses the category system projection stream feature. For more information, [click here](https://docs.kurrent.io/server/v24.10/features/projections/system.html#by-category).
+   The `$ce-cart` stream contains events from all the carts in KurrentDB. This uses the category system projection stream feature. For more information, see [System Projections](https://docs.kurrent.io/server/v25.0/features/projections/system.html#by-category).
    :::
 
 
