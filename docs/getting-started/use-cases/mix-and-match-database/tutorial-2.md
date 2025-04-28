@@ -175,10 +175,6 @@ You will examine how this pattern is applied to the Postgres projection applicat
    For more information about connectors, [click here](https://docs.kurrent.io/server/v24.10/features/connectors/)
    :::
 
-   ::: info Understanding Category System Projection
-   The `$ce-cart` stream contains events from all the carts in KurrentDB. This uses the category system projection stream feature. For more information, [click here](https://docs.kurrent.io/server/v24.10/features/projections/system.html#by-category).
-   :::
-
 4. Locate and examine the code that processes each event:
 
    ```cs

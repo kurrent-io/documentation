@@ -68,9 +68,14 @@ For this quickstart, you can safely ignore and close any Codespaces notification
 
 1. Click the `Stream Browser` link from the top navigation bar.
 
-1. Under `Recently Changed Streams`, click the `$ce-cart` link. 
+2. Under `Recently Changed Streams`, click the `$ce-cart` link. 
 
-2. You should see an ordered list of the appended events associated with two distinct, virtual shopping carts.
+   ::: info Understanding Category System Projection
+   The `$ce-cart` stream contains events from all the carts in KurrentDB. This uses the category system projection stream feature. For more information, [click here](https://docs.kurrent.io/server/v24.10/features/projections/system.html#by-category).
+   :::
+
+
+3. You should see an ordered list of the appended events associated with two distinct, virtual shopping carts.
 
    ::: info Introducing shopping cart events
    In KurrentDB, events for each shopping cart are appended to a stream like `cart-2fbe05d1dcf043d782ea24923298ae3a`, where `2fbeone05d1dcf043d782ea24923298ae3a` is the cart's unique ID.
