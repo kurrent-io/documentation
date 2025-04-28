@@ -27,7 +27,7 @@ Before starting, ensure you have the following:
 This tutorial consists of the following steps:
 
 ### [Part 1: Setup and Initialize KurrentDB](./tutorial-1.md)
-1. **[Setup your Codespaces](./tutorial-1.html#step-1-setup-your-codespaces)**: Starts up an interactive coding environment in your browser where all tools and database are installed
+1. **[Set up your Codespaces](./tutorial-1.html#step-1-set-up-your-codespaces)**: Starts up an interactive coding environment in your browser where all tools and database are installed
 2. **[Start and Initialize KurrentDB with Sample Events](./tutorial-1.html#step-2-start-and-initialize-kurrentdb-with-sample-events)**: Start up KurrentDB and initialize it with sample events
 3. **[Browse the Sample Events in KurrentDB's Admin UI](./tutorial-1.html#step-3-browse-sample-events-in-kurrentdb-s-admin-ui)**: Access the Admin UI to browse the appended events
 ### [Part 2: Project KurrentDB Events to Postgres](./tutorial-2.md) 

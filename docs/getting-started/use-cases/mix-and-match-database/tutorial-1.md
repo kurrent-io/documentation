@@ -12,7 +12,7 @@ In this part, you will start a GitHub Codespaces session in your browser.
 
 You will then initialize KurrentDB by appending sample events that mimic an e-commerce application. The events are appended using a data generator program.
 
-## Step 1: Setup Your Codespaces
+## Step 1: Set up Your Codespaces
 
 1. Click the button below to initiate Codespaces and ensure following values are selected:
    
