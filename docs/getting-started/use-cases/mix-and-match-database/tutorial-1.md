@@ -95,6 +95,6 @@ For this quickstart, you can safely ignore and close any Codespaces notification
 
    ::: info Quick Quiz
 
-   What were the quantities of each product in the shopping carts before they were abandoned?
+   What were the quantities of each product in the shopping carts?
 
    :::
