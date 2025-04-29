@@ -1,5 +1,0 @@
----
-title: 🚧 Checkpoint
----
-
-## 🚧 Coming soon! 🚧
