@@ -98,7 +98,10 @@ export default defineClientConfig({
                 }
             }, 0);
         });
-        addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/getting-started/`);
+        const operatorLatest = __VERSIONS__.all.filter(x => x.id == 'kubernetes-operator')[0].versions[0].version;
+        addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
+        addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
+
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/client/:lang',
             to => {
