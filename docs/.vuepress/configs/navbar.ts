@@ -4,7 +4,7 @@ import {instance as ver} from "../lib/versioning";
 export const navbarEn: NavbarOptions = [
     {
         text: "Getting Started",
-        link: "/getting-started/quickstart/",
+        link: "/getting-started/introduction.html",
         icon: "hugeicons:start-up-02"
     },
     {
