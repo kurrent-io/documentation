@@ -1,102 +1,131 @@
 ---
 home: true
-heroText: Welcome to Kurrent Docs
-tagline: The platform for event-driven architectures.
-actions:
-- text: Get started
-  link: /getting-started/quickstart/
-  icon: hugeicons:start-up-02
-  type: primary
-- text: Start building
-  icon: file-icons:easybuild
-  link: /clients/grpc/getting-started.html
-  
-highlights:
-  - header: Jump start development
-    highlights:
-    - title: Start immediately with Kurrent Cloud
-      details: Sign in to Kurrent Cloud and spin up a cluster in AWS, Azure, or GCP.
-      icon: hugeicons:cloud
-      link: https://console.kurrent.cloud/
-    - title: Start KurrentDB in a container
-      details: Run <code>docker run kurrentplatform/kurrentdb:latest --dev</code> to start KurrentDB in developers mode.
-      icon: simple-icons:docker
-      link: /latest/quick-start/installation.html#docker
-    - title: Start using the client
-      details: Use one of our client libraries to start building your application.
-      icon: material-symbols:sdk
-      link: /clients/grpc/getting-started.html
+heroText: Kurrent Docs
+tagline: The platform for event-driven architectures
 
-  - header: Deploy in your environment
-    description: Deploy KurrentDB in your environment using our binaries, Docker Compose, or Kubernetes Operator.
+
+highlights:
+
+  - header: 🧭 Discover
+    description: Start here!
+    features:
+      - title: Overview
+        icon: hugeicons:block-game
+        details: Kurrent in a nutshell
+        link: /getting-started/introduction.html
+        
+      - title: Features
+        icon: hugeicons:star
+        details: What makes Kurrent unique
+        link: /getting-started/features.html
+
+      - title: Concepts
+        icon: hugeicons:brain
+        details: Essential KurrentDB concepts
+        link: /getting-started/concepts.html
+
+  - header: 🚀 Demo
+    description: Jump in and try Kurrent with one of our QuickStarts
+    features:
+      - title: Github Spaces
+        icon: devicon:linux
+        details: Jump into a running Kurrent setup and try it out
+        link: /getting-started/quickstart/
+        
+      - title: Kurrent Cloud
+        icon: hugeicons:cloud
+        details: Sign in to Kurrent Cloud and spin up a cluster in AWS, Azure, or GCP
+        link: https://console.kurrent.cloud/
+
+      - title: Docker
+        icon: logos:docker-icon
+        details: Use Docker or Docker Compose for local development and testing
+        link: /latest/quick-start/installation.html#docker
+
+
+  - header: 📦 Deploy
+    description: Deploy KurrentDB your way
     features:
       - title: AWS
         icon: skill-icons:aws-dark
-        details: Spin up a managed deployment in Amazon Web Services for free, in less than 10 minutes.
+        details: Spin up a managed deployment in Amazon Web Services for free, in less than 10 minutes
         link: https://console.kurrent.cloud/
 
       - title: Azure
         icon: devicon:azure
-        details: Kurrent Cloud allows you to provision a KurrentDB cluster in Azure.
+        details: Provision your KurrentDB cluster on Microsoft Azure
         link: https://console.kurrent.cloud/
 
       - title: GCP
         icon: devicon:googlecloud
-        details: Kurrent Cloud allows you to provision a KurrentDB cluster in GCP.
+        details: Run your KurrentDB cluster on Google Cloud
         link: https://console.kurrent.cloud/
 
       - title: Linux
         icon: devicon:linux
-        details: Use Kurrent package feeds for Ubuntu, Debian, CentOS, and Red Hat Enterprise Linux.
+        details: Install Kurrent on Ubuntu, Debian, CentOS, and Red Hat Enterprise Linux
         link: /latest/quick-start/installation.html#linux
 
       - title: Windows
         icon: devicon:windows8
-        details: Download the Windows binaries or use Chocolatey to install KurrentDB.
+        details: Install KurrentDB on Microsoft Windows
         link: /latest/quick-start/installation.html#windows
 
       - title: Docker
         icon: logos:docker-icon
-        details: Use Docker Compose to pull images from Cloudsmith and run KurrentDB in containers.
+        details: Use Docker Compose to run KurrentDB in a container
         link: /latest/quick-start/installation.html#docker
 
-  - header: Develop in your language
-    description: Use one of our client libraries to start building your application.
+  - header: 💻 Develop
+    description: Use our official client SDKs to integrate KurrentDB into your stack
     features:
-    - title: NodeJS
-      icon: logos:nodejs-icon
-      details: NodeJS client for JavaScript and TypeScript.
-      link: /client/TypeScript
+      - title: Java
+        icon: devicon:java
+        details: Build event-driven Java applications using the gRPC Java SDK.
+        link: /client/Java
+      - title: Python
+        icon: devicon:python
+        details: Build scripts or applications using our async Python client
+        link: /client/Python
+      - title: NodeJS
+        icon: logos:nodejs-icon
+        details: Use JavaScript or TypeScript to connect via the NodeJS SDK
+        link: /client/TypeScript
+      - title: Go
+        icon: skill-icons:golang
+        details: Connect KurrentDB to Go-based applications with our official SDK
+        link: /client/Go
+      - title: Rust
+        icon: skill-icons:rust
+        details: Use the Rust client for high-performance native event apps
+        link: /client/Rust
+      - title: C#
+        icon: devicon:csharp
+        details: Build .NET apps using the .NET or legacy .NET Framework clients
+        link: /client/csharp
+      - title: HTTP API
+        icon: catppuccin:http
+        details: Interact with KurrentDB from any stack using the REST-style HTTP API
+        link: /http-api/v25.0/introduction.html
 
-    - title: Java
-      icon: devicon:java
-      details: Use the Java client to build applications in Java or other JVM languages.
-      link: /client/Java
+  - header: 🔌 Connect and Manage
+    description: Manage and integrate KurrentDB
+    features:
 
-    - title: C#
-      icon: devicon:csharp
-      details: Build .NET applications with KurrentDB using the .NET client for latest .NET and legacy .NET Framework.
-      link: /client/csharp
+      - title: Connectors
+        icon: ix:connector
+        details: Connect your Kurrent streams to traditional databases and pipelines
+        link: /server/v25.0/features/connectors/
 
-    - title: Python
-      icon: devicon:python
-      details: Create applications and scripts in Python using the KurrentDB client.
-      link: /client/Python
-
-    - title: Rust
-      icon: skill-icons:rust
-      details: Bring KurrentDB to your Rust applications using the Rust client.
-      link: /client/Rust
-
-    - title: Go
-      icon: skill-icons:golang
-      details: Connect KurrentDB with your Go applications using the Go client.
-      link: /client/Go
-
-    - title: HTTP API
-      icon: catppuccin:http
-      details: Use KurrentDB's HTTP API to interact with the database using any language or stack.
-      link: /http-api/v25.0/introduction.html
+      - title: Admin CLI
+        icon: clarity:command-line
+        details: Manaage your KurrentDB using a command line interface
+        link: /commercial-tools/cli-tool.html
+       
+      - title: Admin UI
+        icon: carbon:gui-management
+        details: Manage your Kurrent installation with a graphical user interface
+        link: /server/v25.0/features/admin-ui.html
 
 footer: Copyright © 2025 Kurrent, Inc
 ---
