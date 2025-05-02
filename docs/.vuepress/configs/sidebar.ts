@@ -50,21 +50,7 @@ export const sidebarEn: EsSidebarOptions = {
               ]
             }
           ]
-        },
-        "/getting-started/use-cases/outbox-out-of-the-box.md",
-        "/getting-started/use-cases/microservices.md",
-        "/getting-started/use-cases/time-traveling.md",
-        "/getting-started/use-cases/business-workflow.md",
-      ]
-    },
-    {
-      text: "Best Practices",
-      collapsible: true,
-      expanded: false,
-      group: "Best Practices",
-      children: [
-        "/getting-started/best-practices/checkpoint.md",
-        "/getting-started/best-practices/exactly-once-processing.md"
+        }
       ]
     },
     {

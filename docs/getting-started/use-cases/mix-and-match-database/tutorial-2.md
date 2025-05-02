@@ -140,8 +140,6 @@ You will examine how this pattern is applied to the Postgres projection applicat
    ::: info Understanding Checkpoint
    A projection often uses a checkpoint to recover the position of the last processed event. This way, when an application unexpectedly crashes mid-process, the projection does not have to process all the previously processed events.
 
-   For more information about checkpoints, [click here](../../best-practices/checkpoint.md)
-
    :::
 
    ::: info Storing Checkpoints in Relational Databases
@@ -217,20 +215,17 @@ You will examine how this pattern is applied to the Postgres projection applicat
 
    ::: info Exactly-once processing
    This implementation ensures exactly-once processing by using KurrentDB for reliable persistence, idempotent projection logic, and transactional updates. The read model and checkpoint are updated atomically, preventing duplicates or inconsistencies, unlike traditional message brokers that rely on at-least-once or at-most-once delivery.
-
-   For more information about exactly-once processing with catch-up subscription and transactional checkpoints, [click here](../../best-practices/exactly-once-processing.md)
-
    :::
 
    The `CartProjection.Project(e)` function above returns a SQL command that updates the read model depending on the event.
 
-4. Run the following command in the terminal to open the code that performs for the Postgres projection:
+5. Run the following command in the terminal to open the code that performs for the Postgres projection:
 
    ```sql
    code ./PostgresProjection/CartProjection.cs
    ```
 
-5. Locate and examine the code that handles the projection for the `CustomerStartedShopping` event:
+6. Locate and examine the code that handles the projection for the `CustomerStartedShopping` event:
 
    ```cs
    private static IEnumerable<CommandDefinition>? Project(CustomerStartedShopping evt)
@@ -247,7 +242,7 @@ You will examine how this pattern is applied to the Postgres projection applicat
 
    This returns a sql command that inserts a cart if `CustomerStartedShopping` event is received.
 
-6. Locate and examine the code that handles the projection for the `CartGotCheckedOut` event:
+7. Locate and examine the code that handles the projection for the `CartGotCheckedOut` event:
 
    ```cs
    private static IEnumerable<CommandDefinition>? Project(CartGotCheckedOut evt)
