@@ -50,8 +50,7 @@ export const sidebarEn: EsSidebarOptions = {
               ]
             }
           ]
-        },
-        "/getting-started/use-cases/outbox-out-of-the-box.md",
+        }
       ]
     },
     {
