@@ -81,7 +81,7 @@ highlights:
     features:
       - title: Java
         icon: devicon:java
-        details: Build event-driven Java applications using the gRPC Java SDK.
+        details: Build event-driven Java applications using the gRPC Java SDK
         link: /client/Java
       - title: Python
         icon: devicon:python
@@ -119,7 +119,7 @@ highlights:
 
       - title: Admin CLI
         icon: clarity:command-line
-        details: Manaage your KurrentDB using a command line interface
+        details: Manage your KurrentDB using a command line interface
         link: /commercial-tools/cli-tool.html
        
       - title: Admin UI
