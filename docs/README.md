@@ -81,7 +81,7 @@ highlights:
     features:
       - title: Java
         icon: devicon:java
-        details: Build event-driven Java applications using the gRPC Java SDK.
+        details: Build event-driven Java applications using the gRPC Java SDK
         link: /client/Java
       - title: Python
         icon: devicon:python
