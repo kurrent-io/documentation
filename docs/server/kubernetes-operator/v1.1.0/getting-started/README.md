@@ -9,32 +9,36 @@ dir:
 <CloudBanner />
 
 ---
-Welcome to the **KurrentDB Kubernetes Operator** guide! For the sake of brevity, further references will use the shorter term of Operator.
-
-This guide aims to:
-* Detail key features
-* Provide comprehensive instructions for installing and utilizing the Operator
+Welcome to the **KurrentDB Kubernetes Operator** guide. In this guide, we’ll refer to the KurrentDB Kubernetes Operator simply as “the Operator.” Use the Operator to simplify backup, scaling, and upgrades of KurrentDB clusters on Kubernetes.
 
 :::important
 The Operator is an Enterprise only feature, please [contact us](https://www.kurrent.io/contact) for more information.
 :::
 
-## KurrentDB and Kubernetes: The Perfect Match
+## Why run KurrentDB on Kubernetes?
 
-Kubernetes is the modern Enterprise standard for deploying containerized applications at scale.  The Operator has been purpose built to streamline the deployment and management of KurrentDB.
+Kubernetes is the modern enterprise standard for deploying containerized applications at scale. The Operator streamlines deployment and management of KurrentDB clusters.
 
 ## Features
 
-* Deployment of single-node and multi-node database clusters
-* Backup and restore
-* Rolling upgrades and configuration changes
+* Deploy single-node or multi-node clusters
+* Back up and restore clusters
+* Perform rolling upgrades and update configurations
+
+### New in 1.1.0
+* Deploy Read-only Replica nodes into your KurrentDB cluster. See the [example](
+  ../operations/database-deployment.html#three-node-insecure-cluster-with-two-read-only-replicas), and [reference](
+  resource-types.html#kurrentdbreadonlyreplicasspec)
+* Configure arbitrary scheduling constraints on your KurrentDB pods. See the [example](
+  ../operations/database-deployment.html#deploying-with-scheduling-constraints), and [reference](
+  resource-types.html#kurrentdbconstraints)
 
 ## Supported KurrentDB Versions
 
 The Operator supports running the following major versions of KurrentDB:
-- v23
-- v24
-- v25
+- v25.x
+- v24.x
+- v23.x
 
 ## Supported Hardware Architectures
 
@@ -44,8 +48,8 @@ The Operator is packaged for the following hardware architectures:
 
 ## Technical Support
 
-If you have specific questions please [contact us](https://www.kurrent.io/contact).
+For support questions, please [contact us](https://www.kurrent.io/contact).
 
 ## First Steps
 
-Head over to the [installation](installation.md) section to get rolling!
+Ready to install? Head over to the [installation](installation.md) section.
