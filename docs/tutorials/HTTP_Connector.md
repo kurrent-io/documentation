@@ -9,11 +9,11 @@ Connectors simplify the integration of KurrentDB data into other systems. Each c
 
 The following are the available Kurrent sinks:
 
-1. [Kafka Sink](/server/v24.10/features/connectors/sinks/kafka.html)
-2. [MongoDB Sink](/server/v24.10/features/connectors/sinks/mongo.html)
-3. [RabbitMQ Sink](/server/v24.10/features/connectors/sinks/rabbitmq.html)
-4. [HTTP Sink](/server/v24.10/features/connectors/sinks/http.html)
-5. [Serilog Sink](/server/v24.10/features/connectors/sinks/serilog.html)
+1. [Kafka Sink](/server/latest/features/connectors/sinks/kafka.html)
+2. [MongoDB Sink](/server/latest/features/connectors/sinks/mongo.html)
+3. [RabbitMQ Sink](/server/latest/features/connectors/sinks/rabbitmq.html)
+4. [HTTP Sink](/server/latest/features/connectors/sinks/http.html)
+5. [Serilog Sink](/server/latest/features/connectors/sinks/serilog.html)
 
 This step-by-step tutorial guides you through setting up a connector using the **HTTP Sink** in KurrentDB. This feature allows KurrentDB to push event data to an http endpoint.
 
