@@ -14,7 +14,7 @@ In this part, you will start a GitHub Codespaces session in your browser.
 
 1. Click the button below to initiate Codespaces and ensure following values are selected:
    
-   [![](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=outbox&repo=951198039&skip_quickstart=true&devcontainer_path=.devcontainer%2Foutbox%2Fdevcontainer.json)
+   [![](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=951198039&skip_quickstart=true&devcontainer_path=.devcontainer%2Foutbox%2Fdevcontainer.json)
 
 
    | Configuration Option           | Selection            |
