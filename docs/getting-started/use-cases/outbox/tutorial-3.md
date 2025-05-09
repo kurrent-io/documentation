@@ -257,13 +257,13 @@ For demonstration purposes in this tutorial, an insert into a table would suffic
       try
       {
             _dataAccess.Execute(sql, new { OrderId = orderId });
-            Console.WriteLine($"Order fulfillment for {orderId} created.");
+            Console.WriteLine($"Order fulfillment for {orderId} started.");
 
       }
       catch (PostgresException ex) when (ex.SqlState == "23505")              // If the error is a unique violation (duplicate key)..
       {                                                                       // then it means the order fulfillment already exists.
             Console.WriteLine($"Order fulfillment for {orderId} " +           // Ignore the error and log a message
-               "create request ignored. Already exists.");
+               "already started. Start request ignored.");
       }
    }
    ```
