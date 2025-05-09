@@ -19,7 +19,7 @@ In this part, you will start a GitHub Codespaces session in your browser.
 
    | Configuration Option           | Selection            |
    |--------------------------------|----------------------|
-   | Branch                        | `outbox`   |
+   | Branch                        | `main`   |
    | Dev container configuration   | `Outbox` |
    | Region   | Any value |
    | Machine type   | Any value |
