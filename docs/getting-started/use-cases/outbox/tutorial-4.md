@@ -365,14 +365,9 @@ In this step, you'll see how these retries prevent data loss when database conne
         // Warning: This is just one example of a transient error check  //
         //          You should to add more checks based on your needs    //
         // ------------------------------------------------------------- //
-        var exceptionIsTransient =                                              // Exception is transient if it mateches one of the following patterns:
-            ex is SocketException ||
-            ex is SocketException { SocketErrorCode: SocketError.TimedOut } ||  
-            ex is SocketException { SocketErrorCode: SocketError.HostNotFound } ||  
-            ex is SocketException { SocketErrorCode: SocketError.NetworkDown } ||  
-            ex is SocketException { SocketErrorCode: SocketError.NetworkUnreachable } ||
+        var exceptionIsTransient =                                              // Exception is transient if it matches one of the following patterns:
+            ex is SocketException ||                                            // SocketException indicating a network error (https://learn.microsoft.com/en-us/dotnet/api/system.net.sockets.socketexception?view=dotnet-plat-ext-7.0)    
             ex is NpgsqlException { IsTransient: true };                        // Postgres exception indicating the error is transient (https://www.npgsql.org/doc/api/Npgsql.NpgsqlException.html#Npgsql_NpgsqlException_IsTransient)
-
 
         if (exceptionIsTransient)                                               // If exception is transient..
         {
