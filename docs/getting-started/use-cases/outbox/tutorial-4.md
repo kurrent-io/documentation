@@ -34,36 +34,7 @@ They enable subscriptions to resume from their last position after interruptions
 [Click here](https://docs.kurrent.io/server/v25.0/features/persistent-subscriptions.html#checkpointing) for more information about checkpoints in persistent subscriptions.
 :::
 
-1. Run this command in the terminal to start PostgreSQL CLI:
-
-   ```sh
-   docker exec -it postgres psql -U postgres
-   ```
-
-2. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
-
-   ```sql
-   select orderid from OrderFulfillment;
-   ``` 
-
-   You should see the same four orders in the table from step 8:
-
-   ```
-   orderid
-   ----------------------------------------
-   order-b0d1a15a21d24ffa97785ce7b345a87e
-   order-f16847c9a2e44b23bdacc5c92b6dbb25
-   order-44c1c762ca1d440bb2e03a2655ba7edb
-   order-c49064f930344a72bd6173db57e43f78
-   ```
-
-2. Exit Postgres CLI by running the command:
-
-   ```
-   exit
-   ```
-
-3. Run this command in the terminal to display the current information of the consumer group:
+1. Run this command in the terminal to display the current information of the consumer group:
 
    ```sh
    curl -s http://localhost:2113/subscriptions/%24ce-order/fulfillment/info | \
@@ -96,19 +67,19 @@ They enable subscriptions to resume from their last position after interruptions
    
    
 
-4. Run this command in the terminal to stop the order processor application. This simulates an application outage:
+2. Run this command in the terminal to stop the order processor application. This simulates an application outage:
 
    ```sh
    docker compose --profile app stop
    ```
 
-5. Run this command in the terminal to append two more new `OrderPlaced` events in KurrentDB while the application is down:
+3. Run this command in the terminal to append two more new `OrderPlaced` events in KurrentDB while the application is down:
    
    ```sh
    ./scripts/3-generate-data-during-app-outage.sh
    ```
 
-6. Run this command in the terminal to display the current information of the consumer group:
+4. Run this command in the terminal to display the current information of the consumer group:
 
    ```sh
    curl -s http://localhost:2113/subscriptions/%24ce-order/fulfillment/info | \
@@ -139,13 +110,13 @@ They enable subscriptions to resume from their last position after interruptions
    
    This means the consumer group is aware that two more events were appended.
 
-7.  Run this command in the terminal to stop the order processor application. This simulates an application recovery:
+5.  Run this command in the terminal to stop the order processor application. This simulates an application recovery:
 
    ```sh
    docker compose --profile app start
    ```
 
-8. Run this command in the terminal to view the application log after the application has restarted:
+6. Run this command in the terminal to view the application log after the application has restarted:
 
    ```sh
    docker compose --profile app logs -f
@@ -164,7 +135,7 @@ They enable subscriptions to resume from their last position after interruptions
 
    Notice how the processor received events starting from event #4 because of the previously saved checkpoint.
 
-9. Press `ctrl + c` to exit follow mode.
+7. Press `ctrl + c` to exit follow mode.
 
    :::: info How often are Checkpoints Saved?
    The frequency at which checkpoints are saved depends on three key configuration parameters:
@@ -183,7 +154,7 @@ They enable subscriptions to resume from their last position after interruptions
    
    ::::
 
-10.  Run this command in the terminal to display the current information of the consumer group:
+8.  Run this command in the terminal to display the current information of the consumer group:
 
    ```sh
    curl -s http://localhost:2113/subscriptions/%24ce-order/fulfillment/info | \
@@ -208,13 +179,13 @@ They enable subscriptions to resume from their last position after interruptions
    "lastKnownEventNumber": 5,
    ```
    
-11. Run this command in the terminal to start PostgreSQL CLI:
+9. Run this command in the terminal to start PostgreSQL CLI:
 
    ```sh
    docker exec -it postgres psql -U postgres
    ```
 
-12. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
+10. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
 
    ```sql
    select orderid from OrderFulfillment;
@@ -233,7 +204,7 @@ They enable subscriptions to resume from their last position after interruptions
    order-babc43583617421a90d4c7d039900142
    ```
 
-13. Exit Postgres CLI by running the command:
+11. Exit Postgres CLI by running the command:
 
    ```
    exit
