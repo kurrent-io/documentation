@@ -68,7 +68,8 @@ export const sidebarEn: EsSidebarOptions = {
                 "/getting-started/use-cases/outbox/tutorial-1.md",
                 "/getting-started/use-cases/outbox/tutorial-2.md",
                 "/getting-started/use-cases/outbox/tutorial-3.md",
-                "/getting-started/use-cases/outbox/tutorial-4.md"
+                "/getting-started/use-cases/outbox/tutorial-4.md",
+                "/getting-started/use-cases/outbox/tutorial-summary.md"
               ]
             }
           ]
