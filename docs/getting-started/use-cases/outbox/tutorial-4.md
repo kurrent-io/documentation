@@ -10,13 +10,13 @@ Writing to multiple data stores consistently is a critical challenge in distribu
 - **Duplicated** - when the same operation is performed multiple times
 - **Corrupted** - when partial updates leave data in an inconsistent state
 
-Traditional solutions often rely on distributed transactions, which add complexity and can impact performance. KurrentDB provides built-in features specifically designed to address these challenges in a more elegant way.
+Traditional solutions often rely on distributed transactions, which add complexity and can impact performance. KurrentDB provides built-in features specifically designed to address these challenges more elegantly.
 
-In this section, you'll explore practical failure scenarios that commonly occur when writing to external data stores like PostgreSQL, and how it can be handled with a combination of KurrentDB features and application code.
+In this section, you'll explore practical failure scenarios that commonly occur when writing to external data stores like PostgreSQL, and how they can be handled with a combination of KurrentDB features and application code.
 
 ## Step 9: Handle Application Outage with Checkpoints
 
-Event processing applications like the order processor can sometimes go down while processing historic or live events from a persistent subscription. When this happens, we typically want to avoid reprocessing all previous messages for 2 main reasons:
+Event processing applications like the order processor can sometimes go down while processing historic or live events from a persistent subscription. When this happens, we typically want to avoid reprocessing all previous messages for two main reasons:
 
 - **Data duplication risks**: Reprocessing messages can cause duplicate data in external systems, especially those that don't support idempotency or deduplication (such as email sending operations).
 
@@ -46,7 +46,7 @@ They enable subscriptions to resume from their last position after interruptions
    select orderid from OrderFulfillment;
    ``` 
 
-   You should see the same 4 orders in the table from step 8:
+   You should see the same four orders in the table from step 8:
 
    ```
    orderid
@@ -66,32 +66,35 @@ They enable subscriptions to resume from their last position after interruptions
 3. Run this command in the terminal to display the current information of the consumer group:
 
    ```sh
-   curl -i -X GET http://localhost:2113/subscriptions/%24ce-order/fulfillment/info
+   curl -s http://localhost:2113/subscriptions/%24ce-order/fulfillment/info | \
+   jq '{totalItemsProcessed, lastCheckpointedEventPosition, lastKnownEventNumber}'
    ```
 
-   You should see that 4 items have been processed by the consumer group so far:
+   You should see that four items have been processed by the consumer group so far:
 
    ```
    "totalItemsProcessed": 4,
    ```
 
-   This means the consumer group has 4 acks - one for each order you queried previously.
+   This means the consumer group has four acks - one for each order queried previously.
 
-   You should also see that the last known event number is 3:
+   You should also see that the last checkpointed event position is 3:
+
+   ```
+   "lastCheckpointedEventPosition": "3",
+   ```
+   
+   This means that the consumer group will resume from position 3 even if there is an application outage.
+
+   Finally, you should also see that the last known event number is 3:
 
    ```
    "lastKnownEventNumber": 3,
    ```
 
-   This is the event number of the last and 4th `OrderPlaced` event in `$ce-order`. (3 is displayed since event numbers are zero-based).
+   This is the event number of the last and fourth `OrderPlaced` event in `$ce-order`. ("3" is displayed since event numbers are zero-based).
    
-   Finally, you should also see that the last checkpointed event position is 3:
-
-   ```
-   "lastCheckpointedEventPosition": 3,
-   ```
    
-   This means that the consumer group will resume from position 3 even if there is an application outage.
 
 4. Run this command in the terminal to stop the order processor application. This simulates an application outage:
 
@@ -99,7 +102,7 @@ They enable subscriptions to resume from their last position after interruptions
    docker compose --profile app stop
    ```
 
-5. Run this command in the terminal to append 2 more new `OrderPlaced` events in KurrentDB while the application is down:
+5. Run this command in the terminal to append two more new `OrderPlaced` events in KurrentDB while the application is down:
    
    ```sh
    ./scripts/3-generate-data-during-app-outage.sh
@@ -108,32 +111,33 @@ They enable subscriptions to resume from their last position after interruptions
 6. Run this command in the terminal to display the current information of the consumer group:
 
    ```sh
-   curl -i -X GET http://localhost:2113/subscriptions/%24ce-order/fulfillment/info
+   curl -s http://localhost:2113/subscriptions/%24ce-order/fulfillment/info | \
+   jq '{totalItemsProcessed, lastCheckpointedEventPosition, lastKnownEventNumber}'
    ```
 
-   You should see that the `totalItemsProcessed` is still 4:
+   You should see that the `totalItemsProcessed` is still "4":
 
    ```
    "totalItemsProcessed": 4,
    ```
 
-   This is expected even though 2 new `OrderPlaced` events were appended previously. This is because the application is currently down.
+   This is expected even though two new `OrderPlaced` events were appended. This is because the application is currently down.
 
+   You should also see that the last checkpointed event position is still 3:
+
+   ```
+   "lastCheckpointedEventPosition": "3",
+   ```
+
+   This is because no new events have been processed yet, so the checkpoint has not been updated.
+   
    However, you should see that the `lastKnownEventNumber` is 5 instead of 3:
 
    ```
    "lastKnownEventNumber": 5,
    ```
    
-   This means the consumer group is aware that 2 more events were appended.
-
-   Finally, you should also see that the last checkpointed event position is still 3:
-
-   ```
-   "lastCheckpointedEventPosition": 3,
-   ```
-
-   This is because no new events have been processed yet and so the checkpoint is not updated yet.
+   This means the consumer group is aware that two more events were appended.
 
 7.  Run this command in the terminal to stop the order processor application. This simulates an application recovery:
 
@@ -144,10 +148,10 @@ They enable subscriptions to resume from their last position after interruptions
 8. Run this command in the terminal to view the application log after the application has restarted:
 
    ```sh
-   docker compose --profile app logs
+   docker compose --profile app logs -f
    ```
 
-   You should see messages that indicate that the 2 new events are created:
+   Within a few seconds, you should see messages that indicate that the two new events are created:
 
    ```
    orderprocessor  | OrderProcessor started
@@ -159,6 +163,8 @@ They enable subscriptions to resume from their last position after interruptions
    ```
 
    Notice how the processor received events starting from event #4 because of the previously saved checkpoint.
+
+9. Press `ctrl + c` to exit follow mode.
 
    :::: info How often are Checkpoints Saved?
    The frequency at which checkpoints are saved depends on three key configuration parameters:
@@ -177,10 +183,11 @@ They enable subscriptions to resume from their last position after interruptions
    
    ::::
 
-9.  Run this command in the terminal to display the current information of the consumer group:
+10.  Run this command in the terminal to display the current information of the consumer group:
 
    ```sh
-   curl -i -X GET http://localhost:2113/subscriptions/%24ce-order/fulfillment/info
+   curl -s http://localhost:2113/subscriptions/%24ce-order/fulfillment/info | \
+   jq '{totalItemsProcessed, lastCheckpointedEventPosition, lastKnownEventNumber}'
    ```
 
    You should see that the `totalItemsProcessed` is now 6 instead of 4:
@@ -189,31 +196,31 @@ They enable subscriptions to resume from their last position after interruptions
    "totalItemsProcessed": 6,
    ```
 
-   The `lastKnownEventNumber` is still 5:
+   And the checkpoint has been updated to 5:
+   
+   ```
+   "lastCheckpointedEventPosition": "5",
+   ```
+   
+   But the `lastKnownEventNumber` is still 5:
 
    ```
    "lastKnownEventNumber": 5,
    ```
-
-   And the checkpoint has been updated to 5:
    
-   ```
-   "lastCheckpointedEventPosition": 5,
-   ```
-   
-10. Run this command in the terminal to start PostgreSQL CLI:
+11. Run this command in the terminal to start PostgreSQL CLI:
 
    ```sh
    docker exec -it postgres psql -U postgres
    ```
 
-11. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
+12. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
 
    ```sql
    select orderid from OrderFulfillment;
    ``` 
 
-   You should now see the 6 orders in total:
+   You should now see a total of six orders:
 
    ```
    orderid
@@ -226,7 +233,7 @@ They enable subscriptions to resume from their last position after interruptions
    order-babc43583617421a90d4c7d039900142
    ```
 
-12. Exit Postgres CLI by running the command:
+13. Exit Postgres CLI by running the command:
 
    ```
    exit
@@ -234,7 +241,7 @@ They enable subscriptions to resume from their last position after interruptions
 
 ## Step 10. Handle Transient Errors by Retrying Events
 
-Transient errors are temporary failures that resolve themselves over time - such as database disconnections, network issues, or service restarts. When these errors occur, the best strategy is often to retry processing rather than failing permanently.
+Transient errors are temporary failures that resolve themselves over time. Examples include database disconnections, network issues, or service restarts. When these errors occur, the best strategy is often to retry processing rather than failing permanently.
 
 For example, if PostgreSQL becomes unavailable while the order processor is running:
 
@@ -268,7 +275,10 @@ In this step, you'll see how these retries prevent data loss when database conne
 4. Wait for a few seconds and you will start to notice messages that indicate a transient error is detected and the application will retry the event:
 
    ```
-   TODO
+   orderprocessor  | Detected DB transient error Name or service not known. Retrying.
+   orderprocessor  | Received event #4 in $ce-order stream
+   orderprocessor  | Detected DB transient error Name or service not known. Retrying.
+   orderprocessor  | Received event #5 in $ce-order stream
    ```
 
    Notice that the application retries this continuously for a while.
@@ -287,13 +297,24 @@ In this step, you'll see how these retries prevent data loss when database conne
    docker compose --profile app logs -f
    ```
 
-   Notice that the event processing that have been retrying continuously have now been processed.
+   Wait for a while and notice that the event processing that have been retrying continuously has now been processed.
 
-   ::: info Duplicated Messages
-   TODO
-   :::
+   ```
+   orderprocessor  | Received event #4 in $ce-order stream
+   orderprocessor  | Order fulfillment for order-3d268df88f9c451eae9cae49d10656d5 created.
+   orderprocessor  | Received event #5 in $ce-order stream
+   orderprocessor  | Order fulfillment for order-ad53653936ff469ea208cce8726906eb created.
+   ```
 
 8. Press `ctrl + c` to exit follow mode.
+
+   ::: warning Use Idempotency to Handle Out-of-Order and Duplicate Events
+   Depending on how the persistent subscription is configured and when a transient error is recovered, you may notice events are being retried multiple times and in a different order than you expect.
+
+   Because of this, you should always design your event handling logic to be idempotent. In other words, processing the same event more than once—or receiving it out of order—should not break your application or result in inconsistent data.
+
+   See [Step 7](/getting-started/use-cases/outbox/tutorial-3.md#step-7-examine-the-order-processor-application-codebase) for more information.
+   :::
 
 9. Run this command in the terminal to start PostgreSQL CLI:
 
@@ -307,7 +328,7 @@ In this step, you'll see how these retries prevent data loss when database conne
    select orderid from OrderFulfillment;
    ``` 
 
-   You should now see the 8 orders in total:
+   You should now see the eight orders in total:
 
    ```
    orderid
@@ -345,8 +366,13 @@ In this step, you'll see how these retries prevent data loss when database conne
         //          You should to add more checks based on your needs    //
         // ------------------------------------------------------------- //
         var exceptionIsTransient =                                              // Exception is transient if it mateches one of the following patterns:
-            ex is SocketException { SocketErrorCode: SocketError.TryAgain } ||  // Socket error indicating the name of the host could not be resolved (https://learn.microsoft.com/en-us/dotnet/api/system.net.sockets.socketerror?view=net-9.0)
+            ex is SocketException ||
+            ex is SocketException { SocketErrorCode: SocketError.TimedOut } ||  
+            ex is SocketException { SocketErrorCode: SocketError.HostNotFound } ||  
+            ex is SocketException { SocketErrorCode: SocketError.NetworkDown } ||  
+            ex is SocketException { SocketErrorCode: SocketError.NetworkUnreachable } ||
             ex is NpgsqlException { IsTransient: true };                        // Postgres exception indicating the error is transient (https://www.npgsql.org/doc/api/Npgsql.NpgsqlException.html#Npgsql_NpgsqlException_IsTransient)
+
 
         if (exceptionIsTransient)                                               // If exception is transient..
         {
@@ -357,14 +383,20 @@ In this step, you'll see how these retries prevent data loss when database conne
         }
    ```
 
-   To handle transient errors in exception, you can: 
+   To handle transient errors, you can: 
    - Identify a list of errors that are recoverable
    - Catch these errors and call `subscription.Nack()` to send a not acknowledge message to KurrentDB with the `Retry` flag
 
    With this approach, KurrentDB will re-send the event again for a configured number of time (defined by `maxRetryCount`). If the error is recovered before this, then the processor will successfully handle this error. Otherwise, KurrentDB will park this event.
 
+   ::: warning Customize Transient Error Handling
+   The list of transient errors provided in our example is not exhaustive and may not fully reflect the conditions in your environment. You should treat it as a starting point and customize it based on your infrastructure, observed failure modes, and testing.
+
+   Be sure to evaluate and expand this list to include any additional error types that are specific to your setup or likely to occur in your system.
+   :::
+
    ::: info Parking Events in Persistent Subscription
-   While an event is being retried in the persistent subscription, other events in its stream will be stuck and not pushed to the processor until the event is ack'd, skipped, or parked. 
+   While an event is being retried in the persistent subscription, other events in its stream will be stuck and not pushed to the processor until the event is ack'd, skipped, or parked.
    
    When an event is parked, it is stored in KurrentDB for future play back while other events in the consumer group can be unstuck and pushed.
 
@@ -372,9 +404,9 @@ In this step, you'll see how these retries prevent data loss when database conne
    :::
 
    ::: warning Dangers of Setting a High `maxRetryCount` Configuration
-   The `maxRetryCount` configuration of consumer group sets the number of times it should retry an event when it is instructed. While a high `maxRetryCount` may increase the chance for a transient error to recover while it says waits for server to recover. On the other hand, it can also increase the load on the server that may already be under distress with high load, making it more difficult to recover.
+   The `maxRetryCount` configuration of the consumer group sets the number of times it should retry an event when it is instructed. While a high `maxRetryCount` may increase the chance for a transient error to recover while it waits for server to recover, it can also increase the load on the server that may already be under distress with high load, making it more difficult to recover.
 
-   You should ensure that `maxRetryCount` is set appropriately so that it potentially overload a recovering server.
+   You should ensure that `maxRetryCount` is set appropriately so that it does not potentially overload a recovering server.
    :::
 
 ## Step 12. Handle Permanent Errors by Skipping Events
@@ -401,7 +433,7 @@ This step focuses only on skipping for simplicity.
 1. Run this command in the terminal to generate an invalid `OrderPlaced` event:
 
    ```sh
-   curl -i -X POST \
+   curl -X POST \
       -H "Content-Type: application/vnd.eventstore.events+json" \
       http://localhost:2113/streams/order-b3f2d72c-e008-44ec-a612-5f7fbe9c9240 \
       -d '
@@ -416,18 +448,21 @@ This step focuses only on skipping for simplicity.
          ]'
    ```
 
-3. Run this command in the terminal to view the application log of the order processor application:
+2. Run this command in the terminal to view the application log of the order processor application:
 
    ```sh
-   docker compose --profile app logs
+   docker compose --profile app logs -f
    ```
 
-   You should see a new log message that indicate a permanent error has been detected and the event has been skipped.
+   Within a few seconds, you should see a new log message indicating a permanent error has been detected and the event has been skipped.
 
    ```
    orderprocessor  | Received event #8 in $ce-order stream
-   orderprocessor  | Detected permanent error System.ArgumentException: Order ID cannot be null or empty (Parameter 'orderId')
+   orderprocessor  | Detected permanent error Order ID cannot be null or empty (Parameter 'orderId'). Skipping.
    ```
+
+3. Press `ctrl + c` to exit follow mode.
+
 
 ## Step 13. Examine How Permanent Errors are Handled in the Codebase
 
@@ -454,6 +489,6 @@ This step focuses only on skipping for simplicity.
         }
    ```
 
-   Errors not classified as transient are considered permanent errors. To handle these unrecoverable situations call `subscription.Nack()` with the `PersistentSubscriptionNakEventAction.Skip` flag.
+   Errors not classified as transient are considered permanent errors. To handle these unrecoverable situations, call `subscription.Nack()` with the `PersistentSubscriptionNakEventAction.Skip` flag.
 
    This instructs the consumer group to skip processing the problematic event and deliver the next available event in the stream.

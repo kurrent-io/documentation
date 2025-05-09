@@ -4,21 +4,21 @@ title: Part 2 - Trigger Writes to External Data Stores
 
 # Part 2: Trigger Writes to External Data Stores
 
-With KurrentDB, eventually consistent updates to multiple resources often begins with an event that triggers the entire process. Each downstream system then subsequently subscribes to this event and updates their data store on their own without the need of a distributed transaction.
+With KurrentDB, eventually consistent update to multiple resources often begin with an event that triggers the entire process. Subsequently, each downstream system subscribes to this event and updates its data store on its own without the need for a distributed transaction.
 
-In this tutorial, `OrderPlaced` is the event that will trigger the start of an order fulfillment process in the fulfillment system. 
+In this tutorial, an `OrderPlaced` event will trigger the start of an order fulfillment process in the fulfillment system. 
 
-For the purpose of this tutorial, how this event is created is not important and for simplicity it will be created by a data generator based on checkout related events.
+For the purpose of this tutorial, how this event is created is not important. For simplicity, it will be created by a data generator based on checkout-related events.
 
 ::: note How Triggering Events are Created
-In general, just like any kinds of events, a triggering event can be created in many ways. For example, an `CouponUsed` event may need transactional mechanisms and patterns such as aggregate and deciders to ensure race condition from multiple actors don't violate business rules (e.g. Coupon can only be used for 100 times).
+In general, just like any event, a triggering event can be created in many ways. For example, a `CouponUsed` event may need transactional mechanisms and patterns such as aggregate and deciders to ensure race condition from multiple actors don't violate business rules (e.g. a coupon can only be used 100 times).
 
 On the other hand, an event like `OrderPlaced` in this tutorial may not require these practices since it is only a summary event that collects information from the relevant shopping cart and checkout events.
 :::
 
 ## Step 2: Start Databases and Append OrderPlaced Event to KurrentDB
 
-1. Once your Codespace is loaded, run this command in the terminal to start KurrentDB and PostgreSQL for this tutorial, and append sample events to KurrentDB:
+1. Once your Codespace is loaded, run this command in the terminal to start KurrentDB and PostgreSQL, and append sample events to KurrentDB:
 
    ```sh
    ./scripts/1-start-dbs-and-generate-data.sh
@@ -51,10 +51,10 @@ On the other hand, an event like `OrderPlaced` in this tutorial may not require 
 2. Under `Recently Changed Streams`, click the `$ce-order` link.
 
    ::: info Understanding Category System Projection
-   The `$ce-order` stream contains events from all the carts in KurrentDB. This uses the category system projection stream feature. For more information, see [System Projections](https://docs.kurrent.io/server/v25.0/features/projections/system.html#by-category).
+   The `$ce-order` stream contains events from all the carts in KurrentDB. This uses KurrentDB's "by category" system projection stream feature. For more information, see [System Projections](https://docs.kurrent.io/server/v25.0/features/projections/system.html#by-category).
    :::
 
-3. You should see a sequenced list of the appended events associated with the 2 distinct orders.
+3. You should see a sequenced list of the appended events associated with the two distinct orders.
 
 4. Click on one of them to see the details of the order.
 

@@ -10,8 +10,6 @@ In this part, you will start a GitHub Codespaces session in your browser.
    GitHub Codespaces provides an instant and preconfigured development environment all within your browser. This environment contains all the tools and code to complete this tutorial. To learn more about Github Codespaces, [click here](https://github.com/features/codespaces).
    :::
 
-You will then initialize KurrentDB by appending sample events that mimic an e-commerce application. The events are appended using a data generator program.
-
 ## Step 1: Set up Your Codespaces
 
 1. Click the button below to initiate Codespaces and ensure following values are selected:

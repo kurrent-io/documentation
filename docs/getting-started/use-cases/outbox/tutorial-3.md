@@ -8,16 +8,16 @@ Now that the event that triggers multiple writes is appended to KurrentDB, you w
 
 In this tutorial you will achieve this by running the order processor application. 
 
-This is a sample application within the order fulfillment system which listens for `OrderPlaced` events with a KurrentDB persistent subscription. Whenever it receives the event, it will kickstart a order fulfillment process simulated by inserting a record in a PostgreSQL table.
+This is a sample application within the order fulfillment system that listens for `OrderPlaced` events with a KurrentDB persistent subscription. Whenever it receives an event, it will kickstart an order fulfillment process simulated by inserting a record in a PostgreSQL table.
 
 ## Step 4: Create a KurrentDB Persistent Subscription Consumer Group
 
-To handle the triggering event, persistent subscription consumer group is created on KurrentDB. This is allows client applications to subscribe to events from KurrentDB.
+A persistent subscription consumer group is created on KurrentDB to handle the triggering event. This allows client applications to subscribe to events from KurrentDB.
 
 ::: info Persistent Subscription and Consumer Group
-Persistent subscriptions in EventStoreDB are a type of subscription that is maintained by the server rather than the client. Unlike other subscription types, persistent subscriptions keep their position (checkpoint) on the server side, allowing them to continue from where they left off if the connection is closed or interrupted.
+Persistent subscriptions in KurrentDB are maintained by the server rather than the client. Keeping their position (checkpoint) on the server side, allows them to continue from where they left off if the connection is closed or interrupted.
 
-Consumer groups are a concept used with persistent subscriptions that enable the competing consumers pattern. All clients belonging to a single consumer group receive a portion of events, allowing for load balancing and parallel processing. Multiple consumer groups can be created for the same stream, each operating independently with their own checkpoint position maintained by the server.
+Consumer groups are a concept used with persistent subscriptions that enable the competing consumers pattern, where each clients belonging to a single consumer group receive a portion of events, allowing for load balancing and parallel processing. Multiple consumer groups can be created for the same stream, each operating independently with its own checkpoint position maintained by the server.
 
 [Click here](https://docs.kurrent.io/server/v25.0/features/persistent-subscriptions.html) for more information about persistent subscription and consumer groups.
 :::
@@ -25,7 +25,7 @@ Consumer groups are a concept used with persistent subscriptions that enable the
 1. Run this command in the terminal to create the persistent subscription:
 
    ```sh
-   curl -i -X PUT -d $'{ "minCheckPointCount": 0, "maxCheckPointCount": 0, "resolveLinktos": true, "maxRetryCount": 100 }' \
+   curl -X PUT -d $'{ "minCheckPointCount": 0, "maxCheckPointCount": 0, "resolveLinktos": true, "maxRetryCount": 100 }' \
     http://localhost:2113/subscriptions/%24ce-order/fulfillment \
     -H "Content-Type: application/json"
    ```
@@ -41,9 +41,9 @@ Consumer groups are a concept used with persistent subscriptions that enable the
    }
    ```
 
-   This creates a consumer group called `fulfillment` that subscribes to the `$ce-order` stream that you navigated to in the previous step.
+   This creates a consumer group called `fulfillment` that subscribes to the `$ce-order` stream you reviewed in the previous step.
 
-   :::: warning Review and adjust these settings before production
+   :::: warning Review and adjust these settings before applying to production
    The checkpoint and retry configuration values above are for demonstration only and may not be suitable for a production use. To avoid performance bottlenecks or unexpected behavior, be sure to test and tune them based on your expected workload.
 
    ::: details Checkpoint and Retry Configurations Explained
@@ -64,10 +64,10 @@ Consumer groups are a concept used with persistent subscriptions that enable the
 
 ## Step 5. Review the Consumer Group from KurrentDB Admin UI
 
-1. Navigate to the KurrentDB admin UI that you have went to in the previous part in the tutorial.
+1. Navigate to the KurrentDB Admin.
 
    ::: tip
-   If you are unsure what its URL is, you can execute the following script to find out:
+   If you are unsure what its URL is, you can execute the following script in your codespaces terminal to find out:
 
    ```sh
    ./scripts/get-kurrentdb-ui-url.sh
@@ -76,11 +76,11 @@ Consumer groups are a concept used with persistent subscriptions that enable the
 
 2. Click the `Persistent Subscriptions` link from the top navigation bar.
 
-3. Click on `$ce-order` directly below the `Stream/Group(s)` column header in the dashboard. You will see the `fulfillment` consumer group listed under `$ce-order`.
+3. Click on `$ce-order` directly below the `Stream/Group(s)` column header in the dashboard. The `fulfillment` consumer group should be listed under `$ce-order`.
 
 ## Step 6. Start the Order Processor Application
 
-When the order processor application is started, it will connect to the `fulfillment` subscription created from last step and begin to process any events in the `$ce-order` stream.
+When the order processor application is started, it will connect to the `fulfillment` subscription created during the previous step and begin to process any events in the `$ce-order` stream.
 
 1. Run this command in the terminal to start the order processor application:
    
@@ -94,24 +94,26 @@ When the order processor application is started, it will connect to the `fulfill
    All apps are running.
    ```
 
-2. Run this command in the terminal to view the application log of the order processor application:
+2. Run this command in the terminal to view the application log of the order processor application in follow mode:
 
    ```sh
-   docker compose --profile app logs
+   docker compose --profile app logs -f
    ```
 
-   You should see messages that indicate 2 order fulfillment process has been created:
+   Within a few seconds, you should see messages that indicate two order fulfillment processes have been started:
 
    ```
    orderprocessor  | OrderProcessor started
    orderprocessor  | Subscribing events from stream
    orderprocessor  | Received event #0 in $ce-order stream
-   orderprocessor  | Order fulfillment for order-b0d1a15a21d24ffa97785ce7b345a87e created.
+   orderprocessor  | Order fulfillment for order-b0d1a15a21d24ffa97785ce7b345a87e started.
    orderprocessor  | Received event #1 in $ce-order stream
-   orderprocessor  | Order fulfillment for order-f16847c9a2e44b23bdacc5c92b6dbb25 created.
+   orderprocessor  | Order fulfillment for order-f16847c9a2e44b23bdacc5c92b6dbb25 started.
    ```
 
-3. Run this command in the terminal to start PostgreSQL CLI:
+3. Press `ctrl + c` to exit follow mode.
+
+4. Run this command in the terminal to start PostgreSQL CLI:
 
    ```sh
    docker exec -it postgres psql -U postgres
@@ -126,34 +128,34 @@ When the order processor application is started, it will connect to the `fulfill
    postgres=#
    ```
 
-4. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
+5. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
 
    ```sql
    select orderid from OrderFulfillment;
    ``` 
 
-   You should see 2 orders in the table and should match the orders listed in the application log.
+   You should see two orders in the table that match the orders listed in the application log.
 
    ::: tip
    If you're stuck with the output and can't exit, press `q` to exit. You're likely in paging mode because the output has overflowed.
    :::
 
-5. Exit Postgres CLI by running the command:
+6. Exit Postgres CLI by running the command:
 
    ```
    exit
    ```
    
-::: tip Alternative Ways to Kickstart the Order Fulfillment Process
-Inserting a record to a relational database is just one of the many ways to kickstart the order fulfillment process. Alternatively, the order processor could have also triggered this by:
+::: info Alternative Ways to Kickstart the Order Fulfillment Process
+Inserting a record into a relational database is just one of the many ways to kickstart the order fulfillment process. Alternatively, the order processor could have also triggered this by:
 
 - Making a REST call to the order fulfillment API
 - Publishing a message to a message broker
-- Sending an email to a staff to manually kickstart the process
+- Sending an email to a the fulfillment department to manually kickstart the process
 - Appending an event to a OrderFufillment stream in KurrentDB
 - etc.
   
-For demonstration purposes in this tutorial, an insert to a table would suffice.
+For demonstration purposes in this tutorial, an insert into a table would suffice.
 :::
 
 ## Step 7. Examine the Order Processor Application Codebase
@@ -216,21 +218,21 @@ For demonstration purposes in this tutorial, an insert to a table would suffice.
 
    The code shows a key part of an event processing pipeline that:
 
-   1. Processes subscription messages from KurrentDB event store's `$ce-order` stream
+   - Processes subscription messages from KurrentDB event store's `$ce-order` stream
 
-   2. Performs filtering by:
+   - Performs filtering by:
       - Skipping non-event messages
       - Skipping messages where the subscription isn't found
       - Only processing "order-placed" events
    
-   3. Handles order events by:
+   - Handles order events by:
       - Deserializing the event data into an `OrderPlaced` object
-      - Starting order fulfillment by calling repository.StartOrderFulfillment()
+      - Starting order fulfillment by calling `repository.StartOrderFulfillment()`
    
-   4. Acknowledges successful processing with await subscription.Ack(e) to tell the consumer group to send the next event
+   - Acknowledges successful processing with `subscription.Ack()` to tell the consumer group to send the next event
 
-   ::: tip
-   It is important to send an acknowledge message to the consumer group, otherwise KurrentDB will assume the consumer has not received it yet and will retry.
+   ::: info
+   It is important to send an acknowledge message to the consumer group via `subscription.Ack()` after the event is processed successfully. Otherwise KurrentDB will assume the consumer has not received it yet and will retry.
    :::
 
 4. Run this command in the terminal to open the OrderFulfillmentRepository class used to insert an order fulfillment record in PostgreSQL:
@@ -282,7 +284,7 @@ For demonstration purposes in this tutorial, an insert to a table would suffice.
    - If the same event is processed again, the database rejects the duplicate
    - The function gracefully handles this case without error or side effects
    
-   This approach ensures the same order fulfillment record won't be inserted multiple times, even when the same `OrderPlaced` event is processed repeatedly.
+   This approach ensures that the same order fulfillment record is not inserted multiple times, even when the same `OrderPlaced` event is processed repeatedly.
    :::
 
 ## Step 8. Process New Events in Real-Time
@@ -301,40 +303,42 @@ In this step, you will learn how persistent subscriptions can process new events
    Appended data to KurrentDB
    ```
 
-2. Run this command in the terminal to view the application log of the order processor application:
+2. Run this command in the terminal to view the application log of the order processor application in follow mode:
 
    ```sh
-   docker compose --profile app logs
+   docker compose --profile app logs -f
    ```
 
-   You should see messages that indicate 4 order fulfillment process has been created:
+   Within a few seconds, you should see messages that indicate four order fulfillment processes have been started:
 
    ```
    orderprocessor  | OrderProcessor started
    orderprocessor  | Subscribing events from stream
    orderprocessor  | Received event #0 in $ce-order stream
-   orderprocessor  | Order fulfillment for order-b0d1a15a21d24ffa97785ce7b345a87e created.
+   orderprocessor  | Order fulfillment for order-b0d1a15a21d24ffa97785ce7b345a87e started.
    orderprocessor  | Received event #1 in $ce-order stream
-   orderprocessor  | Order fulfillment for order-f16847c9a2e44b23bdacc5c92b6dbb25 created.
+   orderprocessor  | Order fulfillment for order-f16847c9a2e44b23bdacc5c92b6dbb25 started.
    orderprocessor  | Received event #2 in $ce-order stream
-   orderprocessor  | Order fulfillment for order-44c1c762ca1d440bb2e03a2655ba7edb created.
+   orderprocessor  | Order fulfillment for order-44c1c762ca1d440bb2e03a2655ba7edb started.
    orderprocessor  | Received event #3 in $ce-order stream
-   orderprocessor  | Order fulfillment for order-c49064f930344a72bd6173db57e43f78 created.
+   orderprocessor  | Order fulfillment for order-c49064f930344a72bd6173db57e43f78 started.
    ```
 
-3. Run this command in the terminal to start PostgreSQL CLI:
+3. Press `ctrl + c` to exit follow mode.
+
+4. Run this command in the terminal to start PostgreSQL CLI:
 
    ```sh
    docker exec -it postgres psql -U postgres
    ```
 
-4. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
+5. Run this command in Postgres CLI to list the orders that have started the order fulfillment process:
 
    ```sql
    select orderid from OrderFulfillment;
    ``` 
 
-   You should see 4 orders in the table and should match the orders listed in the application log.
+   You should see four orders in the table that should match those listed in the application log.
 
    ::: tip Built-in Real-time Processing with Persistent Subscription
    Persistent subscriptions deliver events in real-time to subscribers after catching up with historical events.
