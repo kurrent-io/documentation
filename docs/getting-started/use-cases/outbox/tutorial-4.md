@@ -271,9 +271,9 @@ In this step, you'll see how these retries prevent data loss when database conne
    Wait for a while and notice that the event processing that have been retrying continuously has now been processed.
 
    ```
-   orderprocessor  | Received event #4 in $ce-order stream
+   orderprocessor  | Received event #6 in $ce-order stream
    orderprocessor  | Order fulfillment for order-3d268df88f9c451eae9cae49d10656d5 created.
-   orderprocessor  | Received event #5 in $ce-order stream
+   orderprocessor  | Received event #7 in $ce-order stream
    orderprocessor  | Order fulfillment for order-ad53653936ff469ea208cce8726906eb created.
    ```
 
