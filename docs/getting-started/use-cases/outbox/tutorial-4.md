@@ -391,9 +391,7 @@ In this step, you'll see how these retries prevent data loss when database conne
    :::
 
    ::: info Parking Events in Persistent Subscription
-   While an event is being retried in the persistent subscription, other events in its stream will be stuck and not pushed to the processor until the event is ack'd, skipped, or parked.
-   
-   When an event is parked, it is stored in KurrentDB for future play back while other events in the consumer group can be unstuck and pushed.
+   An event can be saved, or "parked," in a special stream dedicated to persistent subscriptions. This parked event can later be reviewed for debugging or troubleshooting, such as checking if it contains a specific error. If the underlying issue is fixed, the event can also be replayed. This process is commonly referred to as "dead-lettering."
 
    [Click here](https://docs.kurrent.io/server/v25.0/features/persistent-subscriptions.html#parked-messages) for more information about parking.
    :::
@@ -406,10 +404,7 @@ In this step, you'll see how these retries prevent data loss when database conne
 
 ## Step 12. Handle Permanent Errors by Skipping Events
 
-Event processors sometimes encounter permanent errors that cannot be resolved through retries. These unrecoverable errors typically result from:
-
-- Malformed events with structural or syntactical problems
-- Bugs in the processor code that require deployment of fixes
+Event processors sometimes encounter permanent errors that cannot be resolved through retries. These unrecoverable errors can sometimes result from say a malformed events with structural or syntactical problems.
 
 When these permanent errors occur, continuous retrying is futile and blocks subsequent events in the stream from being processed.
 
@@ -417,13 +412,6 @@ One solution is to skip the problematic event, allowing the processor to continu
 
 In this step, you will find out how to detect and skip events that trigger permanent errors.
 
-::: info 
-Events can also be "parked" instead of skipped, allowing them to be replayed later.
-
-This step focuses only on skipping for simplicity.
-
-[Click here](https://docs.kurrent.io/server/v25.0/features/persistent-subscriptions.html#parked-messages) for more information about parking events. 
-:::
 
 1. Run this command in the terminal to generate an invalid `OrderPlaced` event:
 
@@ -457,7 +445,6 @@ This step focuses only on skipping for simplicity.
    ```
 
 3. Press `ctrl + c` to exit follow mode.
-
 
 ## Step 13. Examine How Permanent Errors are Handled in the Codebase
 
