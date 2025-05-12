@@ -52,7 +52,7 @@ If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
-helm pull kurrent-latest/kurrentdb-operator --version 1.1.0 --untar
+helm pull kurrent-latest/kurrentdb-operator --version 1.0.0 --untar
 # Install the CRDs
 kubectl apply -f kurrentdb-operator/templates/crds
 ```
