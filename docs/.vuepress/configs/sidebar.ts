@@ -50,6 +50,29 @@ export const sidebarEn: EsSidebarOptions = {
               ]
             }
           ]
+        },
+        {
+          text: "Outbox Out-of-the-Box",
+          collapsible: true,
+          expanded: false,
+          group: "Outbox Out-of-the-Box",
+          children: [
+            "/getting-started/use-cases/outbox/introduction.md",
+            {
+              text: "Tutorial",
+              collapsible: true,
+              expanded: false,
+              group: "Outbox Tutorial",
+              children: [                
+                "/getting-started/use-cases/outbox/tutorial-intro.md",
+                "/getting-started/use-cases/outbox/tutorial-1.md",
+                "/getting-started/use-cases/outbox/tutorial-2.md",
+                "/getting-started/use-cases/outbox/tutorial-3.md",
+                "/getting-started/use-cases/outbox/tutorial-4.md",
+                "/getting-started/use-cases/outbox/tutorial-summary.md"
+              ]
+            }
+          ]
         }
       ]
     },
