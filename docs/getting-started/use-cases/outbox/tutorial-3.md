@@ -62,7 +62,7 @@ Consumer groups are a concept used with persistent subscriptions that enable the
    ::::
 
 
-## Step 5. Review the Consumer Group from KurrentDB Admin UI
+## Step 5. Review the Consumer Group from the KurrentDB Admin UI
 
 1. Navigate to the KurrentDB Admin.
 

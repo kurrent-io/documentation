@@ -1,8 +1,8 @@
 ---
-title: Part 4 - Error Handling of Writes to External Data Stores 
+title: Part 4 - Error Handling for Writes to External Data Stores 
 ---
 
-# Part 4: Error Handling of Writes to External Data Stores
+# Part 4: Error Handling for Writes to External Data Stores
 
 Writing to multiple data stores consistently is a critical challenge in distributed systems. Without proper handling, your data can become:
 
