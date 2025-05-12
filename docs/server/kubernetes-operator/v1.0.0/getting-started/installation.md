@@ -15,28 +15,28 @@ The Operator is an Enterprise only feature, please [contact us](https://www.kurr
 To get the best out of this guide, a basic understanding of [Kubernetes concepts](https://kubernetes.io/docs/concepts/) is essential.
 :::
 
-Before installing and executing the Operator, the following requirements should be met:
+* A Kubernetes cluster running `v1.23.1` or later.
+* Permission to create resources, deploy the Operator and install CRDs in the target cluster. 
+* The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster: 
+  * kubectl [install guide](https://kubernetes.io/docs/tasks/tools/install-kubectl)
+  * k9s [install guide](https://k9scli.io/topics/install/)
+  * Helm 3 CLI [install guide](https://helm.sh/docs/intro/install/)
+  * A valid Operator license. Please [contact us](https://www.kurrent.io/contact) for more information.
 
-* Access to a Kubernetes cluster with a minimum version of `v1.23.1+`.
-* Sufficient permissions to deploy the Operator and Custom Resource Definitions (CRDs).
-* The following CLI tools are installed and configured to interact with your Kubernetes cluster. This means the tool must be accessible from your shell's `$PATH`, and your `$KUBECONFIG` environment variable must point to the correct Kubernetes configuration file:
-  * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl)
-  * [k9s](https://k9scli.io/topics/install/)
-* The [Helm 3 CLI](https://helm.sh/docs/intro/install/) tool is installed and configured to interact with your Kubernetes cluster.
-* Operator license (please [contact us](https://www.kurrent.io/contact) for more information).
+## Configure Helm Repository
 
-## Helm Repository
-
-The Operator deployment process is managed via Helm. The following Kurrent repository must be configured using the command:
+Add the Kurrent Helm repository to your local environment:
 
 ```bash
 helm repo add kurrent-latest \
   'https://packages.kurrent.io/basic/kurrent-latest/helm/charts/'
 ```
 
-## Custom Resource Definitions (CRDs)
+## Install Custom Resource Definitions (CRDs)
 
-The following resource types are supported by the Operator:
+The Operator uses Custom Resource Definitions (CRDs) to extend Kubernetes. You can install them automatically with Helm or manually.
+
+The following resource types are supported:
 - [KurrentDB](resource-types.md#kurrentdb)
 - [KurrentDBBackup](resource-types.md#kurrentdbbackup)
 
@@ -44,11 +44,11 @@ Since CRDs are managed globally by Kubernetes, special care must be taken to ins
 
 ### Automatic Install
 
-The recommended approach to install and manage the CRDs is using Helm. Refer to the [Deployment Modes](#deployment-modes) section for more details.
+It's recommended to install and manage the CRDs using Helm. See [Deployment Modes](#deployment-modes) for more information.
 
 ### Manual Install
 
-If the CRDs must be installed manually, then the following steps can be used:
+If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
@@ -64,13 +64,13 @@ customresourcedefinition.apiextensions.k8s.io/kurrentdbs.kubernetes.kurrent.io c
 
 ## Deployment Modes
 
-The Operator can be scoped to track Kurrent resources across *all* or *specific* namespaces.
+The Operator can be scoped to track Kurrent resources across **all** or **specific** namespaces.
 
 ### Cluster-wide
 
-In this mode, the Operator will track Kurrent resources across **all** namespaces. This mode offers the simplest configuration option but the Operator requires a `ClusterRole` (this  will be created as part of the installation process).
+In cluster-wide mode, the Operator tracks Kurrent resources across **all** namespaces and requires `ClusterRole`. Helm creates the ClusteRole automatically.
 
-To deploy the Operator in this mode, the following command can be used:
+To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
@@ -82,11 +82,11 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
   --set-file operator.license.file=/path/to/license.lic
 ```
 
-Here's what the command does:
-- Sets the namespace of where the Operator will be deployed i.e. `kurrent` (feel free to change this)
+This command: 
+- Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace. 
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
 - Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
-- Configures the Operator license
+- Applys the Operator license
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace.
 
 *Expected Output*:
@@ -155,7 +155,7 @@ helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
 ```
 
 This will trigger:
-- a new `Role` to be created in the `bar` namespace 
+- a new `Role` to be created in the `bar` namespace
 - a rolling restart of the Operator to pick up the new configuration changes
 
 ## Deployment Validation
