@@ -74,7 +74,7 @@ To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.1.0 \
+  --version 1.0.0 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -109,7 +109,7 @@ To deploy the Operator in this mode, the following command can be used:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.1.0 \
+  --version 1.0.0 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -148,7 +148,7 @@ The Operator deployment can be updated to adjust which namespaces are watched. F
 
 ```bash
 helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.1.0 \
+  --version 1.0.0 \
   --namespace kurrent \
   --reuse-values \
   --set operator.namespaces='{kurrent,foo,bar}'
