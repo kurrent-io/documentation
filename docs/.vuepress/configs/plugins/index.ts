@@ -13,7 +13,8 @@ export default {
     docsearch: {
         apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
         indexName: process.env.ALGOLIA_INDEX_NAME,
-        appId: process.env.ALGOLIA_APPLICATION_ID
+        appId: process.env.ALGOLIA_APPLICATION_ID,
+        maxResultsPerGroup:10
     },
     seo: seoPlugin,
     sitemap: {
