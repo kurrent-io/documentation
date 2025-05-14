@@ -5,6 +5,7 @@ import { hostname } from "./shared";
 
 const LEGACY = "Legacy";
 const EXCLUDED_VERSIONS = ["v5", "v24.6"];
+const LATEST_VERSION = "v25.0"; // fallback latest version
 
 export const seoPlugin: SeoPluginOptions = {
   hostname,
@@ -14,16 +15,23 @@ export const seoPlugin: SeoPluginOptions = {
     const section = segments[1];
     const version = segments[2];
 
+    // don’t index/remove unwanted versions
     if (EXCLUDED_VERSIONS.includes(version)) {
       return null;
     }
 
-    // for cloud/tutorials sections, point to their root path
+    // cloud & tutorials always point at root of that section
     if (section === "cloud" || section === "tutorials") {
-      return `https://docs.kurrent.io/${section}${page.path.slice(section.length + 1)}`;
+      return `https://docs.kurrent.io/${section}${page.path.slice(
+        section.length + 1
+      )}`;
     }
 
-    // otherwise use the full path (so v25 > v24, etc)
+    if (version?.startsWith("v")) {
+      const rest = page.path.slice(`/${section}/${version}`.length);
+      return `https://docs.kurrent.io/${section}/${LATEST_VERSION}${rest}`;
+    }
+
     return `https://docs.kurrent.io${page.path}`;
   },
 
