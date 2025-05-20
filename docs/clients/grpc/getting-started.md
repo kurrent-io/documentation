@@ -78,10 +78,10 @@ For the most recent version of the KurrentDB client package, see [Maven Central]
 
 #### .NET
 
-Add the `EventStore.Client.Grpc.Streams` package to your project:
+Add the `KurrentDB.Client` package to your project:
 
 ```bash
-dotnet add package EventStore.Client.Grpc.Streams
+dotnet add package KurrentDB.Client
 ```
 
 #### Go

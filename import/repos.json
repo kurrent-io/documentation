@@ -105,8 +105,8 @@
     "repo": "https://github.com/kurrent-io/EventStore-Client-Dotnet",
     "branches": [
       {
-        "version": "23.3.8",
-        "name":"release/v23"
+        "version": "1.0.0",
+        "name":"kurrentdb-client"
       }
     ]
   },
