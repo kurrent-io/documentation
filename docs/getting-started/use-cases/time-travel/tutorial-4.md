@@ -102,7 +102,7 @@ Which approach you choose depends on your requirements and what you and your tea
 
    :::: tip Solution to the Problem
    You can find the solution to the problem below, or in the file:
-   
+
     `./ReportProjection/SolutionToProjectToMonthEndReportSnapshots.txt`
 
    ::: details Expand to see the solution
@@ -136,6 +136,12 @@ Which approach you choose depends on your requirements and what you and your tea
 
    ```sh
    docker compose --profile app logs -f
+   ```
+
+   Within a few seconds, you should see many messages that indicate the read model is being updated:
+
+   ```
+   reportprojection  | Projected event #XXX order-placed
    ```
 
 7. Press `ctrl + c` to exit follow mode.

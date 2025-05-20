@@ -48,7 +48,7 @@ This effectively enables time-traveling, allowing you to review the events that 
 
 2. Copy the URL printed in the terminal and navigate to it in a browser.
 
-3. Click on the daily sales for `Arts, Crafts & Sewing` category in the `Europe` region.
+3. Click on the **daily sales** for `Arts, Crafts & Sewing` category in the `Europe` region.
 
    Notice the events displayed on the right. These events represent the contributions to the daily sales.
 
@@ -64,7 +64,7 @@ This effectively enables time-traveling, allowing you to review the events that 
    Do the prices and amounts in the line items add up to the total shown in the event summary in the report?
    :::
 
-5. Click on the total monthly sales for `Beauty` category in the `Oceania` region.
+5. Click on the **total monthly sales** for `Beauty` category in the `Oceania` region.
 
    The events on the right now displays events that contributed to the total monthly sales.
 
