@@ -43,14 +43,6 @@ pnpm add @kurrent/opentelemetry
 ```
 :::
 
-### .NET
-
-Install the `EventStore.Client.Extensions.OpenTelemetry` package using the .NET CLI.
-
-```bash
-dotnet add package EventStore.Client.Extensions.OpenTelemetry
-```
-
 ## Instrumentation
 
 To emit trace data, you must first install and use the dedicated package, as instructed in the

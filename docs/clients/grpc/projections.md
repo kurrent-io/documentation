@@ -58,14 +58,6 @@ implementation 'io.kurrent:kurrentdb-client:1.0.0'
 For the most recent version of the KurrentDB client package, see [Maven Central](https://mvnrepository.com/artifact/io.kurrent/kurrentdb-client).
 :::
 
-### .NET
-
-For .NET projects, install the `EventStore.Client.Grpc.ProjectionManagement` package from NuGet. It is not the same package as the regular client package.
-
-```bash
-dotnet add package EventStore.Client.Grpc.ProjectionManagement --version 23.*
-```
-
 ### Python
 
 Install the `kurrentdbclient` package from PyPI or use Poetry:
