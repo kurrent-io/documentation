@@ -64,7 +64,7 @@ You have complete flexibility in choosing the data model and storage method for 
 
    ```json
    {
-      "checkpoint": 535,
+      "checkpoint": 534,
       "salesReports": {
          "2025-01-31": {
             "categories": {
@@ -148,6 +148,10 @@ You have complete flexibility in choosing the data model and storage method for 
 2. Copy the URL printed in the terminal and navigate to it in a browser.
 
    You should see the sales report with structure and figures that match the read model generated previously.
+
+   ::: info Quick Quiz
+   Do the numbers in the report match the ones in `report-read-model.json`?
+   :::
 
 ## Step 6: Examine the Report Projection Application
 

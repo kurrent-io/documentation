@@ -14,9 +14,14 @@ In this part, you will start a KurrentDB instance and initialize it with a few h
    ./scripts/1-start-dbs-and-generate-data.sh
    ```
 
-2. You will see the following message printed in the terminal:
+   This can take a minute or so.
+
+2. After a while, you will see the following message printed in the terminal:
 
    ```
+   KurrentDB has started.
+   17:44:00 info: edb-commerce[0] Executing command 'seed-data-set' with settings {"InputPath":"/workspaces/edu-samples/time-travel/data/data.few-hundred-orders.json","ConnectionString":"esdb://localhost:2113?tls=false"}
+
    Appended data to KurrentDB
 
    🚀 KurrentDB Server has started!! 🚀
