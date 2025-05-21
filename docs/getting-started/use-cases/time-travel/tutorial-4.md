@@ -55,12 +55,12 @@ For example, the read model will look like this:
 }
 ```
 
-::: info Read Model is not Required for Time Traveling
+::: info Pre-computed Read Model is not Required for Time Traveling
 Notice how the read model is once again denormalized with all sales figure precalculated ahead of time. This is done to increase performance and load time when the sales report is rendered.
 
-However, time travelling does not required a denormalized read model and you can choose few other ways to implement it. For example:
+However, time travelling does not required a read model that is pre-generated and saved to disk and you can choose few other ways to implement it. For example:
 - Provide a more normalized read model that say, only contains the events through out the month
-- Instead of providing a read model that is saved to disk, supply an sales report API instead that will construct the report on demand
+- Instead of providing a read model that is pre-computed, supply an API instead that will construct the read model on-demand
 
 Which approach you choose depends on your requirements and what you and your team are comfortable with.
 :::
@@ -77,8 +77,12 @@ Which approach you choose depends on your requirements and what you and your tea
    rm ./data/report-read-model.json
    ```
 
-   ::: info Is it Safe to Delete Read Models?
-   It is generally safe to delete read models because they are not the source of truth; they are materialized views derived from replaying events stored in the event store. As long as you retain all historical events, you can always rebuild any deleted read model by replaying those events. However, ensure that no unique or irreproducible data is stored only in your read models, and be aware that rebuilding can be time-consuming if your event store is very large. 
+   ::: info Is it Safe to Delete Read Models that were Persisted?
+   It is generally safe to delete read models because they are not the source of truth; they are materialized views derived from replaying events stored in the event store. As long as you retain all historical events, you can always rebuild any deleted read model by replaying those events. 
+   
+   Pre-computed read models are often considered a type of cache: they provide fast, query-optimized access to data, but can always be regenerated from the underlying event store if lost or corrupted. Their main purpose is to speed up queries and improve performance, not to serve as the primary source of truth.
+
+   However, ensure that no unique or irreproducible data is stored only in your read models, and be aware that rebuilding can be time-consuming if your event store is very large. 
    :::
 
 3. Run this command in the terminal to open the report projection code file:
