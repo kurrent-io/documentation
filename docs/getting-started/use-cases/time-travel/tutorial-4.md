@@ -1,16 +1,16 @@
 ---
-title: Part 4 - Enable Time Traveling with Read Model 
+title: Part 4 - Time Travel with Pre-computed Read Model 
 ---
 
-# Part 4: Enable Time Traveling with Read Model
+# Part 4: Time Travel with Pre-computed Read Model
 
-In the previous part, the projection generated a read model of the sales report that only showed its latest state for the last day of the month.
+In the previous part, the projection generated and stored a read model of the month end sales report that only showed its latest state.
 
-In this part, you will modify the projection to also record the historical states of the sales report. This will allow you to time travel to previous snapshots of the report.
+In this part, you will modify the projection to also record historical snapshots of the report. This will allow you to time travel to previous states of the report.
 
 ![Time Traveling Report](./images/time-travel-report.gif)
 
-## Step 8: Add Time Traveling Support to Sales Report Projection 
+## Step 8: Add Time Traveling Support to Report Projection 
 
 In this step, you will modify the projection so that the read model includes sales data for every day of the month, not just the most recent day.
 
