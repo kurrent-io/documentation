@@ -20,6 +20,7 @@ In this part, you will start a KurrentDB instance and initialize it with a few h
 
    ```
    KurrentDB has started.
+   Seeding data to KurrentDB... this may take a while.
    17:44:00 info: edb-commerce[0] Executing command 'seed-data-set' with settings {"InputPath":"/workspaces/edu-samples/time-travel/data/data.few-hundred-orders.json","ConnectionString":"esdb://localhost:2113?tls=false"}
 
    Appended data to KurrentDB
