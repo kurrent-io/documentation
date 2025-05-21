@@ -156,31 +156,33 @@ The Event Audit API demonstrates on-demand time traveling by reading events dire
      - The order is placed after the requested date if events for total monthly sales was requested
    - Create an event summary and append to the `orderEventSummaryList` which is returned to caller
 
-   For a request to the endpoint like this:
+3. Run this command in the terminal to test the API:
 
       ```sh
-      curl http://localhost:3000/api/events?checkpoint=550&category=women&region=middle-east&date=2025-01-02&salesFigureType=1
+      curl -s "http://localhost:3000/api/events?checkpoint=534&category=women&region=middle-east&date=2025-01-31&salesFigureType=0" | jq
       ```
 
-   Results in a JSON similar to this:
+   This queries the events from the stream up to event number 534 and filters out orders made for `women` category placed in the `middle-east` region on `2025-01-31`. This returns the total daily sales (for total monthly sales, set `salesFigureType` to `1`) 
+
+   This results in a JSON similar to this:
 
       ```json
       [
          {
-            "eventNumber": 9,
-            "orderId": "order-4687739da8cc45a58e7caf60fc0f0943",
-            "at": "2025-01-01T13:37:18.763904+00:00",
+            "eventNumber": 526,
+            "orderId": "order-c469503f30164b6b91fcf1f1d37491a9",
+            "at": "2025-01-31T10:43:38.2328057+00:00",
             "region": "Middle-East",
             "category": "women",
-            "totalSalesForCategory": 2239.16
+            "totalSalesForCategory": 1679.37
          },
          {
-            "eventNumber": 31,
-            "orderId": "order-08cbfe05f5664a87972787e49e1f90a2",
-            "at": "2025-01-02T22:22:53.0519038+00:00",
+            "eventNumber": 519,
+            "orderId": "order-7c18a37d1cf04cd792a4adcfb8d258c4",
+            "at": "2025-01-31T00:52:29.8409144+00:00",
             "region": "Middle-East",
             "category": "women",
-            "totalSalesForCategory": 2239.16
+            "totalSalesForCategory": 2798.95
          }
       ]
       ```
