@@ -1,36 +1,42 @@
 ---
-title: Part 5 - Enable Time Traveling with Database Read 
+title: Part 5 - Time Travel with On-demand Event Replay 
 ---
 
-# Part 5: Enable Time Traveling with Database Read
+# Part 5: Time Travel with On-demand Event Replay
 
 In the previous section, you learned how to enable time-traveling functionality in the report web app by using projections to add historical snapshots of the report to the read model for quick querying.
 
-Time-traveling can be implemented in various ways, and saving snapshots to the read model is just one approach. Another simpler method is to read events from a stream up to a specific point in time.
+Time-traveling can be implemented in various ways, and pre-computing read model is just one approach. Another simpler method is to replay events on-demand from a stream up to a specific point in time.
 
-::: tip Constructing Read Models: Synchronous vs Asynchronous Approaches
+::: tip Constructing Read Models: Pre-computed vs. On-demand Approaches
 Read models are generally constructed in two ways:
 
-**Asynchronous (Pre-computed) Read Models:**
+**Pre-computed Read Models:**
 - Events are processed in the background and projected into pre-computed views
 - Results are stored in a database or file (like the JSON report in the previous part)
-- Deliver optimzed query performance through pre-computation, ideal for read-heavy applications with frequent access patterns that require minimal query-time processing
-- This was demonstrated in the last part where the read model is stored as a json
+- Deliver optimized query performance through pre-computation, ideal for read-heavy applications with frequent access patterns that require minimal query-time processing
+- This was demonstrated in the last part where the read model is stored as a JSON file
 
-**Synchronous (On-demand) Read Models:**
+**On-demand Read Models:**
 - Events are read and processed at query time directly from the event store
-- Models are constructed on-the-fly when requested
-- Offer always-current data with no staleness concerns while maintaining architectural simplicity and eliminating the need for duplicate storage.
+- Read models are constructed on-the-fly when requested
+- Offer always-current data with no staleness concerns while maintaining architectural simplicity and eliminating the need for duplicate storage
 - This is demonstrated in this part where the read model is returned to the caller immediately
 
 You should always choose the approach that best fits your specific use case requirements.
 :::
 
-In this section, you will explore the on-demand auditing feature of the report web app. This feature helps analyze the events that contributed to a specific sales figure in the report. By leveraging KurrentDB's ability to read events up to a certain point, the report can display only the events up to a selected date. 
+In this section, you will explore how to enable time-traveling by leveraging KurrentDB's ability to read events on-demand up to a certain point.
 
-This effectively enables time-traveling, allowing you to review the events that shaped the sales figure in the past.
+::: tip Why KurrentDB Makes On-Demand Time Travel Easy
+In many traditional systems, reconstructing historical data can be challenging. This is because such systems often require you to create periodic snapshots, or they use message brokers that delete messages once they are consumed. As a result, it becomes difficult or even impossible to revisit the exact state of your data at a specific point in the past.
+
+KurrentDB takes a different approach. It stores every event immutably, so no event is ever lost or overwritten. This lets you replay events up to any point in time, on demand, to reconstruct the exact state of your data — even years after the original events occurred. This enables powerful auditing, debugging, and compliance, ensuring your historical data is always accessible when needed.
+:::
 
 ## Step 10: Discover the Auditing Capabilities in the Report Web Application
+
+The report web application includes auditing features that demonstrate time-traveling through on-demand event replay. These capabilities allow you to examine which events contributed to specific sales figures and at different points in time.
 
 1. Run this command in the terminal to start the sales report web application:
    
@@ -89,6 +95,8 @@ This effectively enables time-traveling, allowing you to review the events that 
    Observe how the events on the right were updated to show only the events relevant to the selected time period.
 
 ## Step 11: Examine the Event Audit API
+
+The Event Audit API demonstrates on-demand time traveling by reading events directly from KurrentDB up to a specific checkpoint. This approach constructs historical views without requiring pre-computed snapshots.
 
 1. Run this command in the terminal to open the report web app:
 
