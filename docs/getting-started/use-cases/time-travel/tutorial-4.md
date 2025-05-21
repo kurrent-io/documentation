@@ -65,6 +65,12 @@ However, time travelling does not required a read model that is pre-generated an
 Which approach you choose depends on your requirements and what you and your team are comfortable with.
 :::
 
+::: tip Granularity of Snapshot
+In this example, snapshots of the report are captured daily. However, you can choose a different level of granularity for your snapshots. The most detailed option is to create a snapshot for every change (by stream revision number), while less frequent options include weekly, monthly, or even annual snapshots.
+
+The best granularity for your system depends on your specific requirements.
+:::
+
 1. Run this command in the terminal to stop the projection app:
 
    ```sh
