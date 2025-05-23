@@ -80,14 +80,20 @@ export const sidebarEn: EsSidebarOptions = {
           expanded: false,
           group: "Time Travel",
           children: [
-            "/getting-started/use-cases/time-travel/introduction.md",
+            {
+              text: "Introduction",
+              link: "/getting-started/use-cases/time-travel/introduction.md"
+            },
             {
               text: "Tutorial",
               collapsible: true,
               expanded: false,
               group: "Time Travel Tutorial",
               children: [                
-                "/getting-started/use-cases/time-travel/tutorial-intro.md",
+                {
+                  text: "Introduction",
+                  link: "/getting-started/use-cases/time-travel/tutorial-intro.md"
+                },
                 "/getting-started/use-cases/time-travel/tutorial-1.md",
                 "/getting-started/use-cases/time-travel/tutorial-2.md",
                 "/getting-started/use-cases/time-travel/tutorial-3.md",
