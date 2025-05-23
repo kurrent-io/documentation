@@ -1,5 +1,6 @@
 ---
-title: Introduction
+title: Outbox Tutorial Introduction
+prev: ./introduction.md
 ---
 
 # Introduction

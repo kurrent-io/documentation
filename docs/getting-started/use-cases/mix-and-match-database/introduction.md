@@ -1,13 +1,11 @@
 ---
-title: Introduction
+title: Mix-and-Match Databases - Achieving Polyglot Persistence with KurrentDB
 next: ./tutorial-intro.md
 ---
 
 ![](./images/use-the-right-database-for-the-job.png#light)
 
 ![](./images/use-the-right-database-for-the-job-dark.png#dark)
-
-## Mix-and-Match Database
 
 Modern applications often deal with diverse data access patterns that a single database can’t efficiently handle. That’s where you can leverage a database mix-and-match approach where different types of databases for different parts of your system can be used based on their strengths.
 

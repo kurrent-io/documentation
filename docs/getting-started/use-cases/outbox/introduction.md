@@ -1,11 +1,11 @@
 ---
-title: Introduction
+title: Solving Dual Writes with KurrentDB's Outbox, Out-of-the-Box
 next: ./tutorial-intro.md
 ---
 
-## Outbox Out-of-the-Box
+![Solving Dual Writes with KurrentDB](./images/outbox-hero.png)
 
-### Dual Write Problem
+## Dual Write Problem
 Without distributed transactions, operations that write to multiple resources are not atomic, potentially leading to inconsistencies in the system. This issue is commonly known as the dual write problem.
 
 Although named "Dual Write," this pattern can involve writing to more than two resources. A common use case is updating a relational database and simultaneously sending a notification message via a message queue to another system. 
@@ -22,7 +22,7 @@ Failure to write to one resource introduces inconsistency with the other. For in
 
 Conversely, a failed database update paired with a successful message dispatch leads to downstream systems acting on non-existent data.
 
-### Transactional Outbox Pattern
+## Transactional Outbox Pattern
 The transactional outbox pattern ensures consistency by writing business data and outgoing messages atomically within the same database transaction. A separate process later dispatches these messages to downstream systems, mitigating the dual write problem.
 
 The outbox pattern promotes reducing the number of resources we write to, preferably to just one, and technically, to one transaction. This 
@@ -53,7 +53,7 @@ Instead of directly managing an outbox table, another implementation of the outb
 
 This approach avoids polling overhead and propagates updates with significantly lower latency. However, it relies on additional CDC tooling, increasing complexity if such tools aren't already part of the existing infrastructure. It also risks exposing the internal data model of the source tables, potentially creating undesirable coupling with other systems.
 
-### Outbox Out-of-the-Box with KurrentDB
+## Outbox Out-of-the-Box with KurrentDB
 
 ![Outbox with KurrentDB](./images/outbox-with-kurrentdb.png#light)
 
@@ -68,7 +68,7 @@ In effect, the stream is the outbox, out of the box.
 
 The native subscription capabilities, such as persistent and catch-up subscriptions and connectors, act as cheap mechanisms for writing the glue code that sends messages to the other system.
 
-### How to Approach the Dual Write Problem with KurrentDB
+## How to Approach the Dual Write Problem with KurrentDB
 1. Record each business change as an event and append it to a stream in KurrentDB, using the stream as the definitive source of truth.
 2. Do not update other systems or read models directly as part of the same append operation.
 3. Set up subscriptions to listen for new events in the stream.

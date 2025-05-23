@@ -1,5 +1,6 @@
 ---
 title: Part 1 - Set up Codespaces
+prev: ./tutorial-intro.md
 ---
 
 # Part 1: Set up Codespaces
