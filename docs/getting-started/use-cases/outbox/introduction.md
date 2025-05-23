@@ -3,6 +3,8 @@ title: Solving Dual Writes with KurrentDB's Outbox, Out-of-the-Box
 next: ./tutorial-intro.md
 ---
 
+![Solving Dual Writes with KurrentDB](./images/outbox-hero.png)
+
 ## Dual Write Problem
 Without distributed transactions, operations that write to multiple resources are not atomic, potentially leading to inconsistencies in the system. This issue is commonly known as the dual write problem.
 
