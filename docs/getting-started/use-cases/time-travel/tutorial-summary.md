@@ -2,7 +2,7 @@
 title: Summary
 ---
 
-In this tutorial, you’ve explored how KurrentDB enables robust snapshot-based and on-demand time-travel capabilities by leveraging its event-driven architecture. Time-travel allows you to reconstruct and query the state of your system at any point in history, an essential feature for auditing, debugging, and understanding how your data evolves. 
+In this tutorial, you’ve explored how KurrentDB enables robust snapshot-based and on-demand time-travel capabilities by leveraging its ordered event streams. Time-travel allows you to reconstruct and query the state of your system at any point in history, an essential feature for auditing, debugging, and understanding how your data evolves. 
 
 Here are the key takeaways:
 

@@ -58,7 +58,7 @@ For example, the read model will look like this:
 ::: info Pre-computed Read Model is not Required for Time Traveling
 Notice how the read model is again denormalized with all sales figures precalculated beforehand. This increases performance and decreases load time when the sales report is rendered.
 
-However, time travelling does not require a read model that is pre-generated and saved to disk. The following are alternate implementation examples:
+However, time traveling does not require a read model that is pre-generated and saved to disk. The following are alternate implementation examples:
 - Provide a more normalized read model that only contains the events throughout the month
 - Instead of providing a read model that is pre-computed, supply an API instead that will construct the read model on-demand
 
