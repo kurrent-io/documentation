@@ -56,10 +56,10 @@ For example, the read model will look like this:
 ```
 
 ::: info Pre-computed Read Model is not Required for Time Traveling
-Notice how the read model is once again denormalized with all sales figure precalculated ahead of time. This is done to increase performance and load time when the sales report is rendered.
+Notice how the read model is again denormalized with all sales figures precalculated beforehand. This increases performance and decreases load time when the sales report is rendered.
 
-However, time travelling does not required a read model that is pre-generated and saved to disk and you can choose few other ways to implement it. For example:
-- Provide a more normalized read model that say, only contains the events through out the month
+However, time travelling does not require a read model that is pre-generated and saved to disk. The following are alternate implementation examples:
+- Provide a more normalized read model that only contains the events throughout the month
 - Instead of providing a read model that is pre-computed, supply an API instead that will construct the read model on-demand
 
 Which approach you choose depends on your requirements and what you and your team are comfortable with.
@@ -68,7 +68,7 @@ Which approach you choose depends on your requirements and what you and your tea
 ::: tip Granularity of Snapshot
 In this example, snapshots of the report are captured daily. However, you can choose a different level of granularity for your snapshots. The most detailed option is to create a snapshot for every change (by stream revision number), while less frequent options include weekly, monthly, or even annual snapshots.
 
-The best granularity for your system depends on your specific requirements.
+The optimal granularity for your system depends on your specific requirements.
 :::
 
 1. Run this command in the terminal to stop the projection app:

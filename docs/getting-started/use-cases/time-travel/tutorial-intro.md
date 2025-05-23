@@ -5,13 +5,13 @@ prev: ./introduction.md
 
 # Introduction
 
-This tutorial will guide you through implementing time-travel capabilities in your applications using KurrentDB. You will learn how to reconstruct and query the state of your system at any point in history—an essential feature for auditing to understand data evolution.
+This tutorial guides you through implementing time-travel capabilities in your applications using KurrentDB. You will learn how to reconstruct and query the state of your system at any point in history, an essential feature for auditing to understand data evolution.
 
 ## Objectives
 
 In this tutorial, you will:
 
-- Understand the principles of time-travel in event-sourced systems
+- Learn the principles of time-travel in event-sourced systems
 - Project events into read models for sales reporting
 - Enable time-travel by recording and querying historical states
 - Explore both snapshot-based and on-demand time-travel approaches
