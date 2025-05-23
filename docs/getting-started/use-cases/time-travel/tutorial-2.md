@@ -51,12 +51,12 @@ In this part, you will start a KurrentDB instance and initialize it with a few h
    :::
 
    ::: info Understanding Event Type System Projection
-   The `$et-order-placed` system stream contains all `order-placed` events across from all streams in KurrentDB. This uses KurrentDB's "by event type" system projection stream feature. For more information, see [System Projections](https://docs.kurrent.io/server/v25.0/features/projections/system.html#by-event-type).
+   The `$et-order-placed` system stream contains all `order-placed` events across all streams in KurrentDB. This uses KurrentDB's "by event type" system projection stream feature. For more information, see [System Projections](https://docs.kurrent.io/server/v25.0/features/projections/system.html#by-event-type).
    :::
 
 3. You should see a sequenced list of the appended `order-placed` events associated to a few hundred orders.
 
-4. Click on one of them to see the details of the order.
+4. Click on one of the events to see the order details.
 
    ::: note Sample detail of an `OrderPlaced` event
 
