@@ -47,7 +47,7 @@ In this part, you will start a KurrentDB instance and initialize it with a few h
 2. Under `Recently Changed Streams`, click the `$et-order-placed` link.
 
    ::: tip
-   You may have noticed other streams and events in KurrentDB. You can safetly ignore them for the purpose of this tutorial. 
+   You may have noticed other streams and events in KurrentDB. You can safely ignore them for the purpose of this tutorial. 
    :::
 
    ::: info Understanding Event Type System Projection
