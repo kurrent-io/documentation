@@ -1,5 +1,5 @@
 ---
-title: Time Traveling with KurrentDB - A Modern Approach to Historical Data
+title: Time Traveling with KurrentDB - A Modern Approach to Query Historical Data
 next: ./tutorial-intro.md
 ---
 

@@ -35,14 +35,20 @@ export const sidebarEn: EsSidebarOptions = {
           expanded: false,
           group: "Mix-and-Match Database",
           children: [
-            "/getting-started/use-cases/mix-and-match-database/introduction.md",
+            {
+              text: "Introduction",
+              link: "/getting-started/use-cases/mix-and-match-database/introduction.md"
+            },
             {
               text: "Tutorial",
               collapsible: true,
               expanded: false,
               group: "Mix-and-Match Database Tutorial",
-              children: [                
-                "/getting-started/use-cases/mix-and-match-database/tutorial-intro.md",
+              children: [                          
+                {
+                  text: "Introduction",
+                  link: "/getting-started/use-cases/mix-and-match-database/tutorial-intro.md"
+                },
                 "/getting-started/use-cases/mix-and-match-database/tutorial-1.md",
                 "/getting-started/use-cases/mix-and-match-database/tutorial-2.md",
                 "/getting-started/use-cases/mix-and-match-database/tutorial-3.md",
@@ -57,14 +63,20 @@ export const sidebarEn: EsSidebarOptions = {
           expanded: false,
           group: "Outbox Out-of-the-Box",
           children: [
-            "/getting-started/use-cases/outbox/introduction.md",
+            {
+              text: "Introduction",
+              link: "/getting-started/use-cases/outbox/introduction.md"
+            },
             {
               text: "Tutorial",
               collapsible: true,
               expanded: false,
               group: "Outbox Tutorial",
               children: [                
-                "/getting-started/use-cases/outbox/tutorial-intro.md",
+                {
+                  text: "Introduction",
+                  link: "/getting-started/use-cases/outbox/tutorial-intro.md"
+                },
                 "/getting-started/use-cases/outbox/tutorial-1.md",
                 "/getting-started/use-cases/outbox/tutorial-2.md",
                 "/getting-started/use-cases/outbox/tutorial-3.md",
