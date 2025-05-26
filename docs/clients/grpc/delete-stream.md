@@ -1,3 +1,7 @@
+---
+order: 9
+---
+
 # Deleting events
 
 In KurrentDB, you can delete events and streams either partially or completely. Settings like $maxAge and $maxCount help control how long events are kept or how many events are stored in a stream, but they won't delete the entire stream.
