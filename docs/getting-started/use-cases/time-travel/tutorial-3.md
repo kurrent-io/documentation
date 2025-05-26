@@ -4,11 +4,13 @@ title: Part 3 - Project Events to Sales Report Read Model
 
 # Part 3: Project Events to Sales Report Read Model
 
-Now that KurrentDB is initialized with a few hundred order events, you will learn how to construct a sales report by projecting these events into a JSON file read model, and then rendering it as a sales report on a web page.
+Now that KurrentDB is initialized with a few hundred order events, you will project the events into a JSON file-read model and render it as a sales report on a web page.
 
 ### Introducing the Month End Sales Report
 
-The month end sales report shows the monthly total revenue generated from orders placed in the e-commerce business’s stores worldwide. Sales data is organized by product category and by the region where each order was placed.
+The month-end sales report summarizes total revenue from orders placed across all e-commerce stores worldwide. Sales figures are broken down by product category and region.
+
+The report also includes the monthly sales target to support forecasting and performance management.
 
 The report also includes a month end sales target, which helps with forecasting and performance management.
 
@@ -124,7 +126,9 @@ You have complete flexibility in choosing the data model and storage method for 
    The structure of `report-read-model.json` is intentionally **denormalized**. This means the data is organized and pre-aggregated for direct use, in this case, by the web page.
 
    ::: info What Does "Denormalized" Mean?
-   A denormalized read model stores related and pre-aggregated data together, shaped for fast querying and display—such as totals by category and region. Unlike normalized databases, which separate data into many related tables, a denormalized model puts everything needed for a report or UI in one place. This avoids complex joins or calculations at query time and makes it easy for the front end to use the data as-is.
+  A denormalized read model stores related and pre-aggregated data together, such as sales totals by category and region, in a format optimized for fast querying and display. Unlike normalized databases, which separate data into multiple related tables, a denormalized model keeps all the information needed for a report or user interface in one place. This approach eliminates the need for complex joins or calculations at query time, allowing front-end applications to use the data directly.
+
+Denormalization is especially common for read models generated from KurrentDB events, as it enables applications to efficiently present and analyze event data without requiring additional processing at runtime.
 
    Denormalization is a common for read models generated from KurrentDB events, since it allows applications to efficiently present and analyze event data without extra processing.
    :::
@@ -214,7 +218,7 @@ The Report Projection Application performs the following steps:
 
    The checkpoint is retrieved from the deserialized read model. If no read model/checkpoint is found or it is the first time the application is executed, we can retrieve the default start position.
 
-   ::: info Understanding Checkpoint
+   ::: info Understanding Checkpoints
    A projection often uses a checkpoint to recover the position of the last processed event. This way, when an application unexpectedly crashes mid-process, the projection does not have to process all the previously processed events.
    :::
 
@@ -256,7 +260,7 @@ The Report Projection Application performs the following steps:
 
    For more information about catch-up subscriptions, [click here](/clients/grpc/subscriptions.html).
    For more information about persistent subscriptions, [click here](/clients/grpc/persistent-subscriptions.html). 
-   For more information about connectors, [click here](/server/v24.10/features/connectors/)
+   For more information about connectors, [click here](/server/v24.10/features/connectors/).
    :::
 
 5. Locate and examine the code that processes each event:
@@ -282,7 +286,7 @@ The Report Projection Application performs the following steps:
    }
    ```
 
-   For each event, loop:
+   For each event, the previous code:
    - Filters for valid event messages and order-placed events only
    - Updates the read model with each order via `ProjectOrderToReadModel`
    - Tracks progress by updating the checkpoint in the read model after each event
@@ -299,7 +303,7 @@ The Report Projection Application performs the following steps:
 
 ## Step 7: Examine the Report Projection Logic
 
-The report projection logic transforms order event into the month end sales reports. It is located in `./ReportProject/ReportProjection.cs`, which:
+In this step, you will explore the report projection logic that transforms the order events into the month-end sales reports. The code located in `./ReportProject/ReportProjection.cs`:
 
 - Takes an OrderPlaced event and a ReportReadModel as inputs
 - Extracts key information like order date and geographic region
@@ -307,7 +311,6 @@ The report projection logic transforms order event into the month end sales repo
    - Monthly sales totals
    - Daily sales
 
-In this step, you will explore how the logic achieves this.
 
 1. Run this command in the terminal to open the main program for the projection application:
 
