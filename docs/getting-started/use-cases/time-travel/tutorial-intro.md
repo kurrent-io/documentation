@@ -11,7 +11,7 @@ This tutorial guides you through implementing time-travel capabilities in your a
 
 In this tutorial, you will:
 
-- Learn the principles of time-travel in event-sourced systems
+- Learn the principles of time-traveling in event-native applications  
 - Project events into read models for sales reporting
 - Enable time-travel by recording and querying historical states
 - Explore both snapshot-based and on-demand time-travel approaches
