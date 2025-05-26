@@ -123,10 +123,10 @@ You have complete flexibility in choosing the data model and storage method for 
    
    :::
 
-   The structure of `report-read-model.json` is intentionally **denormalized**. This means the data is organized and pre-aggregated for direct use, in this case, by the web page.
+   The structure of `report-read-model.json` is intentionally **denormalized**. This means the data is organized and pre-built for direct use, in this case, by the web page.
 
    ::: info What Does "Denormalized" Mean?
-  A denormalized read model stores related and pre-aggregated data together, such as sales totals by category and region, in a format optimized for fast querying and display. Unlike normalized databases, which separate data into multiple related tables, a denormalized model keeps all the information needed for a report or user interface in one place. This approach eliminates the need for complex joins or calculations at query time, allowing front-end applications to use the data directly.
+  A denormalized read model stores related and pre-computed data together, such as sales totals by category and region, in a format optimized for fast querying and display. Unlike normalized data structures, which separate data into multiple related models, a denormalized model keeps all the information needed for a report or user interface in one place. This approach eliminates the need for complex joins or calculations at query time, allowing front-end applications to use the data directly.
 
 Denormalization is especially common for read models generated from KurrentDB events, as it enables applications to efficiently present and analyze event data without requiring additional processing at runtime.
 
