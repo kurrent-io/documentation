@@ -1,11 +1,8 @@
 name: Build Docs Preview
-
 permissions:
   pull-requests: write  
-
 on:
   pull_request:
-
 jobs:
   build:
     name: Build Docs Preview
@@ -15,11 +12,9 @@ jobs:
       ALGOLIA_INDEX_NAME: ${{ secrets.ALGOLIA_INDEX_NAME }}
       ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
       NODE_OPTIONS: --max_old_space_size=8192
-
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
-
       - name: Initial preview comment
         uses: peter-evans/create-or-update-comment@v4
         with:
@@ -29,10 +24,8 @@ jobs:
           body: |
             ### Docs Preview
             - Status: ⏳ Creating preview…
-
       - name: Install dependencies
         run: pnpm install
-
       - name: Identify changed docs
         id: changes
         run: |
@@ -42,15 +35,11 @@ jobs:
           echo "files<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGED" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
-      # 5. Build site (allow failure)
       - name: Build site
         id: build
         run: |
           pnpm run build-prod
         continue-on-error: true
-
-      # 6. Generate the comment body
       - name: Generate comment body
         id: comment
         run: |
@@ -58,7 +47,7 @@ jobs:
           BRANCH="${{ github.event.pull_request.head.ref }}"
           PREVIEW_URL="https://${BRANCH}.documentation-21k.pages.dev"
           LOG_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-
+          
           if [ "${{ steps.build.outcome }}" = "success" ]; then
             STATUS="✅ Build succeeded"
             LINK="Preview: [${PREVIEW_URL}](${PREVIEW_URL})"
@@ -68,27 +57,33 @@ jobs:
             # always link to last branch preview if available
             LINK="${LINK} | Previous preview: [${PREVIEW_URL}](${PREVIEW_URL})"
           fi
-
+          
           BODY="### Docs Preview
           - Status: ${STATUS}
           - ${LINK}
-
           **Changed pages:**"
-
-          # list each changed file as a page link
-          while IFS= read -r f; do
-            [ -z "$f" ] && continue
-            REL_PATH="${f#docs/}"
-            NAME=$(basename "${REL_PATH%.*}")
-            URL="${PREVIEW_URL}/${REL_PATH%.*}.html"
-            BODY="${BODY}
-          - [${NAME}](${URL})"
-                    done <<< "${{ steps.changes.outputs.files }}"
-
-                    echo "body<<EOF" >> $GITHUB_OUTPUT
-                    echo "$BODY" >> $GITHUB_OUTPUT
-                    echo "EOF" >> $GITHUB_OUTPUT
-
+          
+          # Process changed files using a more reliable approach
+          if [ -n "${{ steps.changes.outputs.files }}" ]; then
+            echo "${{ steps.changes.outputs.files }}" | while IFS= read -r f; do
+              [ -z "$f" ] && continue
+              REL_PATH="${f#docs/}"
+              NAME=$(basename "${REL_PATH%.*}")
+              URL="${PREVIEW_URL}/${REL_PATH%.*}.html"
+              echo "- [${NAME}](${URL})"
+            done > /tmp/changed_files_list.txt
+            
+            # Read the processed content and append to BODY
+            if [ -f /tmp/changed_files_list.txt ]; then
+              CHANGED_PAGES=$(cat /tmp/changed_files_list.txt)
+              BODY="${BODY}
+          ${CHANGED_PAGES}"
+            fi
+          fi
+          
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       - name: Update preview comment
         uses: peter-evans/create-or-update-comment@v4
         with:
