@@ -14,5 +14,3 @@ Click a client below to stay up to date with its latest changes and improvements
 | Go            | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-Go/releases)       |
 | Rust          | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-Rust/releases)     |
 | Python        | [View Releases](https://github.com/pyeventsourcing/kurrentdbclient/releases)      |
-
-For details on breaking changes, upgrade instructions, and migration guides, refer to the individual release notes for each client.
