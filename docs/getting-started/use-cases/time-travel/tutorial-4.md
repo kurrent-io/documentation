@@ -4,7 +4,7 @@ title: Part 4 - Time Travel with Pre-computed Read Model
 
 # Part 4: Time Travel with Pre-computed Read Model
 
-In the previous part, the projection generated and stored a read model of the month end sales report that only showed its latest state.
+In the previous section, the projection generated and stored a read model of the month end sales report that only showed its latest state.
 
 In this part, you will modify the projection to also record historical snapshots of the report. This will allow you to time travel to previous states of the report.
 
