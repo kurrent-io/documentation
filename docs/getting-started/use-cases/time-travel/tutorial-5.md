@@ -31,7 +31,7 @@ In this section, you will explore how to enable time-traveling by leveraging Kur
 ::: tip Why KurrentDB Makes On-Demand Time Travel Easy
 In many traditional systems, reconstructing historical data can be challenging. This is because such systems often require you to create periodic snapshots, or they use message brokers that delete messages once they are consumed. As a result, it becomes difficult or even impossible to revisit the exact state of your data at a specific point in the past.
 
-KurrentDB takes a different approach. It stores every event immutably, so no event is ever lost or overwritten. This lets you replay events up to any point in time, on demand, to reconstruct the exact state of your data — even years after the original events occurred. This enables powerful auditing, debugging, and compliance, ensuring your historical data is always accessible when needed.
+KurrentDB takes a different approach. It immutably stores every event, so no event is ever lost or overwritten. This lets you replay events up to any point in time, on demand, to reconstruct the exact state of your data, even years after the original events occurred. This enables powerful auditing, debugging, and compliance, ensuring your historical data is always accessible when needed.
 :::
 
 ## Step 10: Discover the Auditing Capabilities in the Report Web Application
