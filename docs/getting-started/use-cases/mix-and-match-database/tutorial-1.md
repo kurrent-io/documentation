@@ -1,5 +1,6 @@
 ---
 title: Part 1 - Setup and Initialize KurrentDB
+prev: ./tutorial-intro.md
 ---
 
 # Part 1: Setup and Initialize KurrentDB
