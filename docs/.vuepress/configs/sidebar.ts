@@ -36,7 +36,7 @@ export const sidebarEn: EsSidebarOptions = {
           group: "Mix-and-Match Database",
           children: [
             {
-              text: "Introduction",
+              text: "Overview",
               link: "/getting-started/use-cases/mix-and-match-database/introduction.md"
             },
             {
@@ -64,7 +64,7 @@ export const sidebarEn: EsSidebarOptions = {
           group: "Outbox Out-of-the-Box",
           children: [
             {
-              text: "Introduction",
+              text: "Overview",
               link: "/getting-started/use-cases/outbox/introduction.md"
             },
             {
@@ -93,7 +93,7 @@ export const sidebarEn: EsSidebarOptions = {
           group: "Time Travel",
           children: [
             {
-              text: "Introduction",
+              text: "Overview",
               link: "/getting-started/use-cases/time-travel/introduction.md"
             },
             {
