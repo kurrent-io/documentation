@@ -350,7 +350,7 @@ In this step, you will explore the report projection logic that transforms the o
    {
       ProjectToMonthlySales(finalDayOfTheMonth);                           // Project to monthly sales for the last day of the month
 
-      if (orderDate == finalDayOfTheMonth)                                 // If the order date is the last day of the month{
+      if (orderDate == finalDayOfTheMonth)                                 // If the order date is the last day of the month
             ProjectToDailySales(finalDayOfTheMonth);                       // Project the order's total to daily sales for the last day of the month
 
    }
