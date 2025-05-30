@@ -20,7 +20,7 @@ In this part, you will start a GitHub Codespaces session in your browser.
 
    | Configuration Option           | Selection            |
    |--------------------------------|----------------------|
-   | Branch                        | `time-travel`   |
+   | Branch                        | `main`   |
    | Dev container configuration   | `Time Travel` |
    | Region   | Any value |
    | Machine type   | Any value |
