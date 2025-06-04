@@ -25,6 +25,21 @@ If you're looking to get started or experiment with KurrentDB, this option is be
 
 With this option, KurrentDB clusters are hosted on dedicated compute infrastructure, ensuring that all resources are exclusively allocated to you. This setup is ideal for running production workloads that demand consistent performance and guaranteed resource availability.
 
+## KurrentDB features unavailable in Kurrent Cloud
+
+The following features are available with local KurrentDB server deployments only and are not available in Kurrent Cloud:
+
+* Archiving  
+* Direct access to configuration  
+* Encryption at rest  
+* LDAP authentication  
+* Logs download  
+* OAuth authentication  
+* OpenTelemetry exporter  
+* Read-only replicas  
+* Redaction  
+* x.509 user certificates
+
 ## Cloud quick start
 
 Follow the steps in this guide to access the Kurrent Cloud console, provision your first cluster, and connect it to your cloud infrastructure. Kurrent offers video demonstrations for running Kurrent Cloud on [AWS](https://www.youtube.com/watch?v=UeYMA28fOlE) and [Azure](https://www.youtube.com/watch?v=D42c7omFiXA) that adhere closely to the following instructions.
