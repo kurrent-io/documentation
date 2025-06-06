@@ -60,7 +60,7 @@ If you have trouble with this quickstart, you can find more help in the ["Kurren
 
 :::
 
-2. Login to GitHub if required.
+2. Log in to GitHub if required.
    
 3. Follow the instructions to create a new Codespace.
 
@@ -73,7 +73,7 @@ Hello!👋 Welcome to the KurrentDB Getting Started Quickstart Guide.
 ```
 
 ::: tip
-For this quickstart, you can safely ignore and close any Codespaces notification that appears on the bottom right of the page.
+For this quickstart, you can safely ignore and close any Codespaces notifications that appear on the bottom right of the page.
 :::
 
 ## Step 2: Start the KurrentDB Server
@@ -86,7 +86,7 @@ For this quickstart, you can safely ignore and close any Codespaces notification
 
    This is a custom script written for this quickstart to help start KurrentDB in Docker.
 
-2. You will see the below message printed in the terminal:
+2. You will see the following message printed in the terminal:
 
 ```
 🚀 KurrentDB Server has started!! 🚀
@@ -138,31 +138,31 @@ For more information about other KurrentDB parameters and settings, [click here]
 :::
 
 :::: info
-To view the source code in Github, click the link below:
+To view the source code on Github, click the link below:
 
 ::: tabs#dev-language-platform
 @tab Select >
 
 @tab Python
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Python)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
 
 @tab Java
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Java)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
 
 @tab .NET
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Dotnet)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Dotnet)
 
 @tab node.js
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Nodejs)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Nodejs)
 :::
 ::::
 :::::
 
 ## Step 3: Navigate to the KurrentDB Admin UI
 
-1. In Codespaces, copy the URL to KurrentDB Admin UI printed in the terminal from last step.
+1. In Codespaces, copy the URL to KurrentDB Admin UI printed in the terminal from the last step.
 2. Open a new browser tab. 
-3. In the address bar of the new tab, paste the URL to and navigate to it.
+3. In the address bar of the new tab, paste the URL and navigate to it.
 4. This will display the KurrentDB Admin UI.
 5. Keep the Admin UI open for the next steps.
 
@@ -170,7 +170,7 @@ To view the source code in Github, click the link below:
 
 ## Step 4: Install Required Package for Sample Code
 
-1. In Codespace, run this command to install the package for the KurrentDB client. This will be used in the sample codes:
+1. In Codespace, run the following command to install the KurrentDB client package. This will be used in the sample codes:
 
 ::: tabs#dev-language-platform
 @tab Select >
@@ -276,24 +276,22 @@ The version of the KurrentDB client above may be outdated. For more information 
 :::
 
 :::: info
-To view the source code in GitHub, click the link below:
+To view the source code on GitHub, click the link below:
 
 ::: tabs#dev-language-platform
 @tab Select >
 
 @tab Python
-
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Python)
-
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
 
 @tab Java
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Java)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
 
 @tab .NET
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Dotnet)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Dotnet)
 
 @tab node.js
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Nodejs)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Nodejs)
 :::
 
 ::::
@@ -345,7 +343,7 @@ Event Body: {"id":"1","importantData":"some value"}
 
 #### Understanding How the Append Sample Works
 
-To deepen your understanding of how events are appended to KurrentDB programmatically, you will explore the sample code used in this step. 
+To help you understand how events are appended to KurrentDB programmatically, you will explore the sample code used in this step. 
 
 The sample code demonstrates:
 
@@ -355,7 +353,7 @@ The sample code demonstrates:
 
 To see how this works, follow these steps:
 
-1. Run the following command to open sample code:
+1. Run the following command to open the sample code:
    
 ::: tabs#dev-language-platform
 @tab Select >
@@ -516,24 +514,22 @@ To learn more about other KurrentDB client functions, [click here](@clients/grpc
 :::
 
 :::: info
-To view the source code in GitHub, click the link below:
+To view the source code on GitHub, click the link below:
 
 ::: tabs#dev-language-platform
 @tab Select >
 
 @tab Python
-
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Python)
-
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
 
 @tab Java
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Java)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
 
 @tab .NET
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Dotnet)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Dotnet)
 
 @tab node.js
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Nodejs)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Nodejs)
 :::
 
 ::::
@@ -544,7 +540,7 @@ To view the source code in GitHub, click the link below:
 
 1. In the Admin UI, click the `Stream Browser` link from the top navigation bar.
 
-2. Under `Recently Changed Streams`, click `SampleStream` link.
+2. Under `Recently Changed Streams`, click the `SampleStream` link.
 
 3. Click on the `JSON` link in the rightmost column of the table. 
    
@@ -595,7 +591,7 @@ Event Body: {"id":"1","importantData":"some value"}
 
 #### Understanding How the Read Sample Works
 
-You will explore the sample code used in this step to further understand how events are read from KurrentDB programmatically. 
+You will explore the sample code used in this step to gain a deeper understanding of how events are read from KurrentDB programmatically. 
 The sample code demonstrates the following:
 - **Establishing a Connection**: Illustrates how to connect to KurrentDB using the client library.
 - **Reading Events from a Stream**: Reads events from a specific stream.
@@ -603,7 +599,7 @@ The sample code demonstrates the following:
 - **Deserializing Event Data**: Extracts and deserializes the event data from the retrieved events.
 - **Displaying Event Information**: Prints out the event details—such as the stream name, event type, and event body—to the console.
 
-1. Run the following command to open sample code:
+1. Run the following command to open the sample code:
 
 ::: tabs#dev-language-platform
 @tab Select >
@@ -781,24 +777,22 @@ To learn more about other KurrentDB client functions, [click here](@clients/grpc
 :::
 
 :::: info
-To view the source code in Github, click the link below:
+To view the source code on Github, click the link below:
 
 ::: tabs#dev-language-platform
 @tab Select >
 
 @tab Python
-
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Python)
-
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
 
 @tab Java
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Java)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
 
 @tab .NET
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Dotnet)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20.NET-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Dotnet)
 
 @tab node.js
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/KurrentDBDB-From-Scratch-Nodejs)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Node.js-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Nodejs)
 :::
 
 ::::
@@ -815,7 +809,7 @@ In this quickstart, you:
 4. Verified the event in the Admin UI.
 5. Read the event from KurrentDB programmatically.
 
-Feel free to experiment further by appending more events, reading them, or even exploring advanced features of KurrentDB!
+Feel free to experiment further by appending more events, reading them, or exploring the advanced features of KurrentDB.
 
 ## Next Steps
 
