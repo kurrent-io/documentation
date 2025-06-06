@@ -442,7 +442,7 @@ Follow these steps to deploy the cluster:
 kubectl apply -f cluster.yaml
 ```
 
-## Three Node Secure Cluster (using self-signed certificates)
+## Three Node Secure Cluster (using LetsEncrypt)
 
 The following `KurrentDB` resource type defines a three node cluster with the following properties:
 - The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
