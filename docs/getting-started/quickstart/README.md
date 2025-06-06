@@ -1,5 +1,5 @@
 ---
-title: Quickstart
+title: Self-Guided Demo
 ---
 
 # KurrentDB Quickstart
@@ -817,18 +817,3 @@ In this quickstart, you:
 
 Feel free to experiment further by appending more events, reading them, or even exploring advanced features of KurrentDB!
 
-## Next Steps
-
-Now that you've completed the quickstart, you may want to explore the following:
-
-- [KurrentDB "From Scratch" Series](https://academy.kurrent.io/from-scratch): Find more explanations about the scripts and samples used in this quickstart along with other beginner tutorials.
-
-- [Install KurrentDB locally](@server/quick-start/installation.md): Learn how to install KurrentDB on your local machine for deeper exploration and integration with your projects.
-
-- [KurrentDB Client SDK Documentation](@clients/grpc/getting-started.md): Understand how to interact with KurrentDB programmatically with KurrentDB clients.
-
-- [KurrentDB Server Configuration Documentation](@server/configuration/README.md): Explore how to configure KurrentDB for your environment.
-
-- [Kurrent Cloud](https://www.kurrent.io/event-store-cloud): Run KurrentDB from the fully managed environment without the need to host it yourself.
-
-- [KurrentDB Samples](https://github.com/kurrent-io/samples/tree/main): Experiment with different SDKs to interact with KurrentDB using various programming languages.
