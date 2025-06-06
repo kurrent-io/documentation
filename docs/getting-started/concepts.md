@@ -4,6 +4,8 @@ title: Concepts
 
 # Concepts
 
+This section discusses some of the fundamental concepts of event sourcing and KurrentDB. 
+
 ## Event
 
 In KurrentDB, an event is a factual occurrence from the past. It has an *event type* that headlines what happened and an *event body* that outlines the details:
@@ -166,20 +168,3 @@ Optimistic concurrency control also operates without requiring resource locks, m
 To learn more about how to apply optimistic concurrency control, [click here](/clients/grpc/appending-events.md#handling-concurrency)
 :::
 
-## Next Steps
-
-- [Kurrent Essentials](https://academy.kurrent.io/essentials): Understand more about these features in this in-depth guide.
-
-- [KurrentDB Training Video Series](https://www.youtube.com/playlist?list=PLWG5TK2D4U_Nb4rWdiQw2jNWYSaBm7lT_): Learn more about the details around events, streams, and the event log.
-
-- [KurrentDB Server Documentation](@server/quick-start/README.md): Gain a deeper understanding about other KurrentDB features.
-
-- [KurrentDB Server Documentation - Stream](@server/features/streams.md): Gain a deeper understanding of how stream works.
-
-- [KurrentDB Server Documentation - Indexing](@server/configuration/indexes.md): Learn more about how stream and indexing work in detail.
-
-- [KurrentDB Client Documentation](/clients/grpc/getting-started.md): Understand how to work with events and streams programmatically.
-
-- [KurrentDB Client Documentation - Handling Concurrency](/clients/grpc/appending-events.md#handling-concurrency): Understand how use optimistic concurrency control with a KurrentDB client.
-
-- [An End-To-End Example With KurrentDB](https://www.youtube.com/watch?v=vIUw-jKpKfQ) Watch how to build an application with KurrentDB
