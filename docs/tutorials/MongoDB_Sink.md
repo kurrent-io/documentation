@@ -137,7 +137,7 @@ To test the MongoDB Sink connector, first append some sample events to KurrentDB
 5. Click **Add** to append the event to the `LoanRequest-1` stream.  
 6. Repeat steps 3–5 to append more events to different streams (e.g., a stream with the **Stream ID** `LoanRequest-2`).
 
-![Append events to LoanRequest streams ](images/kafka-sink-quickstart-add-event.png =300x)
+![Append events to LoanRequest streams ](../images/kafka-sink-quickstart-add-event.png =300x)
 
 
 ### Step 4: Verify events in MongoDB

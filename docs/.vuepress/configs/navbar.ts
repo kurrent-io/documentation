@@ -5,16 +5,13 @@ export const navbarEn: NavbarOptions = [
     {
         text: "Getting Started",
         link: "/getting-started/introduction.html",
-        icon: "hugeicons:start-up-02"
     },
     {
         text: "Kurrent Cloud",
         link: "/cloud/introduction",
-        icon: "hugeicons:cloud"
     },
     {
         text: "KurrentDB",
-        icon: "ion:server-outline",
         children: [
             {text: "Current", children: ver.linksFor("server", false)},
             {text: "Deprecated", children: ver.linksFor("server", true)},
@@ -23,17 +20,19 @@ export const navbarEn: NavbarOptions = [
     },
     {
         text: "Clients & APIs",
-        icon: "material-symbols:sdk",
         children: [
             {text: "Clients", children: [{text: "KurrentDB clients", link: "/clients/grpc/getting-started"}]},
             {text: "HTTP API", children: ver.linksFor("http-api", false)},
             {text: "Deprecated", children: [{text: "Legacy TCP clients", link: "/clients/tcp/"}]},
         ]
     },
+    {
+        text: "Dev Center",
+        link: "/tutorials/",
+    },
 
     {
         text: "Resources",
-        icon: "material-symbols:support",
         children: [
             {text: "Community forum", link: "https://discuss.kurrent.io/"},
             {text: "Community Discord ", link: "https://discord.gg/Phn9pmCw3t"},
