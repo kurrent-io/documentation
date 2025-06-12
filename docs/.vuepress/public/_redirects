@@ -307,45 +307,8 @@
 # Tutorial and Use Case Redirects
 # ######################
 
-# Specific tutorial files moved from tutorials/ to tutorials/tutorials/
-/tutorials/Auto-Scavenge.md                     /tutorials/tutorials/Auto-Scavenge.md              301
-/tutorials/Encryption-At-Rest.md                /tutorials/tutorials/Encryption-At-Rest.md         301
-/tutorials/Stream_Policy_Authorization.md       /tutorials/tutorials/Stream_Policy_Authorization.md 301
-/tutorials/HTTP_Connector.md                    /tutorials/tutorials/HTTP_Connector.md             301
-/tutorials/Kafka_Sink.md                        /tutorials/tutorials/Kafka_Sink.md                 301
-/tutorials/MongoDB_Sink.md                      /tutorials/tutorials/MongoDB_Sink.md               301
-/tutorials/RabbitMQ_Sink.md                     /tutorials/tutorials/RabbitMQ_Sink.md              301
+# Tutorial files moved from tutorials/ to dev-center/tutorials/
+/tutorials/*                                    /dev-center/tutorials/:splat                       301
 
-# Outbox use case tutorial files
-/getting-started/use-cases/outbox/tutorial-1.md        /tutorials/use-cases/outbox/tutorial/tutorial-1.md         301
-/getting-started/use-cases/outbox/tutorial-1.html      /tutorials/use-cases/outbox/tutorial/tutorial-1.html       301
-/getting-started/use-cases/outbox/tutorial-2.md        /tutorials/use-cases/outbox/tutorial/tutorial-2.md         301
-/getting-started/use-cases/outbox/tutorial-2.html      /tutorials/use-cases/outbox/tutorial/tutorial-2.html       301
-/getting-started/use-cases/outbox/tutorial-3.md        /tutorials/use-cases/outbox/tutorial/tutorial-3.md         301
-/getting-started/use-cases/outbox/tutorial-3.html      /tutorials/use-cases/outbox/tutorial/tutorial-3.html       301
-/getting-started/use-cases/outbox/tutorial-4.md        /tutorials/use-cases/outbox/tutorial/tutorial-4.md         301
-/getting-started/use-cases/outbox/tutorial-4.html      /tutorials/use-cases/outbox/tutorial/tutorial-4.html       301
-
-# Mix and match database use case tutorial files
-/getting-started/use-cases/mix-and-match-database/tutorial-1.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-1.md         301
-/getting-started/use-cases/mix-and-match-database/tutorial-1.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-1.html       301
-/getting-started/use-cases/mix-and-match-database/tutorial-2.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-2.md         301
-/getting-started/use-cases/mix-and-match-database/tutorial-2.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-2.html       301
-/getting-started/use-cases/mix-and-match-database/tutorial-3.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-3.md         301
-/getting-started/use-cases/mix-and-match-database/tutorial-3.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-3.html       301
-/getting-started/use-cases/mix-and-match-database/tutorial-4.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-4.md         301
-/getting-started/use-cases/mix-and-match-database/tutorial-4.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-4.html       301
-/getting-started/use-cases/mix-and-match-database/introduction.md      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-intro.md     301
-/getting-started/use-cases/mix-and-match-database/introduction.html    /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-intro.html   301
-
-# Time travel use case tutorial files
-/getting-started/use-cases/time-travel/tutorial-1.md        /tutorials/use-cases/time-travel/tutorial/tutorial-1.md         301
-/getting-started/use-cases/time-travel/tutorial-1.html      /tutorials/use-cases/time-travel/tutorial/tutorial-1.html       301
-/getting-started/use-cases/time-travel/tutorial-2.md        /tutorials/use-cases/time-travel/tutorial/tutorial-2.md         301
-/getting-started/use-cases/time-travel/tutorial-2.html      /tutorials/use-cases/time-travel/tutorial/tutorial-2.html       301
-/getting-started/use-cases/time-travel/tutorial-3.md        /tutorials/use-cases/time-travel/tutorial/tutorial-3.md         301
-/getting-started/use-cases/time-travel/tutorial-3.html      /tutorials/use-cases/time-travel/tutorial/tutorial-3.html       301
-/getting-started/use-cases/time-travel/tutorial-4.md        /tutorials/use-cases/time-travel/tutorial/tutorial-4.md         301
-/getting-started/use-cases/time-travel/tutorial-4.html      /tutorials/use-cases/time-travel/tutorial/tutorial-4.html       301
-/getting-started/use-cases/time-travel/tutorial-5.md        /tutorials/use-cases/time-travel/tutorial/tutorial-5.md         301
-/getting-started/use-cases/time-travel/tutorial-5.html      /tutorials/use-cases/time-travel/tutorial/tutorial-5.html       301
+# Use case tutorial files moved to dev-center/use-cases/
+/getting-started/use-cases/*                    /dev-center/use-cases/:splat                       301
