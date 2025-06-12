@@ -307,20 +307,45 @@
 # Tutorial and Use Case Redirects
 # ######################
 
-# Tutorial files moved from tutorials/ to tutorials/tutorials/
-/tutorials/*                                    /tutorials/tutorials/:splat                        301
+# Specific tutorial files moved from tutorials/ to tutorials/tutorials/
+/tutorials/Auto-Scavenge.md                     /tutorials/tutorials/Auto-Scavenge.md              301
+/tutorials/Encryption-At-Rest.md                /tutorials/tutorials/Encryption-At-Rest.md         301
+/tutorials/Stream_Policy_Authorization.md       /tutorials/tutorials/Stream_Policy_Authorization.md 301
+/tutorials/HTTP_Connector.md                    /tutorials/tutorials/HTTP_Connector.md             301
+/tutorials/Kafka_Sink.md                        /tutorials/tutorials/Kafka_Sink.md                 301
+/tutorials/MongoDB_Sink.md                      /tutorials/tutorials/MongoDB_Sink.md               301
+/tutorials/RabbitMQ_Sink.md                     /tutorials/tutorials/RabbitMQ_Sink.md              301
 
-# Use case tutorial files moved and restructured
-/getting-started/use-cases/*/tutorial-*.md      /tutorials/use-cases/:splat                        301
-/getting-started/use-cases/*/tutorial-*.html    /tutorials/use-cases/:splat                        301
+# Outbox use case tutorial files
+/getting-started/use-cases/outbox/tutorial-1.md        /tutorials/use-cases/outbox/tutorial/tutorial-1.md         301
+/getting-started/use-cases/outbox/tutorial-1.html      /tutorials/use-cases/outbox/tutorial/tutorial-1.html       301
+/getting-started/use-cases/outbox/tutorial-2.md        /tutorials/use-cases/outbox/tutorial/tutorial-2.md         301
+/getting-started/use-cases/outbox/tutorial-2.html      /tutorials/use-cases/outbox/tutorial/tutorial-2.html       301
+/getting-started/use-cases/outbox/tutorial-3.md        /tutorials/use-cases/outbox/tutorial/tutorial-3.md         301
+/getting-started/use-cases/outbox/tutorial-3.html      /tutorials/use-cases/outbox/tutorial/tutorial-3.html       301
+/getting-started/use-cases/outbox/tutorial-4.md        /tutorials/use-cases/outbox/tutorial/tutorial-4.md         301
+/getting-started/use-cases/outbox/tutorial-4.html      /tutorials/use-cases/outbox/tutorial/tutorial-4.html       301
 
-# Special case: introduction.md -> tutorial-intro.md  
-/getting-started/use-cases/*/introduction.md    /tutorials/use-cases/:splat                        301
-/getting-started/use-cases/*/introduction.html  /tutorials/use-cases/:splat                        301
+# Mix and match database use case tutorial files
+/getting-started/use-cases/mix-and-match-database/tutorial-1.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-1.md         301
+/getting-started/use-cases/mix-and-match-database/tutorial-1.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-1.html       301
+/getting-started/use-cases/mix-and-match-database/tutorial-2.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-2.md         301
+/getting-started/use-cases/mix-and-match-database/tutorial-2.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-2.html       301
+/getting-started/use-cases/mix-and-match-database/tutorial-3.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-3.md         301
+/getting-started/use-cases/mix-and-match-database/tutorial-3.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-3.html       301
+/getting-started/use-cases/mix-and-match-database/tutorial-4.md        /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-4.md         301
+/getting-started/use-cases/mix-and-match-database/tutorial-4.html      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-4.html       301
+/getting-started/use-cases/mix-and-match-database/introduction.md      /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-intro.md     301
+/getting-started/use-cases/mix-and-match-database/introduction.html    /tutorials/use-cases/mix-and-match-database/tutorial/tutorial-intro.html   301
 
-# General getting-started/use-cases to tutorials/use-cases
-/getting-started/use-cases/*                    /tutorials/use-cases/:splat                        301
-
-# Getting started root redirects
-/getting-started.md                             /tutorials/getting-started.html                    301
-/getting-started/                               /tutorials/                                         301
+# Time travel use case tutorial files
+/getting-started/use-cases/time-travel/tutorial-1.md        /tutorials/use-cases/time-travel/tutorial/tutorial-1.md         301
+/getting-started/use-cases/time-travel/tutorial-1.html      /tutorials/use-cases/time-travel/tutorial/tutorial-1.html       301
+/getting-started/use-cases/time-travel/tutorial-2.md        /tutorials/use-cases/time-travel/tutorial/tutorial-2.md         301
+/getting-started/use-cases/time-travel/tutorial-2.html      /tutorials/use-cases/time-travel/tutorial/tutorial-2.html       301
+/getting-started/use-cases/time-travel/tutorial-3.md        /tutorials/use-cases/time-travel/tutorial/tutorial-3.md         301
+/getting-started/use-cases/time-travel/tutorial-3.html      /tutorials/use-cases/time-travel/tutorial/tutorial-3.html       301
+/getting-started/use-cases/time-travel/tutorial-4.md        /tutorials/use-cases/time-travel/tutorial/tutorial-4.md         301
+/getting-started/use-cases/time-travel/tutorial-4.html      /tutorials/use-cases/time-travel/tutorial/tutorial-4.html       301
+/getting-started/use-cases/time-travel/tutorial-5.md        /tutorials/use-cases/time-travel/tutorial/tutorial-5.md         301
+/getting-started/use-cases/time-travel/tutorial-5.html      /tutorials/use-cases/time-travel/tutorial/tutorial-5.html       301
