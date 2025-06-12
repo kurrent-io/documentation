@@ -1,5 +1,5 @@
 ---
-title: Mix-and-Match Databases - Achieving Polyglot Persistence with KurrentDB
+title: Overview
 next: ./tutorial-intro.md
 ---
 

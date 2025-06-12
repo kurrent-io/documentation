@@ -1,5 +1,5 @@
 ---
-title: Time Traveling with KurrentDB
+title: Overview
 image: /getting-started/use-cases/time-travel/images/time-travel-hero.png
 next: ./tutorial-intro.md
 ---

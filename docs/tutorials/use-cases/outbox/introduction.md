@@ -1,5 +1,5 @@
 ---
-title: Solving Dual Writes with KurrentDB's Outbox, Out-of-the-Box
+title: Overview
 next: ./tutorial-intro.md
 ---
 
