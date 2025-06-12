@@ -1,5 +1,6 @@
 ---
 title: Summary
+order: -1
 ---
 
 In this tutorial, you’ve explored how KurrentDB offers a powerful, event-driven approach to address the dual write problem — a core challenge in distributed systems where writes to multiple data stores risk inconsistency due to the lack of atomicity. Through practical exercises, you learned how to reliably propagate changes from KurrentDB to external systems like PostgreSQL without needing distributed transactions.
