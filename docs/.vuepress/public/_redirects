@@ -301,3 +301,26 @@
 # ######################
 
 /resources/*            /         301
+
+
+# ######################
+# Tutorial and Use Case Redirects
+# ######################
+
+# Tutorial files moved from tutorials/ to tutorials/tutorials/
+/tutorials/*                                    /tutorials/tutorials/:splat                        301
+
+# Use case tutorial files moved and restructured
+/getting-started/use-cases/*/tutorial-*.md      /tutorials/use-cases/:splat                        301
+/getting-started/use-cases/*/tutorial-*.html    /tutorials/use-cases/:splat                        301
+
+# Special case: introduction.md -> tutorial-intro.md  
+/getting-started/use-cases/*/introduction.md    /tutorials/use-cases/:splat                        301
+/getting-started/use-cases/*/introduction.html  /tutorials/use-cases/:splat                        301
+
+# General getting-started/use-cases to tutorials/use-cases
+/getting-started/use-cases/*                    /tutorials/use-cases/:splat                        301
+
+# Getting started root redirects
+/getting-started.md                             /tutorials/getting-started.html                    301
+/getting-started/                               /tutorials/                                         301
