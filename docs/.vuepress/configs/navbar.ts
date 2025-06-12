@@ -43,7 +43,7 @@ export const navbarEn: NavbarOptions = [
     children: [
       {
         text: "Tutorials & Use cases",
-        link: "/tutorials/",
+        link: "/dev-center/",
       },
       { text: "Community forum", link: "https://discuss.kurrent.io/" },
       { text: "Community Discord ", link: "https://discord.gg/Phn9pmCw3t" },

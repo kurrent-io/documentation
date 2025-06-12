@@ -40,5 +40,5 @@ export const sidebarEn: EsSidebarOptions = {
   "/cloud/": "structure",
   ...ver.getSidebars(),
   "/clients/tcp/dotnet/21.2/": "structure",
-  "/tutorials/":"structure"
+  "/dev-center/":"structure"
 };
