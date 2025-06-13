@@ -14,7 +14,7 @@ The report also includes the monthly sales target to support forecasting and per
 
 The report also includes a month end sales target, which helps with forecasting and performance management.
 
-![Month End Sales Report](./images/month-end-sales-report.png)
+![Month End Sales Report](../images/month-end-sales-report.png)
 
 ## Step 4: Start the Report Projection Application
 

@@ -8,7 +8,7 @@ In the previous section, the projection generated and stored a read model of the
 
 In this part, you will modify the projection to also record historical snapshots of the report. This will allow you to time travel to previous states of the report.
 
-![Time Traveling Report](./images/time-travel-report.gif)
+![Time Traveling Report](../images/time-travel-report.gif)
 
 ## Step 8: Add Time Traveling Support to Report Projection 
 

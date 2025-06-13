@@ -38,7 +38,7 @@ In this part, you will start a KurrentDB instance and initialize it with a few h
 
 6. This will display the KurrentDB Admin UI.
    
-   ![KurrentDB Admin UI Dashboard](images/admin-ui.png =300x)
+   ![KurrentDB Admin UI Dashboard](../images/admin-ui.png =300x)
 
 ## Step 3: Browse OrderPlaced Events in KurrentDB's Admin UI
 

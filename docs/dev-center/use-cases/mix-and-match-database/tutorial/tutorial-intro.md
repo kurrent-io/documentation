@@ -1,5 +1,5 @@
 ---
-title: Mix-and-Match Database Tutorial Introduction
+title: Introduction
 prev: ./introduction.md
 ---
 

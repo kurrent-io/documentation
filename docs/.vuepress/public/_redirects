@@ -301,3 +301,27 @@
 # ######################
 
 /resources/*            /         301
+
+
+
+# ######################
+# Tutorial and Use Case Redirects
+# ######################
+
+# Tutorial files moved from tutorials/ to dev-center/tutorials/
+/tutorials/*                                           /dev-center/tutorials/:splat                              301
+
+# Use case tutorial-N.md files moved into /tutorial/ subfolder
+/getting-started/use-cases/*/tutorial-1.md             /dev-center/use-cases/:splat/tutorial/tutorial-1.md       301
+/getting-started/use-cases/*/tutorial-1.html           /dev-center/use-cases/:splat/tutorial/tutorial-1.html     301
+/getting-started/use-cases/*/tutorial-2.md             /dev-center/use-cases/:splat/tutorial/tutorial-2.md       301
+/getting-started/use-cases/*/tutorial-2.html           /dev-center/use-cases/:splat/tutorial/tutorial-2.html     301
+/getting-started/use-cases/*/tutorial-3.md             /dev-center/use-cases/:splat/tutorial/tutorial-3.md       301
+/getting-started/use-cases/*/tutorial-3.html           /dev-center/use-cases/:splat/tutorial/tutorial-3.html     301
+/getting-started/use-cases/*/tutorial-4.md             /dev-center/use-cases/:splat/tutorial/tutorial-4.md       301
+/getting-started/use-cases/*/tutorial-4.html           /dev-center/use-cases/:splat/tutorial/tutorial-4.html     301
+/getting-started/use-cases/*/tutorial-5.md             /dev-center/use-cases/:splat/tutorial/tutorial-5.md       301
+/getting-started/use-cases/*/tutorial-5.html           /dev-center/use-cases/:splat/tutorial/tutorial-5.html     301
+
+# Other use case files stay in the root (introduction.md, tutorial-summary.md, etc.)
+/getting-started/use-cases/*                           /dev-center/use-cases/:splat                              301

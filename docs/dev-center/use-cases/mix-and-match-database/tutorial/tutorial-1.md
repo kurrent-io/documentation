@@ -63,7 +63,7 @@ For this quickstart, you can safely ignore and close any Codespaces notification
 
 6. This will display the KurrentDB Admin UI.
    
-   ![KurrentDB Admin UI Dashboard](images/admin-ui.png =300x)
+   ![KurrentDB Admin UI Dashboard](../images/admin-ui.png =300x)
 
 ## Step 3: Browse Sample Events in KurrentDB's Admin UI
 

@@ -62,7 +62,7 @@ The report web application includes auditing features that demonstrate time-trav
   
    Notice the events displayed on the right. These events represent the contributions to the daily sales.
 
-   ![Events for Daily Sales](./images/events-for-daily-sales.png)
+   ![Events for Daily Sales](../images/events-for-daily-sales.png)
 
    ::: info Quick Quiz
    Do the totals of the events add up to the daily sales?
@@ -84,7 +84,7 @@ The report web application includes auditing features that demonstrate time-trav
 
    The events on the right now displays events that contributed to the total monthly sales.
 
-   ![Events for Total Monthly Sales](./images/events-for-total-monthly-sales.png)
+   ![Events for Total Monthly Sales](../images/events-for-total-monthly-sales.png)
 
    ::: info Quick Quiz
    Do the totals of the events add up to the total monthly sales?

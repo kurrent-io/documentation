@@ -1,5 +1,5 @@
 ---
-title: Time Travel Tutorial Introduction
+title: Introduction
 prev: ./introduction.md
 ---
 
