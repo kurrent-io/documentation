@@ -24,11 +24,11 @@ You can read all the events or a sample of the events from individual streams, s
 
 The simplest way to read a stream forwards is to supply a stream name, read direction, and revision from which to start. The revision can either be a *stream position* `Start` or a *big int* (unsigned 64-bit integer):
 
-@[code{read-from-stream}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-from-stream}](@grpc:reading_events.rs)
 
 This will return an enumerable that can be iterated on:
 
-@[code{iterate-stream}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{iterate-stream}](@grpc:reading_events.rs)
 
 There are a number of additional arguments you can provide when reading a stream, listed below.
 
@@ -48,19 +48,19 @@ You can use the `configureOperationOptions` argument to provide a function that 
 
 The `userCredentials` argument is optional. It is used to override the default credentials specified when creating the client instance.
 
-@[code{overriding-user-credentials}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{overriding-user-credentials}](@grpc:reading_events.rs)
 
 ### Reading from a revision
 
 Instead of providing the `StreamPosition` you can also provide a specific stream revision as a *big int* (unsigned 64-bit integer).
 
-@[code{read-from-stream-position}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-from-stream-position}](@grpc:reading_events.rs)
 
 ### Reading backwards
 
 In addition to reading a stream forwards, streams can be read backwards. To read all the events backwards, set the *stream position* to the end:
 
-@[code{reading-backwards}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{reading-backwards}](@grpc:reading_events.rs)
 
 :::tip
 Read one event backwards to find the last position in the stream.
@@ -74,7 +74,7 @@ It is important to check the value of this field before attempting to iterate an
 
 For example:
 
-@[code{checking-for-stream-presence}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{checking-for-stream-presence}](@grpc:reading_events.rs)
 
 ## Reading from the $all stream
 
@@ -84,11 +84,11 @@ Reading from the `$all` stream is similar to reading from an individual stream, 
 
 The simplest way to read the `$all` stream forwards is to supply a read direction and the transaction log position from which you want to start. The transaction log postion can either be a *stream position* `Start` or a *big int* (unsigned 64-bit integer):
 
-@[code{read-from-all-stream}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-from-all-stream}](@grpc:reading_events.rs)
 
 You can iterate asynchronously through the result:
 
-@[code{read-from-all-stream-iterate}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-from-all-stream-iterate}](@grpc:reading_events.rs)
 
 There are a number of additional arguments you can provide when reading the `$all` stream.
 
@@ -100,7 +100,7 @@ Passing in the max count allows you to limit the number of events that returned.
 
 When using projections to create new events you can set whether the generated events are pointers to existing events. Setting this value to true will tell KurrentDB to return the event as well as the event linking to it.
 
-@[code{read-from-all-stream-resolving-link-Tos}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-from-all-stream-resolving-link-Tos}](@grpc:reading_events.rs)
 
 #### configureOperationOptions
 
@@ -109,13 +109,13 @@ This argument is generic setting class for all operations that can be set on all
 #### userCredentials
 The credentials used to read the data can be used by the subscription as follows. This will override the default credentials set on the connection.
 
-@[code{read-all-overriding-user-credentials}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-all-overriding-user-credentials}](@grpc:reading_events.rs)
 
 ### Reading backwards
 
 In addition to reading the `$all` stream forwards, it can be read backwards. To read all the events backwards, set the *position* to the end:
 
-@[code{read-from-all-stream-backwards}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{read-from-all-stream-backwards}](@grpc:reading_events.rs)
 
 :::tip
 Read one event backwards to find the last position in the `$all` stream.
@@ -127,5 +127,5 @@ KurrentDB will also return system events when reading from the `$all` stream. In
 
 All system events begin with `$` or `$$` and can be easily ignored by checking the `EventType` property.
 
-@[code{ignore-system-events}](@grpc:reading_events.py;reading-events.js;reading-events.ts;reading_events/ReadingEvents.java;reading-events/Program.cs;readingEvents.go;reading_events.rs)
+@[code{ignore-system-events}](@grpc:reading_events.rs)
 

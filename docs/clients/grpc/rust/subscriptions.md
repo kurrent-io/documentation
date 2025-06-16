@@ -22,7 +22,7 @@ If you need to process all the events in the store, including historical events,
 
 The simplest stream subscription looks like the following :
 
-@[code{subscribe-to-stream}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-stream}](@grpc:subscribing_to_stream.rs)
 
 The provided handler will be called for every event in the stream.
 
@@ -32,7 +32,7 @@ When you subscribe to a stream with link events, for example the `$ce` category 
 
 Subscribing to `$all` is similar to subscribing to a single stream. The handler will be called for every event appended after the starting position.
 
-@[code{subscribe-to-all}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-all}](@grpc:subscribing_to_stream.rs)
 
 ## Subscribing from a specific position
 
@@ -52,7 +52,7 @@ To subscribe to a stream from a specific position, you must provide a *stream po
 
 The following subscribes to the stream `some-stream` at position `20`, this means that events `21` and onward will be handled:
 
-@[code{subscribe-to-stream-from-position}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-stream-from-position}](@grpc:subscribing_to_stream.rs)
 
 ### Subscribing to $all
 
@@ -62,17 +62,17 @@ The corresponding `$all` subscription will subscribe from the event after the on
 
 Please note that this position will need to be a legitimate position in `$all`.
 
-@[code{subscribe-to-all-from-position}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-all-from-position}](@grpc:subscribing_to_stream.rs)
 
 ## Subscribing to a stream for live updates
 
 You can subscribe to a stream to get live updates by subscribing to the end of the stream:
 
-@[code{subscribe-to-stream-live}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-stream-live}](@grpc:subscribing_to_stream.rs)
 
 And the same works with `$all` :
 
-@[code{subscribe-to-all-live}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-all-live}](@grpc:subscribing_to_stream.rs)
 
 This will not read through the history of the stream but will notify the handler when a new event appears in the respective stream.
 
@@ -88,7 +88,7 @@ Link-to events point to events in other streams in KurrentDB. These are generall
 
 When reading a stream you can specify whether to resolve link-to's. By default, link-to events are not resolved. You can change this behaviour by setting the `resolveLinkTos` parameter to `true`:
 
-@[code{subscribe-to-stream-resolving-linktos}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-stream-resolving-linktos}](@grpc:subscribing_to_stream.rs)
 
 ## Dropped subscriptions
 
@@ -110,11 +110,11 @@ Bear in mind that a subscription can also drop because it is slow. The server tr
 
 An application, which hosts the subscription, can go offline for some time for different reasons. It could be a crash, infrastructure failure, or a new version deployment. As you rarely would want to reprocess all the events again, you'd need to store the current position of the subscription somewhere, and then use it to restore the subscription from the point where it dropped off:
 
-@[code{subscribe-to-stream-subscription-dropped}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-stream-subscription-dropped}](@grpc:subscribing_to_stream.rs)
 
 When subscribed to `$all` you want to keep the event's position in the `$all` stream. As mentioned previously, the `$all` stream position consists of two big integers (prepare and commit positions), not one:
 
-@[code{subscribe-to-all-subscription-dropped}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-all-subscription-dropped}](@grpc:subscribing_to_stream.rs)
 
 ## User credentials
 
@@ -122,7 +122,7 @@ The user creating a subscription must have read access to the stream it's subscr
 
 The code below shows how you can provide user credentials for a subscription. When you specify subscription credentials explicitly, it will override the default credentials set for the client. If you don't specify any credentials, the client will use the credentials specified for the client, if you specified those.
 
-@[code{overriding-user-credentials}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{overriding-user-credentials}](@grpc:subscribing_to_stream.rs)
 
 ## Server-side filtering
 
@@ -136,7 +136,7 @@ Server-side filtering was introduced as a simpler alternative to projections. Yo
 
 A simple stream prefix filter looks like this:
 
-@[code{stream-prefix-filtered-subscription}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{stream-prefix-filtered-subscription}](@grpc:subscribing_to_stream.rs)
 
 The filtering API is described more in-depth in the [filtering section](subscriptions.md#server-side-filtering).
 
@@ -144,7 +144,7 @@ The filtering API is described more in-depth in the [filtering section](subscrip
 
 There are events in KurrentDB called system events. These are prefixed with a `$` and under most circumstances you won't care about these. They can be filtered out by passing in a `SubscriptionFilterOptions` when subscribing to the `$all` stream.
 
-@[code{exclude-system}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{exclude-system}](@grpc:server_side_filtering.rs)
 
 ::: tip
 `$stats` events are no longer stored in KurrentDB by default so there won't be as many `$` events as before.
@@ -158,7 +158,7 @@ If you only want to subscribe to events of a given type, there are two options. 
 
 If you want to filter by prefix, pass in a `SubscriptionFilterOptions` to the subscription with an `EventTypeFilter.Prefix`.
 
-@[code{event-type-prefix}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{event-type-prefix}](@grpc:server_side_filtering.rs)
 
 This will only subscribe to events with a type that begin with `customer-`.
 
@@ -166,7 +166,7 @@ This will only subscribe to events with a type that begin with `customer-`.
 
 It might be advantageous to provide a regular expression when you want to subscribe to multiple event types.
 
-@[code{event-type-regex}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{event-type-regex}](@grpc:server_side_filtering.rs)
 
 This will subscribe to any event that begins with `user` or `company`.
 
@@ -178,7 +178,7 @@ To subscribe to a stream by name, choose either a regular expression or a prefix
 
 If you want to filter by prefix, pass in a `SubscriptionFilterOptions` to the subscription with an `StreamFilter.Prefix`.
 
-@[code{stream-prefix}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{stream-prefix}](@grpc:server_side_filtering.rs)
 
 This will only subscribe to all streams with a name that begins with `user-`.
 
@@ -186,7 +186,7 @@ This will only subscribe to all streams with a name that begins with `user-`.
 
 To subscribe to multiple streams, use a regular expression.
 
-@[code{stream-regex}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{stream-regex}](@grpc:server_side_filtering.rs)
 
 This will subscribe to any stream with a name that begins with `account` or `savings`.
 
@@ -209,14 +209,14 @@ If your database contains events created by the legacy TCP client using the [tra
 ### Updating checkpoints at regular intervals
 The client SDK provides a way to notify your application after processing a configurable number of events. This allows you to periodically save a checkpoint at regular intervals.
 
-@[code{checkpoint}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{checkpoint}](@grpc:server_side_filtering.rs)
 
 By default, the checkpoint notification is sent after every 32 non-system events processed from $all.
 
 ### Configuring the checkpoint interval
 You can adjust the checkpoint interval to change how often the client is notified. 
 
-@[code{checkpoint-with-interval}](@grpc:server_side_filtering.py;server-side-filtering.js;server-side-filtering.ts;server_side_filtering/ServerSideFiltering.java;server-side-filtering/Program.cs;serverSideFiltering.go;server_side_filtering.rs)
+@[code{checkpoint-with-interval}](@grpc:server_side_filtering.rs)
 
 By configuring this parameter, you can balance between reducing checkpoint overhead and ensuring quick recovery in case of a failure.
 

@@ -3,8 +3,8 @@ index: false
 breadcrumbExclude: true
 ---
 
-# Clients
+# Rust Client
 
-Learn how to use the KurrentDB client libraries to interact with the database.
+Learn how to use the KurrentDB Rust client library to interact with the database.
 
 <Catalog/>
