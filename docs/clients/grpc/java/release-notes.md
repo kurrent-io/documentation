@@ -4,7 +4,7 @@ order: 10
 
 # Release Notes
 
-Click a client below to stay up to date with its latest changes and improvements, view its detailed release history and changelogs, and access the release notes for breaking changes, upgrade instructions, and migration guides.
+Click a client below to stay up to date with the latest changes and improvements, view detailed release history and changelogs, and access the release notes for breaking changes, upgrade instructions, and migration guides.
 
 | Client        | Release Notes                                                                 |
 |---------------|------------------------------------------------------------------------------|

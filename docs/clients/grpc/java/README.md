@@ -3,8 +3,8 @@ index: false
 breadcrumbExclude: true
 ---
 
-# Clients
+# Java Client
 
-Learn how to use the KurrentDB client libraries to interact with the database.
+Learn how to use the KurrentDB Java client library to interact with the database.
 
 <Catalog/>

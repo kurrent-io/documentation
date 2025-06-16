@@ -13,30 +13,7 @@ You can find the full sample code from this documentation page in the respective
 
 ## Required packages
 
-Install the client SDK package to your project.
-
-### NodeJS
-
-Add `@kurrent/kurrentdb-client` to your project using Yarn, NPM, or pnpm.
-
-TypeScript type declarations are included in the package.
-
-::: tabs
-@tab npm
-```bash
-npm install --save @kurrent/kurrentdb-client
-```
-@tab yarn
-```bash
-yarn add @kurrent/kurrentdb-client
-```
-@tab pnpm
-```bash
-pnpm add @kurrent/kurrentdb-client
-```
-:::
-
-### Java
+Install the KurrentDB Java client SDK package to your project.
 
 Add the `kurrentdb-client` dependency to your project using Maven or Gradle.
 
@@ -58,51 +35,30 @@ implementation 'io.kurrent:kurrentdb-client:1.0.0'
 For the most recent version of the KurrentDB client package, see [Maven Central](https://mvnrepository.com/artifact/io.kurrent/kurrentdb-client).
 :::
 
-### Python
 
-Install the `kurrentdbclient` package from PyPI or use Poetry:
-
-::: tabs
-@tab pip
-```bash
-pip install kurrentdbclient
-```
-@tab Poetry
-```bash
-poetry add kurrentdbclient
-```
-:::
-
-### Go
-
-Install the `kurrentdb` package using Go modules:
-
-```bash
-go get github.com/kurrent-io/KurrentDB-Client-Go/kurrentdb
-```
 
 ## Creating a client
 
 Projection management operations are exposed through a dedicated client.
 
-@[code{createClient}](@grpc:projection-management.js;projection-management.ts;quickstart.py;projection_management/ProjectionManagement.java;projection-management/Program.cs;quickstart.py;projectionManagement.go)
+@[code{createClient}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Create a projection
 
 Creates a projection that runs until the last event in the store, and then continues processing new events as they are appended to the store. The query parameter contains the JavaScript you want created as a projection.
 Projections have explicit names, and you can enable or disable them via this name.
 
-@[code{CreateContinuous}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{CreateContinuous}](@grpc:projection_management/ProjectionManagement.java)
 
 Trying to create projections with the same name will result in an error:
 
-@[code{CreateContinuous_Conflict}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{CreateContinuous_Conflict}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Restart the subsystem
 
 It is possible to restart the entire projection subsystem using the projections management client API. The user must be in the `$ops` or `$admin` group to perform this operation.
 
-@[code{RestartSubSystem}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{RestartSubSystem}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Enable a projection
 
@@ -110,11 +66,11 @@ Enables an existing projection by name.
 Once enabled, the projection will start to process events even after restarting the server or the projection subsystem.
 You must have access to a projection to enable it, see the [ACL documentation](@server/security/user-authorization.md).
 
-@[code{Enable}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Enable}](@grpc:projection_management/ProjectionManagement.java)
 
 You can only enable an existing projection. When you try to enable a non-existing projection, you'll get an error:
 
-@[code{EnableNotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{EnableNotFound}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Disable a projection
 
@@ -122,84 +78,84 @@ Disables a projection, this will save the projection checkpoint.
 Once disabled, the projection will not process events even after restarting the server or the projection subsystem.
 You must have access to a projection to disable it, see the [ACL documentation](@server/security/user-authorization.md).
 
-@[code{Disable}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Disable}](@grpc:projection_management/ProjectionManagement.java)
 
 You can only disable an existing projection. When you try to disable a non-existing projection, you'll get an error:
 
-@[code{DisableNotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{DisableNotFound}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Delete a projection
 
 Deletes an existing projection. You must disable the projection before deleting it, running projections cannot be deleted. Deleting a projection includes deleting the checkpoint and the emitted streams.
 
-@[code{Delete}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Delete}](@grpc:projection_management/ProjectionManagement.java)
 
 You can only delete an existing projection. When you try to delete a non-existing projection, you'll get an error:
 
-@[code{DeleteNotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projections.py;projectionManagement.go)
+@[code{DeleteNotFound}](@grpc:projection_management/ProjectionManagement.java;projections.py;projectionManagement.go)
 
 ## Abort a projection
 
 Aborts a projection, this will not save the projection's checkpoint.
 
-@[code{Abort}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Abort}](@grpc:projection_management/ProjectionManagement.java)
 
 You can only abort an existing projection. When you try to abort a non-existing projection, you'll get an error:
 
-@[code{Abort_NotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Abort_NotFound}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Reset a projection
 
 Resets a projection, which causes deleting the projection checkpoint. This will force the projection to start afresh and re-emit events. Streams that are written to from the projection will also be soft-deleted.
 
-@[code{Reset}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Reset}](@grpc:projection_management/ProjectionManagement.java)
 
 Resetting a projection that does not exist will result in an error.
 
-@[code{Reset_NotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Reset_NotFound}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Update a projection
 
 Updates a projection with a given name. The query parameter contains the new JavaScript. Updating system projections using this operation is not supported at the moment.
 
-@[code{Update}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Update}](@grpc:projection_management/ProjectionManagement.java)
 
 You can only update an existing projection. When you try to update a non-existing projection, you'll get an error:
 
-@[code{Update_NotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{Update_NotFound}](@grpc:projection_management/ProjectionManagement.java)
 
 ## List all projections
 
 Returns a list of all projections, user defined & system projections.
 See the [projection details](#projection-details) section for an explanation of the returned values.
 
-@[code{ListAll}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{ListAll}](@grpc:projection_management/ProjectionManagement.java)
 
 ## List continuous projections
 
 Returns a list of all continuous projections.
 See the [projection details](#projection-details) section for an explanation of the returned values.
 
-@[code{ListContinuous}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{ListContinuous}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Get status
 
 Gets the status of a named projection.
 See the [projection details](#projection-details) section for an explanation of the returned values.
 
-@[code{GetStatus}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{GetStatus}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Get state
 
 Retrieves the state of a projection.
 
-@[code{GetState}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{GetState}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Get result
 
 Retrieves the result of the named projection and partition.
 
-@[code{GetResult}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projection-management/Program.cs;projections.py;projectionManagement.go)
+@[code{GetResult}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Projection Details
 

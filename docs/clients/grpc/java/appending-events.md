@@ -14,7 +14,7 @@ Check the [Getting Started](getting-started.md) guide to learn how to configure 
 
 The simplest way to append an event to KurrentDB is to create an `EventData` object and call `AppendToStream` method.
 
-@[code{append-to-stream}](@grpc:appending_events.py;appending-events.js;appending-events.ts;appending_events/AppendingEvents.java;appending-events/Program.cs;appendingEvents.go;appending_events.rs)
+@[code{append-to-stream}](@grpc:appending_events/AppendingEvents.java;)
 
 `AppendToStream` takes a collection of `EventData`, which allows you to save more than one event in a single batch.
  
@@ -34,9 +34,9 @@ This takes the format of a `Uuid` and is used to uniquely identify the event you
 
 For example, the following code will only append a single event:
 
-@[code{append-duplicate-event}](@grpc:appending_events.py;appending-events.js;appending-events.ts;appending_events/AppendingEvents.java;appending-events/Program.cs;appendingEvents.go;appending_events.rs)
+@[code{append-duplicate-event}](@grpc:appending_events/AppendingEvents.java;)
 
-![Duplicate Event](./images/duplicate-event.png)
+![Duplicate Event](../images/duplicate-event.png)
 
 ### type
 
@@ -62,7 +62,7 @@ When appending events to a stream, you can supply a *stream state* or *stream re
 
 For example, if you try to append the same record twice, expecting both times that the stream doesn't exist, you will get an exception on the second:
 
-@[code{append-with-no-stream}](@grpc:appending_events.py;appending-events.js;appending-events.ts;appending_events/AppendingEvents.java;appending-events/Program.cs;appendingEvents.go;appending_events.rs)
+@[code{append-with-no-stream}](@grpc:appending_events/AppendingEvents.java;)
 
 There are three available stream states: 
 - `Any`
@@ -71,7 +71,7 @@ There are three available stream states:
 
 This check can be used to implement optimistic concurrency. When retrieving a stream from KurrentDB, note the current version number. When you save it back, you can determine if somebody else has modified the record in the meantime.
 
-@[code{append-with-concurrency-check}](@grpc:appending_events.py;appending-events.js;appending-events.ts;appending_events/AppendingEvents.java;appending-events/Program.cs;appendingEvents.go;appending_events.rs)
+@[code{append-with-concurrency-check}](@grpc:appending_events/AppendingEvents.java;)
 
 <!-- ## Options TODO -->
 
@@ -79,5 +79,5 @@ This check can be used to implement optimistic concurrency. When retrieving a st
 
 You can provide user credentials to append the data as follows. This will override the default credentials set on the connection.
 
-@[code{overriding-user-credentials}](@grpc:appending_events.py;appending-events.js;appending-events.ts;appending_events/AppendingEvents.java;appending-events/Program.cs;appendingEvents.go;appending_events.rs)
+@[code{overriding-user-credentials}](@grpc:appending_events/AppendingEvents.java;)
 
