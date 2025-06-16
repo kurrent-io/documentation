@@ -17,7 +17,6 @@ export const redirect: RedirectPluginOptions = {
         "/getting-started/use-cases/(.*)/tutorial-4.html": "/dev-center/use-cases/$1/tutorial/tutorial-4.html",
         "/getting-started/use-cases/(.*)/tutorial-5.md": "/dev-center/use-cases/$1/tutorial/tutorial-5.md",
         "/getting-started/use-cases/(.*)/tutorial-5.html": "/dev-center/use-cases/$1/tutorial/tutorial-5.html",
-        
         "/getting-started/use-cases/(.*)": "/dev-center/use-cases/$1",
     },
     defaultBehavior: "homepage",
