@@ -51,17 +51,8 @@ The client supports the following parameters:
 
 To authenticate, include these two parameters in your connection string or constructor when initializing the client.
 
-Check the samples for the following clients:
+For example:
 
-::: code-tabs
-@tab TypeScript
-@[code{client-with-user-certificates}](@grpc:user-certificates.ts)
-@tab Java
-@[code{client-with-user-certificates}](@grpc:authentication/UserCertificate.java)
-@tab C##
-@[code{client-with-user-certificates}](@grpc:user-certificates/Program.cs)
-@tab Go
 @[code{client-with-user-certificates}](@grpc:/userCertificates.go)
-:::
 
 
