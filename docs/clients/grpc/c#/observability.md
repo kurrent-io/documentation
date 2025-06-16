@@ -22,26 +22,7 @@ You can click on the links below to view the full code for each client:
 
 ## Required packages
 
-OpenTelemetry support is included to the KurrentDB Java client by default. For other clients, you need to install the dedicated package to enable OpenTelemetry support. 
-
-### NodeJS
-
-Install the `@kurrent/opentelemetry` package using your package manager of choice. TypeScript type declarations are included in the package.
-
-::: tabs
-@tab npm
-```bash
-npm install --save @kurrent/opentelemetry
-```
-@tab yarn
-```bash
-yarn add @kurrent/opentelemetry
-```
-@tab pnpm
-```bash
-pnpm add @kurrent/opentelemetry
-```
-:::
+The KurrentDB C# client includes OpenTelemetry support by default.
 
 ## Instrumentation
 
@@ -49,7 +30,7 @@ To emit trace data, you must first install and use the dedicated package, as ins
 [Required Packages](./observability.md#required-packages) section, if provided. This package
 includes the necessary instrumentation that needs to be registered with the client.
 
-@[code{register-instrumentation}](@grpc:opentelemetry.js;opentelemetry.ts;opentelemetry/Instrumentation.java;diagnostics/Program.cs)
+@[code{register-instrumentation}](@grpc:diagnostics/Program.cs)
 
 ## Traces
 
@@ -114,7 +95,7 @@ querying and visualizing your trace data.
 The code snippets below demonstrate how to set up one or more exporters for each
 client:
 
-@[code{setup-exporter}](@grpc:opentelemetry.js;opentelemetry.ts;opentelemetry/Instrumentation.java;diagnostics/Program.cs)
+@[code{setup-exporter}](@grpc:diagnostics/Program.cs)
 
 For more details on configuring exporters for specific programming languages,
 refer to the [OpenTelemetry](https://opentelemetry.io/docs/languages/)
