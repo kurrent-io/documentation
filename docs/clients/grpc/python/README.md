@@ -3,8 +3,8 @@ index: false
 breadcrumbExclude: true
 ---
 
-# Clients
+# Python Client
 
-Learn how to use the KurrentDB client libraries to interact with the database.
+Learn how to use the KurrentDB Python client library to interact with the database.
 
 <Catalog/>
