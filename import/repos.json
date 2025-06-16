@@ -106,7 +106,7 @@
     "branches": [
       {
         "version": "1.0.0",
-        "name":"kurrentdb-client"
+        "name":"master"
       }
     ]
   },
