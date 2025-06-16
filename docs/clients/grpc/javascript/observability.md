@@ -14,11 +14,9 @@ clients. Moreover, instrumentation is only provided for append and
 subscribe operations, which includes both 'Catchup' and 'Persistent' modes.
 :::
 
-You can click on the links below to view the full code for each client:
+You can click on the links below to view the full code:
 
 - [NodeJS](https://github.com/kurrent-io/KurrentDB-Client-NodeJS/blob/master/packages/test/src/samples/opentelemetry.ts)
-- [Java](https://github.com/kurrent-io/KurrentDBDB-Client-Java/blob/trunk/src/test/java/io/kurrent/dbclient/samples/opentelemetry/Instrumentation.java)
-- [C#](https://github.com/kurrent-io/KurrentDB-Client-Dotnet/blob/master/samples/diagnostics/Program.cs)
 
 ## Required packages
 
@@ -114,7 +112,7 @@ querying and visualizing your trace data.
 The code snippets below demonstrate how to set up one or more exporters for each
 client:
 
-@[code{setup-exporter}](@grpc:opentelemetry.js;opentelemetry.ts;opentelemetry/Instrumentation.java;diagnostics/Program.cs)
+@[code{setup-exporter}](@grpc:opentelemetry.js;opentelemetry.ts)
 
 For more details on configuring exporters for specific programming languages,
 refer to the [OpenTelemetry](https://opentelemetry.io/docs/languages/)

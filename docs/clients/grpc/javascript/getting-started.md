@@ -18,20 +18,6 @@ All our GRPC clients are secure by default and must be configured to connect to 
 
 Install the client SDK package to your project.
 
-#### Python
-
-Install the `kurrentdbclient` package from PyPI or use Poetry:
-
-::: tabs
-@tab pip
-```bash
-pip install kurrentdbclient
-```
-@tab Poetry
-```bash
-poetry add kurrentdbclient
-```
-:::
 
 #### NodeJS
 
@@ -52,49 +38,7 @@ pnpm add @kurrent/kurrentdb-client
 ```
 :::
 
-TypeScript Declarations are included in the package.
-
-#### Java
-
-Add the `kurrentdb-client` dependency to your Maven or Gradle project. 
-
-::: tabs
-@tab Maven
-```xml
-<dependency>
-  <groupId>io.kurrent</groupId>
-  <artifactId>kurrentdb-client</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
-
-@tab Gradle
-```groovy
-implementation 'io.kurrent:kurrentdb-client:1.0.0'
-```
-
-For the most recent version of the KurrentDB client package, see [Maven Central](https://mvnrepository.com/artifact/io.kurrent/kurrentdb-client).
-:::
-
-#### .NET
-
-Add the `KurrentDB.Client` package to your project:
-
-```bash
-dotnet add package KurrentDB.Client
-```
-
-#### Go
-
-Install the `kurrentdb` package using Go modules:
-
-```bash
-go get github.com/kurrent-io/KurrentDB-Client-Go/kurrentdb
-```
-
-#### Rust
-
-No additional configuration is needed having Rust installed. Go check [https://rustup.rs](https://rustup.rs).
+TypeScript declarations are included in the package.
 
 ### Connection string
 
@@ -154,7 +98,7 @@ We use JSON for serialization in the documentation examples.
 
 The code snippet below creates an event object instance, serializes it, and adds it as a payload to the `EventData` structure, which the client can then write to the database.
 
-@[code{createEvent}](@grpc:quickstart.py;get-started.js;get-started.ts;quick_start/QuickStart.java;quick-start/Program.cs;quickstart.go;quickstart.rs)
+@[code{createEvent}](@grpc:get-started.js;get-started.ts)
 
 ### Appending events
 
@@ -162,7 +106,7 @@ Each event in the database has its own unique identifier (UUID). The database us
 
 In the snippet below, we append the event to the stream `some-stream`.
 
-@[code{appendEvents}](@grpc:quickstart.py;get-started.js;get-started.ts;quick_start/QuickStart.java;quick-start/Program.cs;quickstart.go;quickstart.rs)
+@[code{appendEvents}](@grpc:get-started.js;get-started.ts)
 
 Here we are appending events without checking if the stream exists or if the stream version matches the expected event version. See more advanced scenarios in [appending events documentation](./appending-events.md).
 
@@ -170,7 +114,7 @@ Here we are appending events without checking if the stream exists or if the str
 
 Finally, we can read events back from the `some-stream` stream.
 
-@[code{readStream}](@grpc:quickstart.py;get-started.js;get-started.ts;quick_start/QuickStart.java;quick-start/Program.cs;quickstart.go;quickstart.rs)
+@[code{readStream}](@grpc:get-started.js;get-started.ts)
 
 When you read events from the stream, you get a collection of `ResolvedEvent` structures. The event payload is returned as a byte array and needs to be deserialized. See more advanced scenarios in [reading events documentation](./reading-events.md).
 
