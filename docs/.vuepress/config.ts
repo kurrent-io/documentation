@@ -44,6 +44,10 @@ export default defineUserConfig({
                 .replace("@clients/httpapi/", "/http-api/{version}/")
                 .replace("@httpapi/data/", projectionSamplesPath)
                 .replace("@httpapi/", "/http-api/{version}/")
+                // Add tutorial and use case redirects
+                .replace(/^\/tutorials\/(.*)/, "/dev-center/tutorials/$1")
+                .replace(/^\/getting-started\/use-cases\/(.*)\/tutorial-([1-5])\.(md|html)/, "/dev-center/use-cases/$1/tutorial/tutorial-$2.$3")
+                .replace(/^\/getting-started\/use-cases\/(.*)/, "/dev-center/use-cases/$1")
         });
         md.use(importCodePlugin, {
             handleImportPath: s => resolveMultiSamplesPath(s)
