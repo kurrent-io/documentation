@@ -78,7 +78,7 @@ This will not read through the history of the stream but will notify the handler
 
 Keep in mind that when you subscribe to a stream from a specific position, as described [above](#subscribing-from-a-specific-position), you will also get live updates after your subscription catches up (processes all the historical events).
 
-## Resolving link-to's
+## Resolving link-to events
 
 Link-to events point to events in other streams in KurrentDB. These are generally created by projections such as the `$by_event_type` projection which links events of the same event type into the same stream. This makes it easier to look up all events of a specific type.
 
