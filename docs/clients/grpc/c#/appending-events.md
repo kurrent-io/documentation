@@ -36,7 +36,7 @@ For example, the following code will only append a single event:
 
 @[code{append-duplicate-event}](@grpc:appending-events/Program.cs)
 
-![Duplicate Event](./images/duplicate-event.png)
+![Duplicate Event](../images/duplicate-event.png)
 
 ### type
 

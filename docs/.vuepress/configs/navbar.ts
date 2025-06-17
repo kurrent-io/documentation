@@ -27,7 +27,7 @@ export const navbarEn: NavbarOptions = [
       {
         text: "Clients",
         children: [
-          { text: "KurrentDB clients", link: "/clients/grpc/getting-started" },
+          { text: "KurrentDB clients", link: "/clients/grpc/" },
         ],
       },
       { text: "HTTP API", children: ver.linksFor("http-api", false) },
