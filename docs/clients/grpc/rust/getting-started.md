@@ -8,18 +8,13 @@ Get started by connecting your application to KurrentDB.
 
 ## Connecting to KurrentDB
 
-For your application to start communicating with KurrentDB, you need to instantiate the client and configure it accordingly. Below are instructions for supported SDKs.
+To connect your application to KurrentDB, instantiate and configure the client.
 
 ::: tip Insecure clusters
 All our GRPC clients are secure by default and must be configured to connect to an insecure server via [a connection string](#connection-string) or the client's configuration.
 :::
 
 ### Required packages
-
-Install the Rust client SDK package to your project.
-
-
-#### Rust
 
 No additional configuration is needed having Rust installed. For more information, see [https://rustup.rs](https://rustup.rs).
 
