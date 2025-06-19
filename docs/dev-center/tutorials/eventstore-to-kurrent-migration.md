@@ -1,6 +1,6 @@
 ---
-title: Upgrade to the KurrentDB Java client
-description: Easily upgrade your applications to use the rebranded KurrentDB Java client from the EventStoreDB client.
+title: EventStore to KurrentDB Java Client Migration Guide
+description: Automatically migrate your Java applications from the EventStore client to the new KurrentDB client.
 author:
   - david
 draft: false
@@ -13,15 +13,23 @@ categories:
   - java
 ---
 
-
-# Introduction
-
-This guide provides a procedure to easily upgrade from the *com.eventstore* client to the *io.kurrent* client.
+Following the [EventStore rebrand to Kurrent](https://www.kurrent.io/blog/event-store-is-evolving-to-kurrent), all client libraries have been updated with new package names and improved APIs. This guide shows you how to automatically migrate your Java application from `com.eventstore.db-client-java` to the new `io.kurrent.kurrentdb-client`.
 
 
-As [EventStore rebranded to Kurrent](https://www.kurrent.io/blog/event-store-is-evolving-to-kurrent), so did the database clients. For applications using the java client, this causes some effort due to the renaming of packages and classes, as well as configuration parameters.
+## Why Migrate?
 
-This guide will walk you through how to use an [OpenRewrite](https://docs.openrewrite.org) recipe to automatically update the Java code and its dependencies to the new Kurrent Java client.
+- **Latest features and improvements**: The KurrentDB client includes performance enhancements and new capabilities
+- **Ongoing support**: Future updates and bug fixes will only be available in the KurrentDB client
+- **Automated migration**: Use [OpenRewrite](https://docs.openrewrite.org) to handle the migration automatically with minimal manual effort
+
+## What Gets Updated
+
+This migration will automatically update:
+- Maven/Gradle dependencies
+- Package imports (`com.eventstore.dbclient` → `io.kurrent.dbclient`)
+- Class names (`EventStoreDBClient` → `KurrentDBClient`)
+- Connection strings (`esdb://` → `kurrent://`)
+- Method names (`expectedRevision()` → `streamRevision()`)
 
 ## Requirements
 - Java 8 or above
@@ -209,7 +217,7 @@ The output will be similar to:
 
 Once the recipe has been executed, package names, class names, dependencies and connection strings, would have been updated to use the KurrentDB Java client.
 
-# Notes
+# Breaking changes
    ### expectedRevision
 
 The `OptionsWithExpectedRevisionBase` has been replaced with `OptionsWithStreamStateBase`. These classes provide the ability to set the expected revision on `AppendToStreamOptions` and `DeleteStreamOptions`. 
