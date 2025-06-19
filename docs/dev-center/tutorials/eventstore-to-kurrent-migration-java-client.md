@@ -35,8 +35,7 @@ This migration will automatically update:
 
 Create a file named `rewrite.yml` in the root directory of your Java project:
 
-<details>
-<summary>Click to show rewrite.yml contents</summary>
+::::: details Click to show rewrite.yml contents
 
 ```yaml
 ---
@@ -102,7 +101,7 @@ recipeList:
       caseSensitive: true
 ---
 ```
-</details>
+:::::
 
 ## Step 2: Run the Migration
 
