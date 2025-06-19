@@ -196,17 +196,17 @@ appendOptions.streamState(StreamState.NO_STREAM);
 
 ## After Migration
 
-1. **Test your application**: Run your test suite to ensure everything works correctly
-2. **Fix any StreamState calls**: Review compilation errors for `streamState()` vs `streamRevision()` usage
-3. **Verify connection strings**: Ensure all `kurrent://` connections work as expected
-4. **Update documentation**: Update any internal docs referencing the old client
-5. **Clean up**: Remove the `rewrite.yml` and `init.gradle` files if no longer needed
+1. **Test your application**: Run your test suite to ensure everything works correctly.
+2. **Fix any StreamState calls**: Review compilation errors for `streamState()` vs `streamRevision()` usage.
+3. **Verify connection strings**: Ensure all `kurrent://` connections work as expected.
+4. **Update documentation**: Update any internal docs referencing the old client.
+5. **Clean up**: Remove the `rewrite.yml` and `init.gradle` files if no longer needed.
 
 ## Need Help?
 
 If you encounter issues during migration:
-- Check the [KurrentDB Java client documentation](@clients/grpc/getting-started.md)
-- Review the [OpenRewrite documentation](https://docs.openrewrite.org) for advanced configuration
-- Open an issue in the [KurrentDB Java client repository](https://github.com/kurrent-io/KurrentDB-Client-Java)
+- Check the [KurrentDB Java client documentation](@clients/grpc/getting-started.md).
+- Review the [OpenRewrite documentation](https://docs.openrewrite.org) for advanced configuration.
+- Open an issue in the [KurrentDB Java client repository](https://github.com/kurrent-io/KurrentDB-Client-Java).
 
 The migration should handle 95% of the changes automatically, saving you significant time while ensuring consistency across your codebase.
