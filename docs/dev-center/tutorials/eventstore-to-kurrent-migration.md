@@ -19,7 +19,6 @@ Following the [EventStore rebrand to Kurrent](https://www.kurrent.io/blog/event-
 ## Why Migrate?
 
 - **Latest features and improvements**: The KurrentDB client includes performance enhancements and new capabilities
-- **Ongoing support**: Future updates and bug fixes will only be available in the KurrentDB client
 - **Automated migration**: Use [OpenRewrite](https://docs.openrewrite.org) to handle the migration automatically with minimal manual effort
 
 ## What Gets Updated
