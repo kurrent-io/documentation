@@ -8,7 +8,7 @@ categories:
   - java
 ---
 
-Following the [EventStore rebrand to Kurrent](https://www.kurrent.io/blog/event-store-is-evolving-to-kurrent), all client libraries have been updated with new package names and improved APIs. This guide shows you how to automatically migrate your Java application from `com.eventstore.db-client-java` to the new `io.kurrent.kurrentdb-client`.
+Following the [Event Store rebrand to Kurrent](https://www.kurrent.io/blog/event-store-is-evolving-to-kurrent), all client libraries have been updated with new package names and improved APIs. This guide shows you how to automatically migrate your Java application from `com.eventstore.db-client-java` to the new `io.kurrent.kurrentdb-client`.
 
 ## Why Migrate?
 
