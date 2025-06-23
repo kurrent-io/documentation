@@ -1,34 +1,30 @@
-<template #sidebar-top>
+<template>
   <h4 class="version">{{ version ?? "unknown" }}</h4>
   <hr/>
 </template>
 
 <script setup lang="ts">
 import {useClientData} from 'vuepress/client'
-import {type SidebarArrayOptions, useThemeData} from "@vuepress/theme-default/client";
+import {useThemeData} from "@vuepress/plugin-theme-data/client";
+import {useSidebarItems} from "vuepress-theme-hope/composables/sidebar/useSidebarItems";
 import {computed} from "vue";
-import type {SidebarObjectOptions} from "@vuepress/theme-default";
+import {useData} from "vuepress-theme-hope/composables/useData";
+
+declare const __VERSIONS__: { latest: string, selected: string, all: string[] }
 
 const {pageData} = useClientData();
+// console.log(pageData);
 const themeData = useThemeData();
 
-const sidebar = themeData.value.sidebar as SidebarObjectOptions;
+const sidebar = useSidebarItems().value;
 
 const versionInfos = computed(() => {
-  if (!sidebar) return [];
-  return Object.keys(sidebar)
-      .filter(key => pageData.value.path.startsWith(key))
-      .map(key => {
-        const sb = sidebar[key] as SidebarArrayOptions;
-        return {
-          path: key,
-          name: sb.map((v: any) => [v.group ?? v.text, v.version].filter(Boolean).join(" "))[0]
-        };
-      });
 });
 
-const version = computed(() => versionInfos.value.length > 0 ? versionInfos.value[0].name : "");
+const d = useData();
+console.log(__VERSIONS__)
 
+const version = "25.0";
 </script>
 
 <style lang="css">
