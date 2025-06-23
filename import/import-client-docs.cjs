@@ -42,7 +42,8 @@ async function copyDocsAndSamples(destinationPath, samplesPath, branch, repo) {
             startPage: branch.startPage,
             preview: branch.preview,
             deprecated: branch.deprecated,
-            hide: branch.hide
+            hide: branch.hide,
+            lts: branch.lts,
         };
         if (repo.postprocess)
             await postprocess(destination, repo.postprocess)

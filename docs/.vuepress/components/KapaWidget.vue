@@ -1,7 +1,6 @@
 <script setup>
 function triggerKapa() {
   window.Kapa.open();
-
 }
 </script>
 

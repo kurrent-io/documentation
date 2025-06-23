@@ -164,6 +164,9 @@ html[data-theme="dark"] {
   --vp-c-text-mute: white;
   --border-color:white;
   --vp-c-gutter:black;
+
+  --dropdown-item-bg-hover: #2c2e35;
+  --dropdown-item-color: var(--secondary-color);
 }
 
 html[data-theme="light"] {
@@ -181,6 +184,9 @@ html[data-theme="light"] {
   --vp-c-text-mute: black;
   --border-color:black;
   --vp-c-gutter:white;
+
+  --dropdown-item-bg-hover: #F3F4F6;
+  --dropdown-item-color: var(--main-color);
 }
 
 $font-body: 15px;
