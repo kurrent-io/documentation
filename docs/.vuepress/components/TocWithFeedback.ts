@@ -20,8 +20,8 @@ import {
   usePageFrontmatter,
   useRoute,
 } from "vuepress/client";
-import PrintButton from "vuepress-theme-hope/modules/info/components/PrintButton";
-import { useMetaLocale } from "vuepress-theme-hope/modules/info/composables/index";
+import PrintButton from "vuepress-theme-hope/components/base/PrintButton";
+import { useMetaLocale } from "vuepress-theme-hope/composables/info/index";
 
 import "../styles/toc.scss";
 

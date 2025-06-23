@@ -6,6 +6,7 @@ import CloudBanner from "./components/CloudBanner.vue";
 import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import {usePostHog} from "./lib/usePosthog";
+import SidebarLayout from "./layouts/SidebarLayout.vue";
 
 declare const __VERSIONS__: { 
     latest: string, 
@@ -46,14 +47,14 @@ const findEsMeta = (route) => {
     }
 }
 
-interface ClientConfig {
-    enhance?: (context: {
-        app: any;
-        router: Router;
-        siteData: any;
-    }) => void | Promise<void>;
-    setup?: () => void;
-}
+// interface ClientConfig {
+//     enhance?: (context: {
+//         app: any;
+//         router: Router;
+//         siteData: any;
+//     }) => void | Promise<void>;
+//     setup?: () => void;
+// }
 
 const removeHtml = (path: string) => path.replace(".html", "");
 
@@ -71,9 +72,12 @@ const leave = (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     }
 }
 
-const { posthog } = usePostHog();
+const {posthog} = usePostHog();
 
 export default defineClientConfig({
+    layouts: {
+        Layout: SidebarLayout
+    },
     enhance({app, router, _}) {
         app.component("CloudBanner", CloudBanner);
         app.component("KapaWidget", KapaWidget);
@@ -100,11 +104,11 @@ export default defineClientConfig({
         router.afterEach(() => {
             setTimeout(() => { // to ensure this runs after DOM updates
                 try {
-                    const {code} = JSON.parse(localStorage.getItem('VUEPRESS_TAB_STORE'));
+                    const {code} = JSON.parse(localStorage.getItem('VUEPRESS_TAB_STORE')!);
                     if (code) { // If a valid 'code' is found in localStorage
                         Array.from(document.querySelectorAll('.vp-tab-nav'))
                             .forEach((button: HTMLButtonElement) => {
-                                if (button.textContent.trim() === code) {
+                                if (button.textContent!.trim() === code) {
                                     button.click(); // click the button to switch the tab
                                 }
                             });
@@ -170,13 +174,13 @@ export default defineClientConfig({
                     });
                 }, 1000);
             }
-            
+
             // Check for 404 page after navigation completes
             setTimeout(() => {
                 // Check for the specific elements with classes error-code and error-hint
                 const errorCodeElement = document.querySelector('p.error-code');
                 const errorHintElement = document.querySelector('p.error-hint');
-                
+
                 // If both elements exist, we're on a 404 page
                 if (errorCodeElement && errorHintElement) {
                     // Capture the 404 event in PostHog
@@ -189,15 +193,15 @@ export default defineClientConfig({
                         });
                     }
                 }
-            }, 50); 
+            }, 50);
         });
         router.beforeEach((to, from) => leave(to, from));
     },
     setup() {
         onMounted(() => {
             const route = useRoute();
-            if (route.path !== "/");
+            if (route.path !== "/") ;
         });
 
     },
-} satisfies ClientConfig);
+});
