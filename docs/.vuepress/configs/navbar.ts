@@ -27,7 +27,12 @@ export const navbarEn: NavbarOptions = [
       {
         text: "Clients",
         children: [
-          { text: "KurrentDB clients", link: "/clients/grpc/" },
+          { text: ".NET", link: "/clients/grpc/dotnet/getting-started.html" },
+          { text: "Python", link: "/clients/grpc/python/getting-started.html" },
+          { text: "Node.js", link: "/clients/grpc/nodejs/getting-started.html" },
+          { text: "Java", link: "/clients/grpc/java/getting-started.html" },
+          { text: "Go", link: "/clients/grpc/go/getting-started.html" },
+          { text: "Rust", link: "/clients/grpc/rust/getting-started.html" },
         ],
       },
       { text: "HTTP API", children: ver.linksFor("http-api", false) },
