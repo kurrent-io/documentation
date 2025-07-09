@@ -4,7 +4,7 @@ import log from "./log";
 import {createRequire} from 'node:module';
 import references from "../versions.json";
 
-interface VersionDetail {
+export interface VersionDetail {
     version: string,
     path: string,
     startPage: string,
@@ -13,7 +13,7 @@ interface VersionDetail {
     hide: boolean
 }
 
-interface Version {
+export interface Version {
     id: string,
     group: string,
     basePath: string,

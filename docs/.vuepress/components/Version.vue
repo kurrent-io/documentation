@@ -1,30 +1,22 @@
 <template>
-  <h4 class="version">{{ version ?? "unknown" }}</h4>
+  <select>
+    <option class="version" :value="v.version" v-for="v in props.version" :key="v.version" :selected="v.version === props.current">
+      {{ v.version }}
+    </option>
+  </select>
   <hr/>
 </template>
 
 <script setup lang="ts">
-import {useClientData} from 'vuepress/client'
-import {useThemeData} from "@vuepress/plugin-theme-data/client";
-import {useSidebarItems} from "vuepress-theme-hope/composables/sidebar/useSidebarItems";
-import {computed} from "vue";
-import {useData} from "vuepress-theme-hope/composables/useData";
+import type {VersionDetail} from "../lib/versioning";
 
-declare const __VERSIONS__: { latest: string, selected: string, all: string[] }
+interface Props {
+  version: VersionDetail[];
+  current: string;
+}
 
-const {pageData} = useClientData();
-// console.log(pageData);
-const themeData = useThemeData();
-
-const sidebar = useSidebarItems().value;
-
-const versionInfos = computed(() => {
-});
-
-const d = useData();
-console.log(__VERSIONS__)
-
-const version = "25.0";
+const props = defineProps<Props>();
+console.log(props.version)
 </script>
 
 <style lang="css">

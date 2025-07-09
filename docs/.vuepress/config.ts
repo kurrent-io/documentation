@@ -13,7 +13,6 @@ import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
 
-
 dotenv.config({path: path.join(__dirname, '..', '..', '.algolia', '.env')});
 
 // noinspection JSUnusedGlobalSymbols
@@ -29,6 +28,12 @@ export default defineUserConfig({
             selected: ver.latest,
             all: ver.all
         },
+    },
+    extendsPage: (page) => {
+        page.data.versions = {
+            latest: ver.latest,
+            all: ver.all
+        }
     },
     markdown: {
         importCode: false,
@@ -67,7 +72,6 @@ export default defineUserConfig({
     },
     theme: hopeTheme(themeOptions,{custom: true}),
     head: [
-
         // Business Institution 247, before the user accepts cookie
         ['script', {
             type: 'text/javascript',
