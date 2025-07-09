@@ -69,7 +69,7 @@ If you have trouble with this quickstart, you can find more help in the ["Kurren
 5. Once complete, you will see a welcome message in the terminal:
 
 ```
-Hello!👋 Welcome to the KurrentDB Getting Started Quickstart Guide.
+Hello!👋 Welcome to the EventStoreDB Getting Started Quickstart Guide.
 ```
 
 ::: tip
@@ -89,9 +89,9 @@ For this quickstart, you can safely ignore and close any Codespaces notification
 2. You will see the following message printed in the terminal:
 
 ```
-🚀 KurrentDB Server has started!! 🚀
+🚀 EventStoreDB Server has started!! 🚀
 
-URL to the KurrentDB Admin UI 👉: https://XXXXXXXXX.XXX
+URL to the EventStoreDB Admin UI 👉: https://XXXXXXXXX.XXX
 ```
 
 ::::: details (Optional) Learn more about how to start KurrentDB in Docker and the `start_db.sh` script 
@@ -123,7 +123,7 @@ docker run                               # Start a new Docker container using th
      -d \                                # Run the container in detached mode (in the background)
      --name esdb-node \                  # Assign the container a name ('esdb-node' in this case)
      -p 2113:2113 \                      # Map port 2113 on the host to port 2113 in the Docker container. Required for the KurrentDB
-     kurrentplatform/kurrentdb:latest \  # Specify the Docker image to use, in this case, the latest supported version of KurrentDB
+     eventstore/eventstore:24.10.1 \  # Specify the Docker image to use, in this case, the latest supported version of KurrentDB
      --insecure \                        # Run KurrentDB in insecure mode, without authentication and SSL/TLS security (usually for development)
      --run-projections=All \             # Enable all projections in KurrentDB, including system and user projections
      --enable-atom-pub-over-http         # Enable the AtomPub API over HTTP. Required for the KurrentDB Admin UI
@@ -144,7 +144,7 @@ To view the source code on Github, click the link below:
 @tab Select >
 
 @tab Python
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Python)
 
 @tab Java
 [![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
@@ -241,15 +241,15 @@ Alternatively, you can locate and open the file from the EXPLORER window on the 
 
 @tab Python
 ```
-kurrentdbclient==1.0.19
+esdbclient==1.0.19
 ```
 
 @tab Java
 ```xml
 <dependency>
-   <groupId>io.kurrent</groupId>
-   <artifactId>kurrentdb-client</artifactId>
-   <version>1.0.0</version>
+   <groupId>com.eventstore</groupId>
+   <artifactId>db-client-java</artifactId>
+   <version>5.3.2</version>
 </dependency>
 ```
 
@@ -265,7 +265,7 @@ For the most recent version of the KurrentDB client package, see [Maven Central]
 @tab node.js
 ```json
 "dependencies": {
-   "@kurrent/kurrentdb-client": "^6.1.0"
+   "@eventstore/db-client": "^6.1.0"
 }
 ```
 :::
@@ -282,7 +282,7 @@ To view the source code on GitHub, click the link below:
 @tab Select >
 
 @tab Python
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Python)
 
 @tab Java
 [![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
@@ -314,7 +314,7 @@ To view the source code on GitHub, click the link below:
    ```sh
    java -cp \
       target/eventstoredb-demo-1.0-SNAPSHOT-jar-with-dependencies.jar \
-      io.kurrentdb_demo.SampleWrite
+      com.eventstoredb_demo.SampleWrite
    ```
 
 @tab .NET
@@ -390,29 +390,29 @@ Alternatively, you can locate and open the file from the EXPLORER window on the 
 
 @tab Python
 ```python
-# Create an instance of KurrentDBClient, connecting to the KurrentDB at localhost without TLS
-client = KurrentDBClient(uri="kurrentdb://localhost:2113?tls=false")  
+# Create an instance of EventStoreDBClient, connecting to the KurrentDB at localhost without TLS
+client = EventStoreDBClient(uri="esdb://localhost:2113?tls=false")  
 ```
 
 @tab Java
 ```java
 // configure the settings to connect to KurrentDB locally without TLS
-KurrentDBClientSettings settings = KurrentDBConnectionString.parseOrThrow("kurrentdb://localhost:2113?tls=false");
+EventStoreDBClientSettings settings = EventStoreDBConnectionString.parseOrThrow("esdb://localhost:2113?tls=false");
 // apply the settings and create an instance of the client
-KurrentDBClient client = KurrentDBClient.create(settings);
+EventStoreDBClient client = EventStoreDBClient.create(settings);
 ```
 
 @tab .NET
 ```c#
 // Create an instance of EventStoreClientSettings, connecting to the KurrentDB at localhost without TLS
-var settings = EventStoreClientSettings.Create("kurrentdb://localhost:2113?tls=false");
+var settings = EventStoreClientSettings.Create("esdb://localhost:2113?tls=false");
 await using var client = new EventStoreClient(settings);
 ```
 
 @tab node.js
 ```js
-// Create an instance of KurrentDBClient, connecting to the KurrentDB at localhost without TLS
-const client = KurrentDBClient.connectionString("kurrentdb://localhost:2113?tls=false");
+// Create an instance of EventStoreDBClient, connecting to the KurrentDB at localhost without TLS
+const client = EventStoreDBClient.connectionString("esdb://localhost:2113?tls=false");
 ```
 :::
 
@@ -520,7 +520,7 @@ To view the source code on GitHub, click the link below:
 @tab Select >
 
 @tab Python
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Python)
 
 @tab Java
 [![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
@@ -562,7 +562,7 @@ To view the source code on GitHub, click the link below:
    ```sh
    java -cp \
       target/eventstoredb-demo-1.0-SNAPSHOT-jar-with-dependencies.jar \
-      io.kurrentdb_demo.SampleRead
+      com.eventstoredb_demo.SampleRead
    ```
 
 @tab .NET
@@ -637,31 +637,31 @@ Alternatively, you can locate and open the file from the EXPLORER window on the 
 
 @tab Python
 ```python
-# Create an instance of KurrentDBClient, connecting to the KurrentDB at localhost without TLS
-client = KurrentDBClient(uri="kurrentdb://localhost:2113?tls=false")  
+# Create an instance of EventStoreDBClient, connecting to the EventStoreDB at localhost without TLS
+client = EventStoreDBClient(uri="esdb://localhost:2113?tls=false")  
 ```
 
 @tab Java
 ```java
-// configure the settings to connect to KurrentDB locally without TLS
-KurrentDBClientSettings settings = EventStoreDBConnectionString.
-   parseOrThrow("kurrentdb://localhost:2113?tls=false");
+// configure the settings to connect to EventStoreDB locally without TLS
+EventStoreDBClientSettings settings = EventStoreDBConnectionString.
+   parseOrThrow("esdb://localhost:2113?tls=false");
 
 // apply the settings and create an instance of the client
-KurrentDBClient client = KurrentDBClient.create(settings); 
+EventStoreDBClient client = EventStoreDBClient.create(settings); 
 ```
 
 @tab .NET
 ```c#
 // Create an instance of EventStoreClientSettings, connecting to the KurrentDB at localhost without TLS
-var settings = EventStoreClientSettings.Create("kurrentdb://localhost:2113?tls=false");
+var settings = EventStoreClientSettings.Create("esdb://localhost:2113?tls=false");
 await using var client = new EventStoreClient(settings);
 ```
 
 @tab node.js
 ```js
 // Create an instance of KurrentDBClient, connecting to the KurrentDB at localhost without TLS
-const client = KurrentDBClient.connectionString("kurrentdb://localhost:2113?tls=false");
+const client = EventStoreDBClient.connectionString("esdb://localhost:2113?tls=false");
 ```
 :::
 
@@ -783,7 +783,7 @@ To view the source code on Github, click the link below:
 @tab Select >
 
 @tab Python
-[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/KurrentDB-From-Scratch-Python)
+[![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Python-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Python)
 
 @tab Java
 [![](https://img.shields.io/badge/GitHub-EventStoreDB%20From%20Scratch%20Java-blue?logo=github)](https://github.com/kurrent-io/EventStoreDB-From-Scratch-Java)
