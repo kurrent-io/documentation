@@ -16,7 +16,7 @@ subscribe operations, which includes both 'Catchup' and 'Persistent' modes.
 
 You can click on the links below to view the full code:
 
-- [NodeJS](https://github.com/kurrent-io/KurrentDB-Client-NodeJS/blob/master/packages/test/src/samples/opentelemetry.ts)
+Click [here](https://github.com/kurrent-io/KurrentDB-Client-NodeJS/blob/master/packages/test/src/samples/opentelemetry.ts) to view the full sample code for observability.
 
 ## Required packages
 
