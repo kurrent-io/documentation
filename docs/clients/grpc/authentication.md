@@ -54,6 +54,10 @@ To authenticate, include these two parameters in your connection string or const
 Check the samples for the following clients:
 
 ::: code-tabs
+@tab Python
+@[code{client-with-user-certificates}](@grpc:user_certificates.py)
+@tab JavaScript
+@[code{client-with-user-certificates}](@grpc:user-certificates.ts)
 @tab TypeScript
 @[code{client-with-user-certificates}](@grpc:user-certificates.ts)
 @tab Java
@@ -62,6 +66,8 @@ Check the samples for the following clients:
 @[code{client-with-user-certificates}](@grpc:user-certificates/Program.cs)
 @tab Go
 @[code{client-with-user-certificates}](@grpc:/userCertificates.go)
+@tab Rust
+@[code{client-with-user-certificates}](@grpc:/user_certificates.rs)
 :::
 
 
