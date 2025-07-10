@@ -11,32 +11,6 @@ For a detailed explanation of projections, see the [server documentation](@serve
 
 You can find the full sample code from this documentation page in the respective [clients repositories](https://github.com/kurrent-io/?q=client).
 
-## Required packages
-
-Install the client SDK package to your project.
-
-### NodeJS
-
-Add `@kurrent/kurrentdb-client` to your project using Yarn, NPM, or pnpm.
-
-TypeScript type declarations are included in the package.
-
-::: tabs
-@tab npm
-```bash
-npm install --save @kurrent/kurrentdb-client
-```
-@tab yarn
-```bash
-yarn add @kurrent/kurrentdb-client
-```
-@tab pnpm
-```bash
-pnpm add @kurrent/kurrentdb-client
-```
-:::
-
-
 ## Creating a client
 
 Projection management operations are exposed through a dedicated client.

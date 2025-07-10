@@ -11,27 +11,6 @@ For a detailed explanation of projections, see the [server documentation](@serve
 
 You can find the full sample code from this documentation page in the respective [clients repositories](https://github.com/kurrent-io/?q=client).
 
-## Required packages
-
-Install the client SDK package to your project.
-
-
-### Python
-
-Install the `kurrentdbclient` package from PyPI or use Poetry:
-
-::: tabs
-@tab pip
-```bash
-pip install kurrentdbclient
-```
-@tab Poetry
-```bash
-poetry add kurrentdbclient
-```
-:::
-
-
 ## Creating a client
 
 Projection management operations are exposed through a dedicated client.
