@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, toRef, watch } from 'vue'
-import { useRouter } from 'vuepress/client'
+import { useRoute, useRouter } from 'vuepress/client'
 import type { VersionDetail } from '../lib/versioning'
 
 interface Props {
@@ -8,14 +8,10 @@ interface Props {
   current: string
 }
 
-interface Emits {
-  versionChanged: [version: string]
-}
-
 const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
 
 const router = useRouter()
+const route = useRoute()
 const selectedVersion = toRef(props, 'current')
 const isOpen = ref(false)
 
@@ -37,10 +33,10 @@ const handleVersionSelect = (version: string): void => {
   const versionDetails = props.version.find(v => v.version === version)
 
   if (versionDetails) {
-    router.replace(`/server/${versionDetails.path}/${versionDetails.startPage}`)
+    const base = route.path.split('/').filter(seg => seg)[0]
+    router.replace(`/${base}/${versionDetails.path}/${versionDetails.startPage}`)
   }
 
-  emit('versionChanged', version)
   closeDropdown()
 }
 
