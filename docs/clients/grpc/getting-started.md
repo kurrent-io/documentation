@@ -1,6 +1,7 @@
-# KurrentDB Clients
 
-Start working with KurrentDB using one of the official clients:
+# Getting Started
+
+To redirect you to the right page, please select a client:
 
 <img src="https://skillicons.dev/icons?i=dotnet" alt=".NET" style="height: 1.5em; vertical-align: middle;" /> [.NET](/clients/grpc/dotnet/getting-started.md)
 
