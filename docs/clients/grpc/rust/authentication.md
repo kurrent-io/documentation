@@ -53,4 +53,9 @@ The client supports the following parameters:
 | `userCertFile` | The file containing the X.509 user certificate in PEM format.                  |
 | `userKeyFile`  | The file containing the user certificate’s matching private key in PEM format. |
 
+
 To authenticate, include these two parameters in your connection string or constructor when initializing the client.
+
+Check the samples for the following clients:
+
+@[code{client-with-user-certificates}](@grpc:/user_certificates.rs)
