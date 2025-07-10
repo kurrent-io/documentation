@@ -114,7 +114,7 @@ An application, which hosts the subscription, can go offline for some time for d
 
 When subscribed to `$all` you want to keep the event's position in the `$all` stream. As mentioned previously, the `$all` stream position consists of two big integers (prepare and commit positions), not one:
 
-@[code{subscribe-to-all-subscription-dropped}](@grpc:subscribing_to_stream.py;subscribing-to-streams.js;subscribing-to-streams.ts;subscribing_to_stream/SubscribingToStream.java;subscribing-to-streams/Program.cs;subscribingToStream.go;subscribing_to_stream.rs)
+@[code{subscribe-to-all-subscription-dropped}](@grpc:subscribing-to-streams.js;subscribing-to-streams.ts)
 
 ## User credentials
 

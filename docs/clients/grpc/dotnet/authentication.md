@@ -53,15 +53,4 @@ To authenticate, include these two parameters in your connection string or const
 
 Check the samples for the following clients:
 
-::: code-tabs
-@tab TypeScript
-@[code{client-with-user-certificates}](@grpc:user-certificates.ts)
-@tab Java
-@[code{client-with-user-certificates}](@grpc:authentication/UserCertificate.java)
-@tab C##
 @[code{client-with-user-certificates}](@grpc:user-certificates/Program.cs)
-@tab Go
-@[code{client-with-user-certificates}](@grpc:/userCertificates.go)
-:::
-
-

@@ -92,7 +92,7 @@ Deletes an existing projection. You must disable the projection before deleting 
 
 You can only delete an existing projection. When you try to delete a non-existing projection, you'll get an error:
 
-@[code{DeleteNotFound}](@grpc:projection_management/ProjectionManagement.java;projections.py;projectionManagement.go)
+@[code{DeleteNotFound}](@grpc:projection_management/ProjectionManagement.java)
 
 ## Abort a projection
 

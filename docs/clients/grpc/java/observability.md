@@ -31,7 +31,7 @@ To emit trace data, you must first install and use the dedicated package, as ins
 [Required Packages](./observability.md#required-packages) section, if provided. This package
 includes the necessary instrumentation that needs to be registered with the client.
 
-@[code{register-instrumentation}](@grpc:opentelemetry.js;opentelemetry.ts;opentelemetry/Instrumentation.java;diagnostics/Program.cs)
+@[code{register-instrumentation}](@grpc:opentelemetry/Instrumentation.java)
 
 ## Traces
 
@@ -96,7 +96,7 @@ querying and visualizing your trace data.
 The code snippets below demonstrate how to set up one or more exporters for each
 client:
 
-@[code{setup-exporter}](@grpc:opentelemetry.js;opentelemetry.ts;opentelemetry/Instrumentation.java;diagnostics/Program.cs)
+@[code{setup-exporter}](@grpc:opentelemetry/Instrumentation.java)
 
 For more details on configuring exporters for specific programming languages,
 refer to the [OpenTelemetry](https://opentelemetry.io/docs/languages/)

@@ -47,7 +47,7 @@ To emit trace data, you must first install and use the dedicated package, as ins
 [Required Packages](./observability.md#required-packages) section, if provided. This package
 includes the necessary instrumentation that needs to be registered with the client.
 
-@[code{register-instrumentation}](@grpc:opentelemetry.js;opentelemetry.ts;opentelemetry/Instrumentation.java;diagnostics/Program.cs)
+@[code{register-instrumentation}](@grpc:opentelemetry.js;opentelemetry.ts)
 
 ## Traces
 

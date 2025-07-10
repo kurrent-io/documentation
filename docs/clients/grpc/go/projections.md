@@ -85,7 +85,7 @@ go get github.com/kurrent-io/KurrentDB-Client-Go/kurrentdb
 
 Projection management operations are exposed through a dedicated client.
 
-@[code{createClient}](@grpc:projection-management.js;projection-management.ts;quickstart.py;projection_management/ProjectionManagement.java;projection-management/Program.cs;quickstart.py;projectionManagement.go)
+@[code{createClient}](@grpc:projectionManagement.go)
 
 ## Create a projection
 
@@ -136,7 +136,7 @@ Deletes an existing projection. You must disable the projection before deleting 
 
 You can only delete an existing projection. When you try to delete a non-existing projection, you'll get an error:
 
-@[code{DeleteNotFound}](@grpc:projection-management.js;projection-management.ts;projection_management/ProjectionManagement.java;projections.py;projectionManagement.go)
+@[code{DeleteNotFound}](@grpc:projectionManagement.go)
 
 ## Abort a projection
 
