@@ -1,3 +1,9 @@
+---
+sitemap:
+  priority: 0
+  changefreq: monthly
+---
+
 # Projections
 
 To redirect you to the right page, please select a client:

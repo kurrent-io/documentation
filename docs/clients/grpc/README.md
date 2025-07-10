@@ -1,4 +1,7 @@
 ---
+sitemap:
+  priority: 0
+  changefreq: monthly
 breadcrumbExclude: true
 ---
 

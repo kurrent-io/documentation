@@ -1,3 +1,8 @@
+---
+sitemap:
+  priority: 0
+  changefreq: monthly
+---
 
 # Getting Started
 
