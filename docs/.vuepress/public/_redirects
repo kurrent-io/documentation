@@ -25,7 +25,7 @@
 # ######################
 
 # redirect for internet search on "esdb .net client
-/clients/dotnet/5.0/connecting.html   /clients/grpc/getting-started.html#connecting-to-eventstoredb    301
+/clients/dotnet/5.0/connecting.html   /clients/grpc/dotnet/getting-started.html#connecting-to-eventstoredb    301
 
 # TCP Clients
 /clients/dotnet/21.2/migration-to-gRPC.html#appending-events       /clients/tcp/dotnet/21.2/migration-to-gRPC.html#appending-events    301
@@ -52,6 +52,13 @@
 /clients/http-api/generated/v5/docs/optional-http-headers/resolve-linkto.html       /http-api/v5/optional-http-headers.html#resolve-linkto   301
 /clients/http-api/generated/v5/docs/introduction/reading-streams.html               /http-api/v5/#reading-streams-and-events   301
 /clients/http-api/generated/v5/docs/introduction/optimistic-concurrency-and-idempotence.html      /http-api/v5/#optimistic-concurrency-and-idempotence   301
+
+/clients/grpc/python     /clients/grpc/python/getting-started.html    301
+/clients/grpc/rust       /clients/grpc/rust/getting-started.html      301
+/clients/grpc/nodejs     /clients/grpc/nodejs/getting-started.html    301
+/clients/grpc/java       /clients/grpc/java/getting-started.html      301
+/clients/grpc/dotnet     /clients/grpc/dotnet/getting-started.html    301
+/clients/grpc/go         /clients/grpc/go/getting-started.html        301
 
 /server/generated/v5/http-api/persistent-subscriptions.html       /http-api/v5/persistent.html   301
 /server/generated/v5/http-api/reading-subscribing-events.html     /http-api/v5/#reading-an-event-from-a-stream   301
