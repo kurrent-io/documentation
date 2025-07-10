@@ -1,6 +1,12 @@
+---
+breadcrumbExclude: true
+---
+
 # KurrentDB Clients
 
-Start working with KurrentDB using one of the official clients:
+KurrentDB offers official client libraries for multiple programming languages, making it easy to build applications that work with event-native workloads.
+
+Select your client library to view the documentation:
 
 <img src="https://skillicons.dev/icons?i=dotnet" alt=".NET" style="height: 1.5em; vertical-align: middle;" /> [.NET](/clients/grpc/dotnet/getting-started.md)
 

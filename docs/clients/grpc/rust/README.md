@@ -1,6 +1,5 @@
 ---
 index: false
-breadcrumbExclude: true
 ---
 
 # Rust
