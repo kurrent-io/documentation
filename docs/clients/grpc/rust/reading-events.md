@@ -1,8 +1,12 @@
 ---
 order: 3
+head:
+  - - title
+    - {}
+    - Reading Events | Rust | Clients | Kurrent Docs
 ---
 
-# Reading events
+# Reading Events
 
 There are two options for reading events from KurrentDB. You can either: 
     1. Read from an individual stream, or 

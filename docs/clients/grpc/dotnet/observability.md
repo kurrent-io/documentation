@@ -1,5 +1,9 @@
 ---
 order: 8
+head:
+  - - title
+    - {}
+    - Observability | .NET | Clients | Kurrent Docs
 ---
 
 # Observability

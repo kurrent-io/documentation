@@ -1,8 +1,11 @@
 ---
 order: 2
+  - - title
+    - {}
+    - Appending Events | .NET | Kurrent Docs
 ---
 
-# Appending events
+# Appending Events
 
 When you start working with KurrentDB, it is empty. The first meaningful operation is to add one or more events to the database using one of the available client SDKs.
 

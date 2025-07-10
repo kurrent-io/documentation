@@ -1,5 +1,9 @@
 ---
 order: 1
+head:
+  - - title
+    - {}
+    - Getting Started | .NET | Clients | Kurrent Docs
 ---
 
 # Getting started

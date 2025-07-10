@@ -1,5 +1,9 @@
 ---
 order: 10
+head:
+  - - title
+    - {}
+    - Release Notes | Python | Clients | Kurrent Docs
 ---
 
 # Release Notes

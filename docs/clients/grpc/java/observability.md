@@ -1,5 +1,9 @@
 ---
 order: 8
+head:
+  - - title
+    - {}
+    - Observability | Java | Clients | Kurrent Docs
 ---
 
 # Observability

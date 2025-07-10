@@ -1,6 +1,10 @@
 ﻿---
 order: 6
 title: Projections
+head:
+  - - title
+    - {}
+    - Projections | .NET | Clients | Kurrent Docs
 ---
 
 # Projection management

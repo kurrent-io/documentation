@@ -1,9 +1,13 @@
 ﻿---
 order: 6
 title: Projections
+head:
+  - - title
+    - {}
+    - Projections | Node.js | Clients | Kurrent Docs
 ---
 
-# Projection management
+# Projection Management
 
 The various gRPC client APIs include dedicated clients that allow you to manage projections.
 

@@ -1,8 +1,12 @@
 ---
 order: 5
+head:
+  - - title
+    - {}
+    - Persistent Subscriptions | Java | Clients | Kurrent Docs
 ---
 
-# Persistent subscriptions
+# Persistent Subscriptions
 
 Persistent subscriptions are similar to catch-up subscriptions, but there are two key differences:
 - The subscription checkpoint is maintained by the server. It means that when your client reconnects to the persistent subscription, it will automatically resume from the last known position.

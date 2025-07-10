@@ -1,5 +1,9 @@
 ---
 order: 10
+head:
+  - - title
+    - {}
+    - Release Notes | Java | Clients | Kurrent Docs
 ---
 
 # Release Notes

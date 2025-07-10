@@ -1,6 +1,10 @@
 ﻿---
 order: 6
 title: Projections
+head:
+  - - title
+    - {}
+    - Projections | Java | Clients | Kurrent Docs
 ---
 
 # Projection management

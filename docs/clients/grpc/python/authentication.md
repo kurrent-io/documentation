@@ -1,6 +1,10 @@
 ---
 title: Authentication
 order: 7
+head:
+  - - title
+    - {}
+    - Authentication | Python | Clients | Kurrent Docs
 ---
 
 ## Client x.509 certificate <Badge type="warning" text="Commercial" vertical="middle"/>

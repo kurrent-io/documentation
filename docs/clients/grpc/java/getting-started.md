@@ -1,8 +1,12 @@
 ---
 order: 1
+head:
+  - - title
+    - {}
+    - Getting Started | Java | Clients | Kurrent Docs
 ---
 
-# Getting started
+# Getting Started
 
 Get started by connecting your application to KurrentDB. 
 

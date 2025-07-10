@@ -1,5 +1,9 @@
 ---
 order: 10
+head:
+  - - title
+    - {}
+    - Release Notes | .NET | Clients | Kurrent Docs
 ---
 
 # Release Notes

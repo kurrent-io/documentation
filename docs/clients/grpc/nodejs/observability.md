@@ -1,5 +1,9 @@
 ---
 order: 8
+head:
+  - - title
+    - {}
+    - Observability | Node.js | Clients | Kurrent Docs
 ---
 
 # Observability

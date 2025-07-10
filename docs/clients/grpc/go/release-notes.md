@@ -1,5 +1,9 @@
 ---
 order: 10
+head:
+  - - title
+    - {}
+    - Release Notes | Go | Clients | Kurrent Docs
 ---
 
 # Release Notes
