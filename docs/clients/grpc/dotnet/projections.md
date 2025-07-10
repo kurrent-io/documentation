@@ -11,7 +11,6 @@ For a detailed explanation of projections, see the [server documentation](@serve
 
 You can find the full sample code from this documentation page in the respective [clients repositories](https://github.com/kurrent-io/?q=client).
 
-
 ## Creating a client
 
 Projection management operations are exposed through a dedicated client.

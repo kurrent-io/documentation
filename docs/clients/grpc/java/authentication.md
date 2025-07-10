@@ -54,5 +54,3 @@ To authenticate, include these two parameters in your connection string or const
 For example:
 
 @[code{client-with-user-certificates}](@grpc:authentication/UserCertificate.java)
-
-
