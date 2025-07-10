@@ -6,7 +6,7 @@ import CloudBanner from "./components/CloudBanner.vue";
 import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import {usePostHog} from "./lib/usePosthog";
-import Layout from "./layouts/Layout.vue";
+import Layout from "./layouts/SidebarLayout.vue";
 
 declare const __VERSIONS__: { latest: string, selected: string, all: string[] }
 

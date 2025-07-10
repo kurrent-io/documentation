@@ -164,6 +164,11 @@ html[data-theme="dark"] {
   --vp-c-text-mute: white;
   --border-color:white;
   --vp-c-gutter:black;
+
+  --dropdown-trigger-border-color: #4e575a;
+  --dropdown-item-bg: #202127;
+  --dropdown-item-bg-hover: #2c2e35;
+  --dropdown-item-color: white;
 }
 
 html[data-theme="light"] {
@@ -181,6 +186,11 @@ html[data-theme="light"] {
   --vp-c-text-mute: black;
   --border-color:black;
   --vp-c-gutter:white;
+
+  --dropdown-trigger-border-color: #a2adaf;
+  --dropdown-item-bg: white;
+  --dropdown-item-bg-hover: #E8EDEB;
+  --dropdown-item-color: #{$main-color};
 }
 
 $font-body: 15px;
