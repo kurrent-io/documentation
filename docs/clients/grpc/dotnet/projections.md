@@ -60,13 +60,7 @@ You can only disable an existing projection. When you try to disable a non-exist
 
 ## Delete a projection
 
-Deletes an existing projection. You must disable the projection before deleting it, running projections cannot be deleted. Deleting a projection includes deleting the checkpoint and the emitted streams.
-
-@[code{Delete}](@grpc:projection-management/Program.cs)
-
-You can only delete an existing projection. When you try to delete a non-existing projection, you'll get an error:
-
-@[code{DeleteNotFound}](@grpc:projections.py;projectionManagement.go)
+This feature is not available for this client.
 
 ## Abort a projection
 
