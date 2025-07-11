@@ -1,8 +1,9 @@
 ---
 order: 2
+head:
   - - title
     - {}
-    - Appending Events | .NET | Kurrent Docs
+    - Appending Events | .NET | Clients | Kurrent Docs
 ---
 
 # Appending Events
