@@ -5,48 +5,49 @@ import references from '../versions.json'
 import log from './log'
 
 export interface VersionDetail {
-  version: string
-  path: string
-  startPage: string
-  preview: boolean
-  deprecated: boolean
-  hide: boolean
+  version: string;
+  path: string;
+  startPage: string;
+  preview: boolean;
+  deprecated: boolean;
+  hide: boolean;
+  lts: boolean;
 }
 
 export interface Version {
-  id: string
-  group: string
-  basePath: string
-  versions: VersionDetail[]
+  id: string;
+  group: string;
+  basePath: string;
+  versions: VersionDetail[];
 }
 
 export interface VersionLink {
-  text: string
-  link: string
+  text: string;
+  link: string;
 }
 
 export class Versioning {
-  readonly versions: Version[] = []
+  readonly versions: Version[] = [];
 
   constructor() {
-    const require = createRequire(import.meta.url)
+    const require = createRequire(import.meta.url);
     
     references.forEach(p => {
-      const fileName = path.resolve(__dirname, p)
+      const fileName = path.resolve(__dirname, p);
       
       if (fs.existsSync(fileName)) {
-        log.info(`Importing versions from ${fileName}`)
-        const list: Version[] = require(fileName)
+        log.info(`Importing versions from ${fileName}`);
+        const list: Version[] = require(fileName);
         
         list.forEach(v => {
-          const existing = this.versions.find(x => x.id === v.id)
+          const existing = this.versions.find(x => x.id === v.id);
           if (existing === undefined)
-            this.versions.push(v)
+            this.versions.push(v);
           else
-            existing.versions.push(...v.versions)
+            existing.versions.push(...v.versions);
         })
       } else {
-        log.info(`File ${fileName} doesn't exist, ignoring`)
+        log.info(`File ${fileName} doesn't exist, ignoring`);
       }
     })
   }
@@ -70,7 +71,7 @@ export class Versioning {
     }
 
     get all(): Version[] {
-        return this.versions
+        return this.versions;
     }
 
     // Generate a single object that represents all versions from each sidebar

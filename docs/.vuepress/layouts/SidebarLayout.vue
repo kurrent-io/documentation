@@ -15,7 +15,9 @@ interface ExtendedPageData extends Record<string, unknown> {
   }
 }
 
-const pageData = usePageData<ExtendedPageData>()
+const pageData = usePageData<ExtendedPageData>();
+
+console.log(pageData.value.versions)
 const route = useRoute()
 
 /**
@@ -39,7 +41,7 @@ const versionInfo = computed(() => {
         if (route.path.includes(`/${basePath}/${versionPath}/`)) {
           return {
             versions: versionInfo.versions,
-            current: versionDetail.version
+            current: versionDetail
           }
         }
       }
