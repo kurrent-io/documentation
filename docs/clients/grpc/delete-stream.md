@@ -1,98 +1,21 @@
 ---
-order: 9
+sitemap:
+  priority: 0
+  changefreq: monthly
 ---
 
-# Deleting events
+# Deleting Events
 
-In KurrentDB, you can delete events and streams either partially or completely. Settings like $maxAge and $maxCount help control how long events are kept or how many events are stored in a stream, but they won't delete the entire stream.
-When you need to fully remove a stream, KurrentDB offers two options: Soft Delete and Hard Delete.
+To redirect you to the right page, please select a client:
 
-## Soft delete
+<img src="https://skillicons.dev/icons?i=dotnet" alt=".NET" style="height: 1.5em; vertical-align: middle;" /> [.NET](/clients/grpc/dotnet/delete-stream.md)
 
-Soft delete in KurrentDB allows you to mark a stream for deletion without completely removing it, so you can still add new events later. While you can do this through the UI, using code is often better for automating the process,
-handling many streams at once, or including custom rules. Code is especially helpful for large-scale deletions or when you need to integrate soft deletes into other workflows.
+<img src="https://skillicons.dev/icons?i=python" alt="Python" style="height: 1.5em; vertical-align: middle;" /> [Python](/clients/grpc/python/delete-stream.md)
 
-::: tabs#lang
-@tab Python
-```python
-client.delete_stream(stream_name, current_version=6)
-```
-@tab JavaScript
-```javascript
-await client.deleteStream(streamName);
-```
-@tab TypeScript
-```typescript
-await client.deleteStream(streamName);
-```
-@tab Java
-```java
-client.deleteStream(streamName, DeleteStreamOptions.get()).get();
-```
-@tab C##
-```csharp
-await client.DeleteAsync(streamName, StreamState.Any);
-```
-@tab Go
-```go
-options := esdb.DeleteStreamOptions{
-    ExpectedRevision: esdb.Any{},
-}
-_, err = client.DeleteStream(context.Background(), streamName, options)
-```
-@tab Rust
-```rust
-let options = DeleteStreamOptions::default();
-client
-    .delete_stream(stream_name, &options)
-    .await?;
-```
-:::
+<img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" style="height: 1.5em; vertical-align: middle;" /> [Node.js](/clients/grpc/nodejs/delete-stream.md)
 
-::: note 
-Clicking the delete button in the UI performs a soft delete, 
-setting the TruncateBefore value to remove all events up to a certain point. 
-While this marks the events for deletion, actual removal occurs during the next scavenging process. 
-The stream can still be reopened by appending new events.
-:::
+<img src="https://skillicons.dev/icons?i=java" alt="Java" style="height: 1.5em; vertical-align: middle;" /> [Java](/clients/grpc/java/delete-stream.md)
 
-## Hard delete
+<img src="https://skillicons.dev/icons?i=go" alt="Go" style="height: 1.5em; vertical-align: middle;" /> [Go](/clients/grpc/go/delete-stream.md)
 
-Hard delete in KurrentDB permanently removes a stream and its events. While you can use the HTTP API, code is often better for automating the process, managing multiple streams, and ensuring precise control. Code is especially useful when you need to integrate hard delete into larger workflows or apply specific conditions. Note that when a stream is hard deleted, you cannot reuse the stream name, it will raise an exception if you try to append to it again.
-
-::: tabs#lang
-@tab Python
-```python
-client.tombstone_stream(stream_name, current_version=4)
-```
-@tab JavaScript
-```javascript
-await client.tombstoneStream(streamName);
-```
-@tab TypeScript
-```typescript
-await client.tombstoneStream(streamName);
-```
-@tab Java
-```java
-client.tombstoneStream(streamName, DeleteStreamOptions.get()).get();
-```
-@tab C##
-```csharp
-await client.TombstoneAsync(streamName, StreamState.Any);
-```
-@tab Go
-```go
-options := esdb.TombstoneStreamOptions{
-    ExpectedRevision: esdb.Any{},
-}
-_, err = client.TombstoneStream(context.Background(), streamName, options)
-```
-@tab Rust
-```rust
-let options = TombstoneStreamOptions::default();
-client
-    .tombstone_stream(stream_name, &options)
-    .await?;
-```
-:::
+<img src="https://skillicons.dev/icons?i=rust" alt="Rust" style="height: 1.5em; vertical-align: middle;" /> [Rust](/clients/grpc/rust/delete-stream.md)

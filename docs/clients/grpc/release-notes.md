@@ -1,16 +1,21 @@
 ---
-order: 10
+sitemap:
+  priority: 0
+  changefreq: monthly
 ---
 
 # Release Notes
 
-Click a client below to stay up to date with its latest changes and improvements, view its detailed release history and changelogs, and access the release notes for breaking changes, upgrade instructions, and migration guides.
+To redirect you to the right page, please select a client:
 
-| Client        | Release Notes                                                                 |
-|---------------|------------------------------------------------------------------------------|
-| Node.js       | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-NodeJS/releases)   |
-| .NET          | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-Dotnet/releases)   |
-| Java          | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-Java/releases)     |
-| Go            | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-Go/releases)       |
-| Rust          | [View Releases](https://github.com/kurrent-io/KurrentDB-Client-Rust/releases)     |
-| Python        | [View Releases](https://github.com/pyeventsourcing/kurrentdbclient/releases)      |
+<img src="https://skillicons.dev/icons?i=dotnet" alt=".NET" style="height: 1.5em; vertical-align: middle;" /> [.NET](/clients/grpc/dotnet/release-notes.md)
+
+<img src="https://skillicons.dev/icons?i=python" alt="Python" style="height: 1.5em; vertical-align: middle;" /> [Python](/clients/grpc/python/release-notes.md)
+
+<img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" style="height: 1.5em; vertical-align: middle;" /> [Node.js](/clients/grpc/nodejs/release-notes.md)
+
+<img src="https://skillicons.dev/icons?i=java" alt="Java" style="height: 1.5em; vertical-align: middle;" /> [Java](/clients/grpc/java/release-notes.md)
+
+<img src="https://skillicons.dev/icons?i=go" alt="Go" style="height: 1.5em; vertical-align: middle;" /> [Go](/clients/grpc/go/release-notes.md)
+
+<img src="https://skillicons.dev/icons?i=rust" alt="Rust" style="height: 1.5em; vertical-align: middle;" /> [Rust](/clients/grpc/rust/release-notes.md)

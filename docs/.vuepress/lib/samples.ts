@@ -1,6 +1,7 @@
 import {logger, path} from 'vuepress/utils';
 import {type ResolvedImport} from "../markdown/xode/types";
 import version from "./version";
+import * as fs from 'fs';
 
 const base = "../../samples";
 
@@ -8,10 +9,12 @@ export function resolveMultiSamplesPath(src: string): ResolvedImport[] {
     const split = src.split(':');
     const cat = split.length < 2 ? undefined : split[0];
     const paths = split.length === 1 ? src : split[1];
-    return paths.split(';').map(x => {
-        const r = resolveSamplesPath(x, cat);
-        return {label: r.label, importPath: r.path};
-    })
+    return paths.split(';')
+        .filter(x => x.trim() !== '') // Filter out empty strings
+        .map(x => {
+            const r = resolveSamplesPath(x, cat);
+            return {label: r.label, importPath: r.path};
+        })
 }
 
 export function resolveSamplesPath(src: string, srcCat: string | undefined) {
@@ -19,9 +22,17 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
         return {label: "", path: s}
     };
 
-    const ext = src.split('.').pop()!;
+    // Handle empty src
+    if (!src || src.trim() === '') {
+        console.warn(`Empty source path provided, srcCat: "${srcCat}"`);
+        return def(src);
+    }
+
+    const srcParts = src.split('.');
+    const ext = srcParts.length > 1 ? srcParts.pop()! : '';
     const pseudo = src.split('/');
     const includesCat = pseudo[0].startsWith('@');
+    
     if (!includesCat && srcCat === undefined) return def(src);
 
     const cats: Record<string, Record<string, {path: string, version?: string, label?: string}>> = {
@@ -78,9 +89,15 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
     }
 
     let lang = cat[ext] ?? cat["default"];
-    if (lang === undefined && cat.path === undefined) {
-        logger.warn(`Unknown extension ${ext} in ${cat}`);
+    if (lang === undefined) {
+        // If no extension match and no default, try to find by partial match or return default
+        logger.warn(`Unknown extension "${ext}" in category "${catName}". Available extensions: ${Object.keys(cat).join(', ')}`);
         return def(src);
+    }
+
+    // If we don't have an extension but we have a default, use it
+    if (ext === '' && cat["default"]) {
+        lang = cat["default"];
     }
 
     const samplesVersion = isVersion ? pseudo[1] : lang.version;
@@ -88,8 +105,20 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
     const toReplace = isVersion ? `${pseudo[0]}/${pseudo[1]}` : `${pseudo[0]}`;    
 
     const p = includesCat ? src.replace(toReplace, `${base}/${langPath}`) : `${base}/${langPath}/${src}`;
+    const resolvedPath = path.resolve(__dirname, p);
 
-    return {label: lang.label, path: path.resolve(__dirname, p)};
+    // Check if the resolved path is a directory, and if so, warn and return the original src
+    try {
+        const stat = fs.statSync(resolvedPath);
+        if (stat.isDirectory()) {
+            logger.warn(`Resolved path is a directory, not a file: ${resolvedPath}`);
+            return def(src);
+        }
+    } catch (error) {
+        // File doesn't exist, which is handled elsewhere
+    }
+
+    return {label: lang.label, path: resolvedPath};
 }
 
 export const projectionSamplesPath = "https://raw.githubusercontent.com/kurrent-io/KurrentDB/53f84e55ea56ccfb981aff0e432581d72c23fbf6/samples/http-api/data/";
