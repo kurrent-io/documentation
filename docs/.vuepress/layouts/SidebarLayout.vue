@@ -18,7 +18,10 @@ interface ExtendedPageData extends Record<string, unknown> {
 const pageData = usePageData<ExtendedPageData>()
 const route = useRoute()
 
-const version = computed(() => {
+/**
+ * Find which version of documentation the user is currently viewing based on the URL path
+ */
+const versionInfo = computed(() => {
   const pathSegments = route.path.split('/').filter(segment => segment !== '')
 
   if (pathSegments.length < 2)
@@ -35,7 +38,7 @@ const version = computed(() => {
         const versionPath = versionDetail.path
         if (route.path.includes(`/${basePath}/${versionPath}/`)) {
           return {
-            version: versionInfo.versions,
+            versions: versionInfo.versions,
             current: versionDetail.version
           }
         }
@@ -49,8 +52,8 @@ const version = computed(() => {
 
 <template>
   <Layout>
-    <template v-if="version" #sidebarTop>
-      <VersionDropdown :version="version.version" :current="version.current" />
+    <template v-if="versionInfo" #sidebarTop>
+      <VersionDropdown :versions="versionInfo.versions" :current="versionInfo.current" />
     </template>
   </Layout>
 </template>

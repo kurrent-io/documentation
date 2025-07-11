@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, toRef, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vuepress/client'
 import type { VersionDetail } from '../lib/versioning'
 
 interface Props {
-  version: VersionDetail[]
+  versions: VersionDetail[]
   current: string
 }
 
@@ -12,10 +12,12 @@ const props = defineProps<Props>()
 
 const router = useRouter()
 const route = useRoute()
-const selectedVersion = toRef(props, 'current')
+const selectedVersion = ref(props.current)
 const isOpen = ref(false)
 
-const latestVersion = computed(() => props.version[0]?.version)
+const latestVersion = computed(() => props.versions[0]?.version)
+const currentVersions = computed(() => props.versions.filter(v => !v.deprecated))
+const deprecatedVersions = computed(() => props.versions.filter(v => v.deprecated))
 
 watch(() => props.current, (newCurrent) => {
   selectedVersion.value = newCurrent
@@ -30,7 +32,7 @@ const closeDropdown = (): void => {
 }
 
 const handleVersionSelect = (version: string): void => {
-  const versionDetails = props.version.find(v => v.version === version)
+  const versionDetails = props.versions.find(v => v.version === version)
 
   if (versionDetails) {
     const base = route.path.split('/').filter(seg => seg)[0]
@@ -48,9 +50,8 @@ const handleClickOutside = (event: Event): void => {
     closeDropdown()
 }
 
-if (typeof window !== 'undefined') {
-  document.addEventListener('click', handleClickOutside)
-}
+onMounted(() => document.addEventListener('click', handleClickOutside))
+onUnmounted(() => document.removeEventListener('click', handleClickOutside))
 </script>
 
 <template>
@@ -63,7 +64,10 @@ if (typeof window !== 'undefined') {
       aria-haspopup="listbox"
       @click="toggleDropdown"
     >
-      <span class="selected-version">{{ selectedVersion }} <span v-if="selectedVersion === latestVersion">(latest)</span></span>
+      <span class="selected-version">
+        {{ selectedVersion }}
+        <span v-if="selectedVersion === latestVersion">(latest)</span>
+      </span>
       <svg 
         class="dropdown-arrow" 
         :class="{ 'rotate-180': isOpen }"
@@ -89,159 +93,217 @@ if (typeof window !== 'undefined') {
       role="listbox"
       aria-label="Version options"
     >
-      <button
-        v-for="v in version"
-        :key="v.version"
-        type="button"
-        class="dropdown-item"
-        :class="{ 'active': v.version === selectedVersion }"
-        role="option"
-        :aria-selected="v.version === selectedVersion"
-        @click="handleVersionSelect(v.version)"
-      >
-        <svg 
-          class="check-icon"
-          :class="{ 'visible': v.version === selectedVersion }"
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg"
+      <!-- Current versions -->
+      <template v-if="currentVersions.length > 0">
+        <div class="dropdown-separator">Current</div>
+        <button
+          v-for="v in currentVersions"
+          :key="v.version"
+          type="button"
+          class="dropdown-item"
+          :class="{ 'active': v.version === selectedVersion }"
+          role="option"
+          :aria-selected="v.version === selectedVersion"
+          @click="handleVersionSelect(v.version)"
         >
-          <path 
-            d="M13.5 4.5L6 12L2.5 8.5" 
-            stroke="currentColor" 
-            stroke-width="2" 
-            stroke-linecap="round" 
-            stroke-linejoin="round"
-          />
-        </svg>
-        <span class="version-text">
-          {{ v.version }}<span v-if="v.version === latestVersion"> (latest)</span>
-        </span>
-      </button>
+          <svg 
+            class="check-icon"
+            :class="{ 'visible': v.version === selectedVersion }"
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path 
+              d="M13.5 4.5L6 12L2.5 8.5" 
+              stroke="currentColor" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="version-text">
+            {{ v.version }}
+            <span v-if="v.version === latestVersion"> (latest)</span>
+          </span>
+        </button>
+      </template>
+
+      <!-- Deprecated versions -->
+      <template v-if="deprecatedVersions.length > 0">
+        <div class="dropdown-separator" style="margin-top: 8px;">Deprecated</div>
+        <button
+          v-for="v in deprecatedVersions"
+          :key="v.version"
+          type="button"
+          class="dropdown-item deprecated"
+          :class="{ 'active': v.version === selectedVersion }"
+          role="option"
+          :aria-selected="v.version === selectedVersion"
+          @click="handleVersionSelect(v.version)"
+        >
+          <svg 
+            class="check-icon"
+            :class="{ 'visible': v.version === selectedVersion }"
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path 
+              d="M13.5 4.5L6 12L2.5 8.5" 
+              stroke="currentColor" 
+              stroke-width="2" 
+              stroke-linecap="round" 
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="version-text">
+            {{ v.version }}
+            <span v-if="v.version === latestVersion"> (latest)</span>
+          </span>
+        </button>
+      </template>
     </div>
   </div>
 </template>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .version-dropdown {
   position: relative;
-  margin-top: 1rem;
-  margin-right: 0.5rem;
-  margin-left: 0.5rem;
-}
+  margin: 1rem 0.5rem 0;
 
-.version-trigger {
-  width: 100%;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  border: 1px solid var(--dropdown-trigger-border-color);
-  border-radius: 0.375rem;
-  background-color: transparent;
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--text-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: left;
-}
+  .version-trigger {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--vp-c-border);
+    border-radius: 0.375rem;
+    background-color: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    transition: all 0.2s ease;
 
-.version-trigger:hover {
-  outline: 2px solid rgba(78, 87, 90, 0.2);
-  outline-offset: 1px;
-}
+    &:hover,
+    &:focus {
+      outline: 2px solid rgba(78, 87, 90, 0.2);
+      outline-offset: 1px;
+    }
 
-.version-trigger:focus {
-  outline: 2px solid rgba(78, 87, 90, 0.2);
-  outline-offset: 1px;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
 
-.selected-version {
-  flex: 1;
-}
+    .selected-version {
+      flex: 1;
+    }
 
-.dropdown-arrow {
-  flex-shrink: 0;
-  margin-left: 0.5rem;
-}
+    .dropdown-arrow {
+      flex-shrink: 0;
+      margin-left: 0.5rem;
+      transition: transform 0.2s ease;
 
-.dropdown-arrow.rotate-180 {
-  transform: rotate(180deg);
-}
+      &.rotate-180 {
+        transform: rotate(180deg);
+      }
+    }
+  }
 
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  margin-top: 0.3rem;
-  border: none;
-  border-radius: 0.375rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  max-height: 250px;
-  overflow-y: auto;
-}
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    margin-top: 0.3rem;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 0.5rem;
+    box-shadow: 
+      0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    max-height: 250px;
+    overflow-y: auto;
+    background-color: var(--vp-c-bg-elv);
 
-.dropdown-menu::-webkit-scrollbar {
-  width: 8px;
-  background-color: #202127;
-}
-.dropdown-menu::-webkit-scrollbar-track {
-  background-color: #202127;
-}
-.dropdown-menu::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 4px;
-}
-.dropdown-menu {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.4) #202127;
-}
+    // Webkit scrollbar styles
+    &::-webkit-scrollbar {
+      width: 8px;
+      background-color: var(--vp-c-bg-elv);
+    }
 
-.dropdown-item {
-  width: 100%;
-  padding: 0.5rem;
-  font-weight: normal;
-  color: var(--dropdown-item-color);
-  background-color: var(--dropdown-item-bg);
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: 16px;
-}
+    &::-webkit-scrollbar-track {
+      background-color: var(--vp-c-bg-elv);
+    }
 
-.dropdown-item:hover {
-  background-color: var(--dropdown-item-bg-hover)
-}
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.4);
+      border-radius: 4px;
+    }
 
-.dropdown-item.active {
-  font-weight: bold;
-}
+    // Firefox scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: rgb(161, 161, 161) var(--vp-c-bg-elv);
 
-.check-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 0.5rem;
-  opacity: 0;
-  flex-shrink: 0;
-}
+    .dropdown-separator {
+      padding: 0.5rem 1rem;
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--vp-c-text-mute);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background-color: var(--vp-c-bg-elv);
+    }
 
-.check-icon.visible {
-  opacity: 1;
-}
+    .dropdown-item {
+      width: 100%;
+      padding: 0.5rem 1rem;
+      font-size: 16px;
+      font-weight: normal;
+      background-color: var(--vp-c-bg-elv);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      transition: all 0.2s ease;
 
-.version-text {
-  flex: 1;
+      &:hover {
+        background-color: var(--dropdown-item-bg-hover);
+      }
+
+      &.active {
+        font-weight: bold;
+        color: var(--dropdown-item-color);
+      }
+
+      &.deprecated .version-text {
+        color: var(--dropdown-deprecated-text-color);
+      }
+
+      .check-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 0.5rem;
+        opacity: 0;
+        flex-shrink: 0;
+        transition: opacity 0.2s ease;
+
+        &.visible {
+          opacity: 1;
+        }
+      }
+
+      .version-text {
+        flex: 1;
+      }
+    }
+  }
 }
 </style>

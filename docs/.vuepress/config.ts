@@ -1,10 +1,11 @@
+/* eslint-disable import/no-named-as-default */
+
 import {dl} from "@mdit/plugin-dl";
 import viteBundler from "@vuepress/bundler-vite";
-import dotenv from 'dotenv';
+import dotenv from "dotenv"
 import vueDevTools from 'vite-plugin-vue-devtools'
 import {defineUserConfig} from "vuepress";
 import {path} from 'vuepress/utils';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import {hopeTheme} from "vuepress-theme-hope";
 import {themeOptions} from "./configs/theme";
 import {projectionSamplesPath, resolveMultiSamplesPath} from "./lib/samples";
@@ -39,6 +40,12 @@ export default defineUserConfig({
         importCode: false,
         headers: {level: [2, 3]},
     },
+    pagePatterns: [
+      '**/*.md',
+      '!**/v*/README.md',
+      '!.vuepress',
+      '!node_modules'
+    ],
     extendsMarkdown: md => {
         md.use(replaceLinkPlugin, {
             replaceLink: (link: string, _) => link
