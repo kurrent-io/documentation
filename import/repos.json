@@ -4,7 +4,7 @@
     "group": "Server",
     "basePath": "server",
     "docsRelativePath": ["docs"],
-    "samplesRelativePath": ["samples", "server"],
+    "samplesRelativePath": ["samples"],
     "currentBranch": "master",
     "repo": "https://github.com/kurrent-io/KurrentDB",
     "branches": [
@@ -53,51 +53,7 @@
       }
     ],
     "postprocess": [
-      "pnpm shx rm -rf <root>/.vuepress",
-      "pnpm shx rm -rf ./docs/server/v5/http-api",
-      "pnpm shx rm -rf ./docs/server/v22.10/http-api",
-      "pnpm shx rm -rf ./docs/server/v23.10/http-api",
-      "pnpm shx rm -rf ./docs/server/v24.6/http-api"
-    ]
-  },
-  {
-    "id": "http-api",
-    "group": "HTTP API",
-    "basePath": "http-api",
-    "docsRelativePath": ["docs", "http-api"],
-    "samplesRelativePath": ["samples", "http-api"],
-    "repo": "https://github.com/kurrent-io/KurrentDB",
-    "branches": [
-      {
-        "version": "v25.0",
-        "name": "release/v25.0",
-        "startPage": "introduction.html"
-      },
-      {
-        "version": "v24.10",
-        "name": "release/v24.10",
-        "startPage": "introduction.html"
-      },
-      {
-        "version": "v24.6",
-        "name": "release/oss-v24.6",
-        "startPage": "introduction.html"
-      },
-      {
-        "version": "v23.10",
-        "name": "release/oss-v23.10",
-        "startPage": "introduction.html"
-      },
-      {
-        "version": "v22.10",
-        "name": "release/oss-v22.10",
-        "startPage": "introduction.html"
-      },
-      {
-        "version": "v5",
-        "name": "release/oss-v5",
-        "startPage": "introduction.html"
-      }
+      "pnpm shx rm -rf <root>/.vuepress"
     ]
   },
   {
