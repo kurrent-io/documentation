@@ -27,7 +27,7 @@ export const navbarEn: NavbarOptions = [
       {
         text: "Clients",
         children: [
-          { text: ".NET", link: "/clients/grpc/dotnet/getting-started.html" },
+          { text: ".NET", link: `/clients/grpc/dotnet/` },
           { text: "Python", link: "/clients/grpc/python/getting-started.html" },
           { text: "Node.js", link: "/clients/grpc/nodejs/getting-started.html" },
           { text: "Java", link: "/clients/grpc/java/getting-started.html" },

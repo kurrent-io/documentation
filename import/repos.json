@@ -100,13 +100,16 @@
   {
     "id": "dotnet-client",
     "group": ".NET SDK",
-    "basePath": "clients/dotnet",
+    "basePath": "clients/grpc/dotnet",
+    "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
+    "currentBranch": "docs",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Dotnet",
     "branches": [
       {
-        "version": "1.0.0",
-        "name":"master"
+        "version": "v23.3",
+        "name": "docs",
+        "startPage": "getting-started.html"
       }
     ]
   },

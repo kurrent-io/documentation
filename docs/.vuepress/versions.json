@@ -1,5 +1,6 @@
 [
   "../../http-api/generated-versions.json",
   "../../server/generated-versions.json",
-  "../../server/kubernetes-operator/versions.json"
+  "../../server/kubernetes-operator/versions.json",
+  "../../clients/grpc/dotnet/generated-versions.json"
 ]

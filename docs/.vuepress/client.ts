@@ -102,6 +102,12 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
+        addDynamicRoute('/clients/grpc/:lang',
+            to => {
+              const latest = __VERSIONS__.all.filter(x => x.id == `${to.params.lang}-client`)[0].versions[0].version;
+              return `/clients/grpc/${to.params.lang}/${latest}/getting-started.html`
+            });
+
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/client/:lang',
             to => {
