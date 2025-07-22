@@ -130,15 +130,6 @@ export default defineClientConfig({
         addFixedRoute("/server/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest.html", `/${__VERSIONS__.latest}/quick-start/`);
-        
-        // .NET client redirect to latest version (dynamic)
-        const dotnetClient = __VERSIONS__.all.find(x => x.id === 'dotnet-client');
-        if (dotnetClient && dotnetClient.versions.length > 0) {
-            const latestDotnetVersion = dotnetClient.versions[0].version;
-            const startPage = dotnetClient.versions[0].startPage || 'getting-started.html';
-            addFixedRoute("/clients/grpc/dotnet/latest/", `/clients/grpc/dotnet/${latestDotnetVersion}/${startPage}`);
-            addFixedRoute("/clients/grpc/dotnet/latest", `/clients/grpc/dotnet/${latestDotnetVersion}/${startPage}`);
-        }
 
         router.afterEach((to, from) => {
             if (typeof window === "undefined" || to.path === from.path || removeHtml(to.path) === removeHtml(from.path)) return;
