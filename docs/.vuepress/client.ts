@@ -120,6 +120,7 @@ export default defineClientConfig({
 
         // uncomment and replace with `/clients/grpc/:lang/:version` once clients are versioned
         addDynamicRoute('/clients/grpc/dotnet/:version', to => `/clients/grpc/dotnet/${to.params.version}/getting-started.html`);
+        addDynamicRoute('/clients/grpc/dotnet/:version/', to => `/clients/grpc/dotnet/${to.params.version}/getting-started.html`);
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/client/:lang',
