@@ -114,6 +114,7 @@
       {
         "version": "Legacy v23.3",
         "name": "release/legacy/v23.3",
+        "deprecated": true,
         "startPage": "getting-started.html"
       }
     ]
