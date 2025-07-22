@@ -7,7 +7,23 @@ import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import {usePostHog} from "./lib/usePosthog";
 
-declare const __VERSIONS__: { latest: string, selected: string, all: string[] }
+declare const __VERSIONS__: { 
+    latest: string, 
+    selected: string, 
+    all: {
+        id: string,
+        group: string,
+        basePath: string,
+        versions: {
+            version: string,
+            path: string,
+            startPage: string,
+            preview?: boolean,
+            deprecated?: boolean,
+            hide?: boolean
+        }[]
+    }[]
+}
 
 const storageKey = "VUEPRESS_TAB_STORE";
 
@@ -98,19 +114,9 @@ export default defineClientConfig({
                 }
             }, 0);
         });
-        const operatorLatest = __VERSIONS__.all.filter(x => x.id == 'kubernetes-operator')[0].versions[0].version;
+        const operatorLatest = __VERSIONS__.all.filter(x => x.id === 'kubernetes-operator')[0].versions[0].version;
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
-
-        const dotnetClientLatest = __VERSIONS__.all.filter(x => x.id == 'dotnet-client')[0].versions[0].version;
-        addDynamicRoute("/clients/grpc/dotnet", to => `/clients/grpc/dotnet/${dotnetClientLatest}/getting-started.html`);
-
-        // // TODO: Uncomment until we finish writing the docs for the other clients
-        // addDynamicRoute('/clients/grpc/:lang',
-        //     to => {
-        //       const latest = __VERSIONS__.all.filter(x => x.id == `${to.params.lang}-client`)[0].versions[0].version;
-        //       return `/clients/grpc/${to.params.lang}/${latest}/getting-started.html`
-        //     });
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/client/:lang',
@@ -124,6 +130,15 @@ export default defineClientConfig({
         addFixedRoute("/server/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest.html", `/${__VERSIONS__.latest}/quick-start/`);
+        
+        // .NET client redirect to latest version (dynamic)
+        const dotnetClient = __VERSIONS__.all.find(x => x.id === 'dotnet-client');
+        if (dotnetClient && dotnetClient.versions.length > 0) {
+            const latestDotnetVersion = dotnetClient.versions[0].version;
+            const startPage = dotnetClient.versions[0].startPage || 'getting-started.html';
+            addFixedRoute("/clients/grpc/dotnet/latest/", `/clients/grpc/dotnet/${latestDotnetVersion}/${startPage}`);
+            addFixedRoute("/clients/grpc/dotnet/latest", `/clients/grpc/dotnet/${latestDotnetVersion}/${startPage}`);
+        }
 
         router.afterEach((to, from) => {
             if (typeof window === "undefined" || to.path === from.path || removeHtml(to.path) === removeHtml(from.path)) return;
