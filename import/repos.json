@@ -103,12 +103,12 @@
     "basePath": "clients/grpc/dotnet",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
-    "currentBranch": "docs",
+    "currentBranch": "master",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Dotnet",
     "branches": [
       {
         "version": "v23.3",
-        "name": "docs",
+        "name": "release/legacy/v23.3",
         "startPage": "getting-started.html"
       }
     ]
