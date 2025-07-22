@@ -54,6 +54,16 @@ Other than `replicas`, each of the fields in `KurrentDBReadOnlyReplicasSpec` def
 |------------------------------------------------------------------|----------|----------------------------------------------------------------------------------|
 | `domain` _string_                                                | Yes      | Domain used for external DNS e.g. advertised address exposed in the gossip state |
 | `loadBalancer` _[KurrentDBLoadBalancer](#kurrentdbloadbalancer)_ | Yes      | Defines a load balancer to use with the database                                 |
+| `fqdnTemplate` _string_                                          | No       | The template string used to define the external advertised address of a node     |
+
+Note that `fqdnTemplate` supports the following expansions:
+- `{name}` expands to KurrentDB.metadata.name
+- `{namespace}` expands to KurretnDB.metadata.namespace
+- `{domain}` expands to the KurrnetDBNetwork.domain
+- `{podName}` expands to the name of the pod
+- `{nodeTypeSuffix}` expands to `""` for a primary node or `"-replica"` for a replica node
+
+When `fqdnTemplate` is empty, it defaults to `{podName}.{name}{nodeTypeSuffix}.{domain}`.
 
 #### KurrentDBLoadBalancer
 

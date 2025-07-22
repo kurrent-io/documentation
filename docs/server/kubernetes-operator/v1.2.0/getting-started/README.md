@@ -25,13 +25,9 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 * Back up and restore clusters
 * Perform rolling upgrades and update configurations
 
-### New in 1.1.0
-* Deploy Read-only Replica nodes into your KurrentDB cluster. See the [example](
-  ../operations/database-deployment.html#three-node-insecure-cluster-with-two-read-only-replicas), and [reference](
-  resource-types.html#kurrentdbreadonlyreplicasspec)
-* Configure arbitrary scheduling constraints on your KurrentDB pods. See the [example](
-  ../operations/database-deployment.html#deploying-with-scheduling-constraints), and [reference](
-  resource-types.html#kurrentdbconstraints)
+### New in 1.2.0
+* Configure the advertised FQDN with a template.  See the [docs](
+  ../getting-started/resource-types.md#kurrentdbnetwork).
 
 ## Supported KurrentDB Versions
 

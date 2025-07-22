@@ -16,8 +16,8 @@ To get the best out of this guide, a basic understanding of [Kubernetes concepts
 :::
 
 * A Kubernetes cluster running `v1.23.1` or later.
-* Permission to create resources, deploy the Operator and install CRDs in the target cluster. 
-* The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster: 
+* Permission to create resources, deploy the Operator and install CRDs in the target cluster.
+* The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster:
   * kubectl [install guide](https://kubernetes.io/docs/tasks/tools/install-kubectl)
   * k9s [install guide](https://k9scli.io/topics/install/)
   * Helm 3 CLI [install guide](https://helm.sh/docs/intro/install/)
@@ -52,7 +52,7 @@ If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
-helm pull kurrent-latest/kurrentdb-operator --version 1.1.0 --untar
+helm pull kurrent-latest/kurrentdb-operator --version 1.2.0 --untar
 # Install the CRDs
 kubectl apply -f kurrentdb-operator/templates/crds
 ```
@@ -74,7 +74,7 @@ To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.1.0 \
+  --version 1.2.0 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -82,8 +82,8 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
   --set-file operator.license.file=/path/to/license.lic
 ```
 
-This command: 
-- Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace. 
+This command:
+- Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace.
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
 - Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
 - Applys the Operator license
@@ -109,7 +109,7 @@ To deploy the Operator in this mode, the following command can be used:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.1.0 \
+  --version 1.2.0 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -148,7 +148,7 @@ The Operator deployment can be updated to adjust which namespaces are watched. F
 
 ```bash
 helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.1.0 \
+  --version 1.2.0 \
   --namespace kurrent \
   --reuse-values \
   --set operator.namespaces='{kurrent,foo,bar}'

@@ -5,6 +5,20 @@ order: 3
 
 The Operator expects consumers to leverage a thirdparty tool to generate TLS certificates that can be wired in to [KurrentDB](../getting-started/resource-types.md#kurrentdb) deployments using secrets. The sections below describe how certificates can be generated using popular vendors.
 
+## Picking certificate names
+
+Each node in each KurrentDB cluster you create will advertise a fully-qualified domain name (FQDN).
+Clients will expect those advertised names to match the names you configure on your TLS
+certificates.  You will need to understand how the FQDN is calculated for each node in order to
+request a TLS certificate that is valid for each node of your kurrentdb cluster.
+
+By default, the [network.fqdnTemplate field of your KurrentDB spec](
+../getting-started/resource-types.md#kurrentdbnetwork) is
+`{podName}.{name}{nodeTypeSuffix}.{domain}`, which may require multiple wildcard names on your
+certificate, like both `*.myName.myDomain.com` and `*.myName-replica.myDomain.com`.  You may prefer
+to instead configure an `fqdnTemplate` like `{podName}.{domain}`, which could be covered
+by a single wildcard: `*.myDomain.com`.
+
 ## Certificate Manager (cert-manager)
 
 ### Prerequisites
