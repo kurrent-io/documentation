@@ -107,7 +107,12 @@
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Dotnet",
     "branches": [
       {
-        "version": "v23.3",
+        "version": "v1.0",
+        "name": "release/v1.0",
+        "startPage": "getting-started.html"
+      },
+      {
+        "version": "Legacy v23.3",
         "name": "release/legacy/v23.3",
         "startPage": "getting-started.html"
       }
