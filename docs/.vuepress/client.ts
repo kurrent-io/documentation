@@ -118,9 +118,12 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
-        // uncomment and replace with `/clients/grpc/:lang/:version` once clients are versioned
+        const dotnetClient = __VERSIONS__.all.find(x => x.id === 'dotnet-client');
+        const latestDotnetVersion = dotnetClient?.versions[0];
         addDynamicRoute('/clients/grpc/dotnet/:version', to => `/clients/grpc/dotnet/${to.params.version}/getting-started.html`);
         addDynamicRoute('/clients/grpc/dotnet/:version/', to => `/clients/grpc/dotnet/${to.params.version}/getting-started.html`);
+        addDynamicRoute('/clients/grpc/dotnet', to => `/${dotnetClient?.basePath}/${latestDotnetVersion?.path}/${latestDotnetVersion?.startPage}`);
+        addDynamicRoute('/clients/grpc/dotnet/', to => `/${dotnetClient?.basePath}/${latestDotnetVersion?.path}/${latestDotnetVersion?.startPage}`);
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/client/:lang',
