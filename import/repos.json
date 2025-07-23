@@ -122,82 +122,104 @@
   {
     "id": "java-client",
     "group": "Java SDK",
-    "basePath": "clients/java",
-    "samplesRelativePath": [
-      "src",
-      "test",
-      "java",
-      "io",
-      "kurrent",
-      "dbclient",
-      "samples"
-    ],
+    "basePath": "clients/grpc/java",
+    "docsRelativePath": [ "docs", "api" ],
+    "samplesRelativePath": ["samples"],
+    "currentBranch": "trunk",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Java",
     "branches": [
       {
-        "version": "5.4.5",
-        "name": "trunk"
+        "version": "v1.0",
+        "name": "release/v1.0",
+        "startPage": "getting-started.html"
+      },
+      {
+        "version": "Legacy v5.4",
+        "name": "release/legacy/v5.4",
+        "deprecated": true,
+        "startPage": "getting-started.html"
       }
     ]
   },
   {
     "id": "rust-client",
     "group": "Rust SDK",
-    "basePath": "clients/rust",
+    "basePath": "clients/grpc/rust",
+    "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["examples"],
+    "currentBranch": "master",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Rust",
     "branches": [
       {
-        "version": "4.0.1",
-        "name": "master"
+        "version": "v1.0",
+        "name": "release/v1.0",
+        "startPage": "getting-started.html"
+      },
+      {
+        "version": "Legacy v4.0",
+        "name": "release/legacy/v4.0",
+        "deprecated": true,
+        "startPage": "getting-started.html"
       }
     ]
   },
   {
     "id": "node-client",
-    "group": "NodeJS SDK",
-    "basePath": "clients/node",
-    "samplesRelativePath": [
-      "packages",
-      "test",
-      "src",
-      "samples"
-    ],
+    "group": "Node SDK",
+    "basePath": "clients/grpc/node",
+    "docsRelativePath": [ "docs", "api" ],
+    "samplesRelativePath": ["samples"],
+    "currentBranch": "master",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-NodeJS",
     "branches": [
       {
-        "version": "6.2.1",
-        "name": "master"
+        "version": "v1.0",
+        "name": "release/v1.0",
+        "startPage": "getting-started.html"
+      },
+      {
+        "version": "Legacy v6.2",
+        "name": "release/legacy/v6.2",
+        "deprecated": true,
+        "startPage": "getting-started.html"
       }
-    ],
-    "samplesPostprocess": [
-      "pnpm babel <root> --presets @babel/preset-typescript --retain-lines --out-dir <root> --extensions .ts",
-      "pnpm prettier --write <root>/*.js"
     ]
   },
   {
     "id": "go-client",
     "group": "Go SDK",
-    "basePath": "clients/go",
+    "basePath": "clients/grpc/go",
+    "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
+    "currentBranch": "main",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Go",
     "branches": [
       {
-        "version": "1.0.0",
-        "name": "main"
+        "version": "v1.0",
+        "name": "release/v1.0",
+        "startPage": "getting-started.html"
+      },
+      {
+        "version": "Legacy v4.2",
+        "name": "release/legacy/v4.2",
+        "deprecated": true,
+        "startPage": "getting-started.html"
       }
     ]
   },
   {
     "id": "python-client",
     "group": "Python SDK",
-    "basePath": "clients/python",
+    "basePath": "clients/grpc/python",
+    "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
+    "currentBranch": "main",
     "repo": "https://github.com/pyeventsourcing/kurrentdbclient",
     "branches": [
       {
-        "version": "1.0.17",
-        "name": "1.0"
+        "version": "v1.0",
+        "name": "docs/v1.0",
+        "startPage": "getting-started.html"
       }
     ]
   }

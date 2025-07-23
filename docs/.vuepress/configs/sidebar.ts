@@ -38,7 +38,7 @@ export const sidebarEn: EsSidebarOptions = {
   ],
   "/clients/grpc/dotnet/": "structure",
   "/clients/grpc/python/": "structure",
-  "/clients/grpc/nodejs/": "structure",
+  "/clients/grpc/node/": "structure",
   "/clients/grpc/java/": "structure",
   "/clients/grpc/go/": "structure",
   "/clients/grpc/rust/": "structure",

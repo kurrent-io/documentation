@@ -2,5 +2,10 @@
   "../../http-api/generated-versions.json",
   "../../server/generated-versions.json",
   "../../server/kubernetes-operator/versions.json",
-  "../../clients/grpc/dotnet/generated-versions.json"
+  "../../clients/grpc/dotnet/generated-versions.json",
+  "../../clients/grpc/node/generated-versions.json",
+  "../../clients/grpc/python/generated-versions.json",
+  "../../clients/grpc/rust/generated-versions.json",
+  "../../clients/grpc/go/generated-versions.json",
+  "../../clients/grpc/java/generated-versions.json"
 ]

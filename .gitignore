@@ -347,4 +347,4 @@ docs/.vuepress/dist/
 
 config.ts.*.mjs
 
-docs/clients/grpc/dotnet/* 
+docs/clients/grpc/**/* 

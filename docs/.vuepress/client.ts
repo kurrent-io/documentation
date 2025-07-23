@@ -118,12 +118,24 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
-        const dotnetClient = __VERSIONS__.all.find(x => x.id === 'dotnet-client');
-        const latestDotnetVersion = dotnetClient?.versions[0];
-        addDynamicRoute('/clients/grpc/dotnet/:version', to => `/clients/grpc/dotnet/${to.params.version}/getting-started.html`);
-        addDynamicRoute('/clients/grpc/dotnet/:version/', to => `/clients/grpc/dotnet/${to.params.version}/getting-started.html`);
-        addDynamicRoute('/clients/grpc/dotnet', to => `/${dotnetClient?.basePath}/${latestDotnetVersion?.path}/${latestDotnetVersion?.startPage}`);
-        addDynamicRoute('/clients/grpc/dotnet/', to => `/${dotnetClient?.basePath}/${latestDotnetVersion?.path}/${latestDotnetVersion?.startPage}`);
+        addDynamicRoute('/clients/grpc/:lang/:version', to => `/clients/grpc/${to.params.lang}/${to.params.version}/getting-started.html`);
+        addDynamicRoute('/clients/grpc/:lang/:version/', to => `/clients/grpc/${to.params.lang}/${to.params.version}/getting-started.html`);
+
+        addDynamicRoute('/clients/grpc/:lang/', to => {
+          const basePath = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.basePath
+          const path = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.path
+          const version = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.startPage
+
+          return `/${basePath}/${path}/${version}`;
+        })
+
+        addDynamicRoute('/clients/grpc/:lang', to => {
+          const basePath = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.basePath
+          const path = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.path
+          const version = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.startPage
+
+          return `/${basePath}/${path}/${version}`;
+        })
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/client/:lang',
