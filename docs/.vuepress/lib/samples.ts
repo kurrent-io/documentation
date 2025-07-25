@@ -24,17 +24,19 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
     const includesCat = pseudo[0].startsWith('@');
     if (!includesCat && srcCat === undefined) return def(src);
 
-    const cats: Record<string, Record<string, {path: string, version?: string, label?: string}>> = {
+    const cats: Record<string, Record<string, {path: string, version?: string, subPath?: string, label?: string}>> = {
         "@samples": {
             "default": {
                 path: "server",
-                version: "{version}"
+                version: "{version}",
+                subPath: "server"
             }
         },
         "@httpapi": {
             "default": {
-                path: "http-api",
-                version: "{version}"
+                path: "server",
+                version: "{version}",
+                subPath: "http-api",
             }
         },
         "@grpc": {          
@@ -84,7 +86,7 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
     }
 
     const samplesVersion = isVersion ? pseudo[1] : lang.version;
-    const langPath = samplesVersion !== undefined ? `${lang.path}/${samplesVersion}` : lang.path;
+    const langPath = samplesVersion !== undefined ? `${lang.path}/${samplesVersion}` + (lang.subPath ? `/${lang.subPath}` : "") : lang.path;
     const toReplace = isVersion ? `${pseudo[0]}/${pseudo[1]}` : `${pseudo[0]}`;    
 
     const p = includesCat ? src.replace(toReplace, `${base}/${langPath}`) : `${base}/${langPath}/${src}`;

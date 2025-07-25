@@ -10,7 +10,7 @@
     "branches": [
       {
         "version": "v25.0",
-        "name": "release/v25.0",
+        "name": "docs/release/v25.0",
         "relativePath": ["server"],
         "startPage": "quick-start/"
       },
