@@ -32,7 +32,10 @@ const closeDropdown = (): void => {
 }
 
 const handleVersionSelect = (version: VersionDetail): void => {
-  const base = route.path.split('/').filter(seg => seg)[0];
+  const segments = route.path.split('/').filter(seg => seg);
+  const versionIndex = segments.findIndex(seg => seg === props.current.path);
+  const base = versionIndex > 0 ? segments.slice(0, versionIndex).join('/') : segments[0] || '';
+  
   router.replace(`/${base}/${version.path}/${version.startPage}`);
 
   closeDropdown();

@@ -29,16 +29,18 @@ const versionInfo = computed(() => {
   if (pathSegments.length < 2)
     return null
 
-  const basePath = pathSegments[0]
-
   if (!pageData.value.versions?.all)
     return null
 
   for (const versionInfo of pageData.value.versions.all) {
-    if (versionInfo.basePath === basePath && versionInfo.versions) {
+    const basePath = versionInfo.basePath
+    
+    if (route.path.startsWith(`/${basePath}/`) && versionInfo.versions) {
       for (const versionDetail of versionInfo.versions) {
         const versionPath = versionDetail.path
-        if (route.path.includes(`/${basePath}/${versionPath}/`)) {
+        const fullVersionPath = `/${basePath}/${versionPath}/`
+        
+        if (route.path.startsWith(fullVersionPath)) {
           return {
             versions: versionInfo.versions,
             current: versionDetail
@@ -48,6 +50,7 @@ const versionInfo = computed(() => {
     }
   }
 
+  console.log("No matching version found")
   return null
 })
 </script>
