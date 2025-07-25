@@ -64,7 +64,7 @@
     "build": "node ./import/build.cjs build docs",
     "build:verbose": "vuepress build docs -- --verbose",
     "build-prod": "pnpm run import && pnpm build",
-    "import": "node ./import/import-client-docs.cjs",
+    "import": "node ./import/import.cjs",
     "serve": "node ./serve.js",
     "swagger": "swagger-markdown -i docs/server/5.0/http-api/swagger.yaml"
   },
