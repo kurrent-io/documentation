@@ -123,9 +123,22 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
         addDynamicRoute('/clients/grpc/:lang/:version', to => `/clients/grpc/${to.params.lang}/${to.params.version}/getting-started.html`);
+        addDynamicRoute('/clients/grpc/:lang/:version/', to => `/clients/grpc/${to.params.lang}/${to.params.version}/getting-started.html`);
+
+        addDynamicRoute('/clients/grpc/:lang/', to => {
+          const basePath = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.basePath
+          const path = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.path
+          const version = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.startPage
+
+          return `/${basePath}/${path}/${version}`;
+        })
+
         addDynamicRoute('/clients/grpc/:lang', to => {
-          const version = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.path
-          return `/clients/grpc/${to.params.lang}/${version}/getting-started.html`;
+          const basePath = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.basePath
+          const path = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.path
+          const version = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.startPage
+
+          return `/${basePath}/${path}/${version}`;
         })
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
