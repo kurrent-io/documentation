@@ -115,7 +115,7 @@
         "startPage": "getting-started.html"
       },
       {
-        "version": "legacy-v23.3",
+        "version": "legacy/v23.3",
         "alias": "Legacy v23.3",
         "name": "release/legacy/v23.3",
         "deprecated": true,
@@ -138,7 +138,7 @@
         "startPage": "getting-started.html"
       },
       {
-        "version": "legacy-v5.4",
+        "version": "legacy/v5.4",
         "alias": "Legacy v5.4",
         "name": "release/legacy/v5.4",
         "deprecated": true,
@@ -161,7 +161,7 @@
         "startPage": "getting-started.html"
       },
       {
-        "version": "legacy-v4.0",
+        "version": "legacy/v4.0",
         "alias": "Legacy v4.0",
         "name": "release/legacy/v4.0",
         "deprecated": true,
@@ -184,7 +184,7 @@
         "startPage": "getting-started.html"
       },
       {
-        "version": "legacy-v6.2",
+        "version": "legacy/v6.2",
         "alias": "Legacy v6.2",
         "name": "release/legacy/v6.2",
         "deprecated": true,
@@ -207,7 +207,7 @@
         "startPage": "getting-started.html"
       },
       {
-        "version": "legacy-v4.2",
+        "version": "legacy/v4.2",
         "alias": "Legacy v4.2",
         "name": "release/legacy/v4.2",
         "deprecated": true,
