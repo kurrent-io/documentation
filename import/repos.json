@@ -16,14 +16,14 @@
       },
       {
         "version": "v24.10",
-        "name": "release/v24.10",
+        "name": "docs/release/v24.10",
         "relativePath": ["server"],
         "startPage": "quick-start/",
         "lts": true
       },
       {
         "version": "v24.6",
-        "name": "release/oss-v24.6",
+        "name": "docs/release/oss-v24.6",
         "relativePath": ["server"],
         "startPage": "quick-start/",
         "deprecated": true,
@@ -31,21 +31,21 @@
       },
       {
         "version": "v23.10",
-        "name": "release/oss-v23.10",
+        "name": "docs/release/oss-v23.10",
         "relativePath": ["server"],
         "startPage": "quick-start/",
         "lts": true
       },
       {
         "version": "v22.10",
-        "name": "release/oss-v22.10",
+        "name": "docs/release/oss-v22.10",
         "relativePath": ["server"],
         "startPage": "introduction.html",
         "deprecated": true
       },
       {
         "version": "v5",
-        "name": "release/oss-v5",
+        "name": "docs/release/oss-v5",
         "relativePath": ["server"],
         "startPage": "introduction.html",
         "deprecated": true,

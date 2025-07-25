@@ -52,10 +52,8 @@ export default defineUserConfig({
                 .replace("@server/", "/server/{version}/")
                 .replace("@clients/grpc/", "/clients/grpc/")
                 .replace("@client/dotnet/5.0/", "/clients/tcp/dotnet/21.2/")
-                .replace("@clients/http-api/", "/server/http-api/{version}/")
-                .replace("@clients/httpapi/", "/server/http-api/{version}/")
                 .replace("@httpapi/data/", projectionSamplesPath)
-                .replace("@httpapi/", "/server/http-api/{version}/")
+                .replace("@httpapi/", "/server/v5/http-api/")
                 // Add tutorial and use case redirects
                 .replace(/^\/tutorials\/(.*)/, "/dev-center/tutorials/$1")
                 .replace(/^\/getting-started\/use-cases\/(.*)\/tutorial-([1-5])\.(md|html)/, "/dev-center/use-cases/$1/tutorial/tutorial-$2.$3")

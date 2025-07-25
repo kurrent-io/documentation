@@ -80,31 +80,11 @@ export class Versioning {
         return r.reduce((result, curr) => ({...result, [curr]: "structure"}), {});
     }
 
-    version(id: string): Version | undefined {
-        const ret = this.versions.find(x => x.id === id);
-        if (ret === undefined) log.error(`Version ${id} not defined`);
-        return ret;
-    }
-
-    getRecords(id: string, deprecated: boolean): VersionDetail[] {
-        const version = this.version(id);
-        if (version === undefined) return [];
-        const filter = deprecated ? (v: VersionDetail) => v.deprecated && !v.hide : (v: VersionDetail) => !v.deprecated;
-        return version.versions.filter(filter);
-    }
-
-    // Build dropdown items for each version
-    linksFor(id: string, deprecated: boolean): VersionLink[] {
-        const version = this.version(id);
-        if (version === undefined) return [];
-
-        const getLink = (v: VersionDetail): VersionLink => {
-            const path = `${version.basePath}/${v.path}`;
-            const pageUrl = v.startPage ? v.startPage : "";
-            return {text: v.version, link: `/${path}/${pageUrl}`};
-        }
-        return this.getRecords(id, deprecated).map(v => getLink(v));
-    }
+    // version(id: string): Version | undefined {
+    //     const ret = this.versions.find(x => x.id === id);
+    //     if (ret === undefined) log.error(`Version ${id} not defined`);
+    //     return ret;
+    // }
 }
 
 export const instance: Versioning = new Versioning();

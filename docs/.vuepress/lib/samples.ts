@@ -28,18 +28,15 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
         "@samples": {
             "default": {
                 path: "server",
-                version: "{version}",
-                subPath: "server"
+                version: "{version}"
             }
         },
         "@httpapi": {
             "default": {
-                path: "server",
-                version: "{version}",
-                subPath: "http-api",
+                path: "server/v5/http-api",
             }
         },
-        "@grpc": {          
+        "@grpc": {
             "js": {
                 label: "JavaScript",
                 path: "clients/node/6.2.1"
@@ -86,7 +83,7 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
     }
 
     const samplesVersion = isVersion ? pseudo[1] : lang.version;
-    const langPath = samplesVersion !== undefined ? `${lang.path}/${samplesVersion}` + (lang.subPath ? `/${lang.subPath}` : "") : lang.path;
+    const langPath = samplesVersion !== undefined ? `${lang.path}/${samplesVersion}` : lang.path;
     const toReplace = isVersion ? `${pseudo[0]}/${pseudo[1]}` : `${pseudo[0]}`;    
 
     const p = includesCat ? src.replace(toReplace, `${base}/${langPath}`) : `${base}/${langPath}/${src}`;
