@@ -10,17 +10,8 @@ export const navbarEn: NavbarOptions = [
     text: "Kurrent Cloud",
     link: "/cloud/introduction",
   },
-  {
-    text: "KurrentDB",
-    children: [
-      { text: "Current", children: ver.linksFor("server", false) },
-      { text: "Deprecated", children: ver.linksFor("server", true) },
-      {
-        text: "Kubernetes Operator",
-        children: ver.linksFor("kubernetes-operator", false),
-      },
-    ],
-  },
+  { text: "KurrentDB", link: ver.linksFor("server", false)[0]?.link || "/server/" },
+  { text: "Kubernetes Operator", link: ver.linksFor("kubernetes-operator", false)[0]?.link || "/server/kubernetes-operator/" },
   {
     text: "Clients & APIs",
     children: [
