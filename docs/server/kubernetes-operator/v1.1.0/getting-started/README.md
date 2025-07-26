@@ -27,12 +27,8 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 * Perform rolling upgrades and update configurations
 
 ### New in 1.1.0
-* Deploy Read-only Replica nodes into your KurrentDB cluster. See the [example](
-  ../operations/database-deployment.html#three-node-insecure-cluster-with-two-read-only-replicas), and [reference](
-  resource-types.html#kurrentdbreadonlyreplicasspec)
-* Configure arbitrary scheduling constraints on your KurrentDB pods. See the [example](
-  ../operations/database-deployment.html#deploying-with-scheduling-constraints), and [reference](
-  resource-types.html#kurrentdbconstraints)
+* Deploy Read-only Replica nodes into your KurrentDB cluster. See the [example](../operations/database-deployment.md#three-node-insecure-cluster-with-two-read-only-replicas), and [reference](./resource-types.md#kurrentdbreadonlyreplicasspec)
+* Configure arbitrary scheduling constraints on your KurrentDB pods. See the [example](../operations/database-deployment.md#deploying-with-scheduling-constraints), and [reference](./resource-types.md#kurrentdbconstraints)
 
 ## Supported KurrentDB Versions
 
