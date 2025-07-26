@@ -1,9 +1,8 @@
 ---
 order: 2
-index: false
-title: "Operations"
 dir:
   text: "Operations"
+  link: true
   order: 1
 ---
 

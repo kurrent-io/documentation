@@ -10,7 +10,7 @@ In this part, you will modify the projection to also record historical snapshots
 
 ![Time Traveling Report](../images/time-travel-report.gif)
 
-## Step 8: Add Time Traveling Support to Report Projection 
+## Step 8: Add Time Travel Support to Report Projection
 
 In this step, you will modify the projection so that the read model includes sales data for every day of the month, not just the most recent day.
 
@@ -171,7 +171,7 @@ The optimal granularity for your system depends on your specific requirements.
 10. Repeat 1. to 9. until the results match
 
 
-## Step 9: Explore Time Traveling Capability in the Report Web Application
+## Step 9: Explore Time Travel Capability in the Report Web Application
 
 1. Run this command in the terminal to start the sales report web application:
    

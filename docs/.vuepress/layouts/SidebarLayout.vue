@@ -29,18 +29,16 @@ const versionInfo = computed(() => {
   if (pathSegments.length < 2)
     return null
 
+  const basePath = pathSegments[0]
+
   if (!pageData.value.versions?.all)
     return null
 
   for (const versionInfo of pageData.value.versions.all) {
-    const basePath = versionInfo.basePath
-    
-    if (route.path.startsWith(`/${basePath}/`) && versionInfo.versions) {
+    if (versionInfo.basePath === basePath && versionInfo.versions) {
       for (const versionDetail of versionInfo.versions) {
         const versionPath = versionDetail.path
-        const fullVersionPath = `/${basePath}/${versionPath}/`
-        
-        if (route.path.startsWith(fullVersionPath)) {
+        if (route.path.includes(`/${basePath}/${versionPath}/`)) {
           return {
             versions: versionInfo.versions,
             current: versionDetail
