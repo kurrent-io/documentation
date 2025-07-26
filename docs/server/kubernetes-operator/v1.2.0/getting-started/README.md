@@ -26,8 +26,8 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 * Perform rolling upgrades and update configurations
 
 ### New in 1.2.0
-* Configure the advertised FQDN with a template.  See the [docs](
-  ../getting-started/resource-types.md#kurrentdbnetwork).
+
+* Configure the advertised FQDN with a template. See the [docs](resource-types.md#kurrentdbnetwork).
 
 ## Supported KurrentDB Versions
 
