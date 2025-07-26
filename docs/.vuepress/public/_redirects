@@ -299,10 +299,12 @@
 # ######################
 # Other
 # ######################
-
 /resources/*            /         301
 
-
+# ######################
+# HTTP API
+# ######################
+/http-api/v25.0/*       /server/v25.0/http-api/:splat       301
 
 # ######################
 # Tutorial and Use Case Redirects
@@ -325,3 +327,4 @@
 
 # Other use case files stay in the root (introduction.md, tutorial-summary.md, etc.)
 /getting-started/use-cases/*                           /dev-center/use-cases/:splat                              301
+

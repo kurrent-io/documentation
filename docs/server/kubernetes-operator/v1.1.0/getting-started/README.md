@@ -1,7 +1,8 @@
 ---
 order: 1
+title: "Getting Started"
 dir:
-  text: "Getting started"
+  text: "Getting Started"
   link: true
   order: 1
 ---
