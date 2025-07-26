@@ -168,8 +168,8 @@ You will examine how this pattern is applied to the Postgres projection applicat
    ::: info Different Types of Subscriptions
    This sample uses catch-up subscriptions to subscribe to events. You can also use persistent subscriptions or connectors to achieve a similar result. 
 
-   For more information about catch-up subscriptions, [click here](https://docs.kurrent.io/clients/grpc/subscriptions.html).
-   For more information about persistent subscriptions, [click here](https://docs.kurrent.io/clients/grpc/persistent-subscriptions.html). 
+   For more information about catch-up subscriptions, [click here](https://docs.kurrent.io/clients/subscriptions.html).
+   For more information about persistent subscriptions, [click here](https://docs.kurrent.io/clients/persistent-subscriptions.html). 
    For more information about connectors, [click here](https://docs.kurrent.io/server/v24.10/features/connectors/)
    :::
 

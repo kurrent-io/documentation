@@ -47,15 +47,6 @@ const findEsMeta = (route) => {
     }
 }
 
-// interface ClientConfig {
-//     enhance?: (context: {
-//         app: any;
-//         router: Router;
-//         siteData: any;
-//     }) => void | Promise<void>;
-//     setup?: () => void;
-// }
-
 const removeHtml = (path: string) => path.replace(".html", "");
 
 const reload = () => {
@@ -122,20 +113,13 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
-        addDynamicRoute('/clients/grpc/:lang/:version', to => `/clients/grpc/${to.params.lang}/${to.params.version}/getting-started.html`);
-        addDynamicRoute('/clients/grpc/:lang', to => {
+        addDynamicRoute('/clients/:lang/:version', to => `/clients/${to.params.lang}/${to.params.version}/getting-started.html`);
+        addDynamicRoute('/clients/:lang', to => {
           const version = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]?.path
-          return `/clients/grpc/${to.params.lang}/${version}/getting-started.html`;
+          return `/clients/${to.params.lang}/${version}/getting-started.html`;
         })
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
-        addDynamicRoute('/client/:lang',
-            to => {
-                const lang = to.params.lang === "csharp" ? "C#" : to.params.lang;
-                const stored = JSON.parse(localStorage.getItem(storageKey) ?? "{}");
-                localStorage.setItem(storageKey, JSON.stringify({...stored, code: lang}));
-                return '/clients/grpc/getting-started.html';
-            });
         addDynamicRoute('/latest/:pathMatch(.*)*', to => to.path.replace(/^\/latest/, `/${__VERSIONS__.latest}`));
         addFixedRoute("/server/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest", `/${__VERSIONS__.latest}/quick-start/`);

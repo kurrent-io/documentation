@@ -5,52 +5,52 @@ import references from '../versions.json'
 import log from './log'
 
 export interface VersionDetail {
-  version: string;
-  path: string;
-  startPage: string;
-  preview: boolean;
-  deprecated: boolean;
-  hide: boolean;
-  lts: boolean;
+    version: string;
+    path: string;
+    startPage: string;
+    preview: boolean;
+    deprecated: boolean;
+    hide: boolean;
+    lts: boolean;
 }
 
 export interface Version {
-  id: string;
-  group: string;
-  basePath: string;
-  versions: VersionDetail[];
+    id: string;
+    group: string;
+    basePath: string;
+    versions: VersionDetail[];
 }
 
 export interface VersionLink {
-  text: string;
-  link: string;
+    text: string;
+    link: string;
 }
 
 export class Versioning {
-  readonly versions: Version[] = [];
+    readonly versions: Version[] = [];
 
-  constructor() {
-    const require = createRequire(import.meta.url);
+    constructor() {
+        const require = createRequire(import.meta.url);
 
-    references.forEach(p => {
-      const fileName = path.resolve(__dirname, p);
+        references.forEach(p => {
+            const fileName = path.resolve(__dirname, p);
 
-      if (fs.existsSync(fileName)) {
-        log.info(`Importing versions from ${fileName}`);
-        const list: Version[] = require(fileName);
+            if (fs.existsSync(fileName)) {
+                log.info(`Importing versions from ${fileName}`);
+                const list: Version[] = require(fileName);
 
-        list.forEach(v => {
-          const existing = this.versions.find(x => x.id === v.id);
-          if (existing === undefined)
-            this.versions.push(v);
-          else
-            existing.versions.push(...v.versions);
+                list.forEach(v => {
+                    const existing = this.versions.find(x => x.id === v.id);
+                    if (existing === undefined)
+                        this.versions.push(v);
+                    else
+                        existing.versions.push(...v.versions);
+                })
+            } else {
+                log.info(`File ${fileName} doesn't exist, ignoring`);
+            }
         })
-      } else {
-        log.info(`File ${fileName} doesn't exist, ignoring`);
-      }
-    })
-  }
+    }
 
     get latestSemver(): string {
         const serverDocs = this.versions.find(v => v.id === "server");
@@ -79,12 +79,6 @@ export class Versioning {
         const r = this.versions.map(v => v.versions.map(x => `/${v.basePath}/${x.path}/`)).flat();
         return r.reduce((result, curr) => ({...result, [curr]: "structure"}), {});
     }
-
-    // version(id: string): Version | undefined {
-    //     const ret = this.versions.find(x => x.id === id);
-    //     if (ret === undefined) log.error(`Version ${id} not defined`);
-    //     return ret;
-    // }
 }
 
 export const instance: Versioning = new Versioning();

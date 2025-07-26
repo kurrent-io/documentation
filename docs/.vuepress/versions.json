@@ -1,10 +1,10 @@
 [
   "../../server/generated-versions.json",
   "../../server/kubernetes-operator/versions.json",
-  "../../clients/grpc/dotnet/generated-versions.json",
-  "../../clients/grpc/node/generated-versions.json",
-  "../../clients/grpc/python/generated-versions.json",
-  "../../clients/grpc/rust/generated-versions.json",
-  "../../clients/grpc/go/generated-versions.json",
-  "../../clients/grpc/java/generated-versions.json"
+  "../../clients/dotnet/generated-versions.json",
+  "../../clients/node/generated-versions.json",
+  "../../clients/python/generated-versions.json",
+  "../../clients/rust/generated-versions.json",
+  "../../clients/golang/generated-versions.json",
+  "../../clients/java/generated-versions.json"
 ]

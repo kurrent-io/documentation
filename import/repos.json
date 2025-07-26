@@ -10,20 +10,20 @@
     "branches": [
       {
         "version": "v25.0",
-        "name": "release/v25.0",
+        "name": "alexey/docs/release/v25.0",
         "relativePath": ["server"],
         "startPage": "quick-start/"
       },
       {
         "version": "v24.10",
-        "name": "release/v24.10",
+        "name": "alexey/docs/release/v24.10",
         "relativePath": ["server"],
         "startPage": "quick-start/",
         "lts": true
       },
       {
         "version": "v24.6",
-        "name": "release/oss-v24.6",
+        "name": "alexey/docs/release/v24.6",
         "relativePath": ["server"],
         "startPage": "quick-start/",
         "deprecated": true,
@@ -31,21 +31,21 @@
       },
       {
         "version": "v23.10",
-        "name": "release/oss-v23.10",
+        "name": "alexey/docs/release/v23.10",
         "relativePath": ["server"],
         "startPage": "quick-start/",
         "lts": true
       },
       {
         "version": "v22.10",
-        "name": "release/oss-v22.10",
+        "name": "alexey/docs/release/v22.10",
         "relativePath": ["server"],
         "startPage": "introduction.html",
         "deprecated": true
       },
       {
         "version": "v5",
-        "name": "release/oss-v5",
+        "name": "alexey/docs/release/v5",
         "relativePath": ["server"],
         "startPage": "introduction.html",
         "deprecated": true,
@@ -59,7 +59,7 @@
   {
     "id": "dotnet-client",
     "group": ".NET SDK",
-    "basePath": "clients/grpc/dotnet",
+    "basePath": "clients/dotnet",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
     "currentBranch": "master",
@@ -82,7 +82,7 @@
   {
     "id": "java-client",
     "group": "Java SDK",
-    "basePath": "clients/grpc/java",
+    "basePath": "clients/java",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
     "currentBranch": "trunk",
@@ -105,7 +105,7 @@
   {
     "id": "rust-client",
     "group": "Rust SDK",
-    "basePath": "clients/grpc/rust",
+    "basePath": "clients/rust",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["examples"],
     "currentBranch": "master",
@@ -128,7 +128,7 @@
   {
     "id": "node-client",
     "group": "Node SDK",
-    "basePath": "clients/grpc/node",
+    "basePath": "clients/node",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
     "currentBranch": "master",
@@ -151,7 +151,7 @@
   {
     "id": "go-client",
     "group": "Go SDK",
-    "basePath": "clients/grpc/go",
+    "basePath": "clients/golang",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
     "currentBranch": "main",
@@ -174,7 +174,7 @@
   {
     "id": "python-client",
     "group": "Python SDK",
-    "basePath": "clients/grpc/python",
+    "basePath": "clients/python",
     "docsRelativePath": [ "docs", "api" ],
     "samplesRelativePath": ["samples"],
     "currentBranch": "main",

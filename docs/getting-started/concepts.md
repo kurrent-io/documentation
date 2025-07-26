@@ -25,7 +25,7 @@ An event usually represents a state change in an application, its entities, or b
 ![Examples of events](./images/examples-of-event-dark.png#dark)
 
 ::: note
-To learn more about how to perform basic operations around events, [click here](/clients/grpc/appending-events.md).
+To learn more about how to perform basic operations around events, [click here](/clients/appending-events.md).
 :::
 
 ## Event Log
@@ -165,6 +165,6 @@ For example, a financial institution has a stream representing a digital wallet 
 Optimistic concurrency control also operates without requiring resource locks, meaning these protections come without the performance hit of managing locks. This helps maintain high performance even when multiple concurrent writes occur.
 
 ::: note
-To learn more about how to apply optimistic concurrency control, [click here](/clients/grpc/appending-events.md#handling-concurrency)
+To learn more about how to apply optimistic concurrency control, [click here](/clients/appending-events.md#handling-concurrency)
 :::
 
