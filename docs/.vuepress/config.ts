@@ -1,10 +1,11 @@
+/* eslint-disable import/no-named-as-default */
+
 import {dl} from "@mdit/plugin-dl";
 import viteBundler from "@vuepress/bundler-vite";
-import dotenv from 'dotenv';
+import dotenv from "dotenv"
 import vueDevTools from 'vite-plugin-vue-devtools'
 import {defineUserConfig} from "vuepress";
 import {path} from 'vuepress/utils';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import {hopeTheme} from "vuepress-theme-hope";
 import {themeOptions} from "./configs/theme";
 import {projectionSamplesPath, resolveMultiSamplesPath} from "./lib/samples";
@@ -12,7 +13,6 @@ import {instance as ver} from "./lib/versioning";
 import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
-
 
 dotenv.config({path: path.join(__dirname, '..', '..', '.algolia', '.env')});
 
@@ -30,20 +30,30 @@ export default defineUserConfig({
             all: ver.all
         },
     },
+    extendsPage: (page) => {
+        page.data.versions = {
+            latest: ver.latest,
+            all: ver.all
+        }
+    },
     markdown: {
         importCode: false,
         headers: {level: [2, 3]},
     },
+    pagePatterns: [
+      '**/*.md',
+      '!**/v*/README.md',
+      '!.vuepress',
+      '!node_modules'
+    ],
     extendsMarkdown: md => {
         md.use(replaceLinkPlugin, {
             replaceLink: (link: string, _) => link
                 .replace("@server/", "/server/{version}/")
                 .replace("@clients/grpc/", "/clients/grpc/")
                 .replace("@client/dotnet/5.0/", "/clients/tcp/dotnet/21.2/")
-                .replace("@clients/http-api/", "/http-api/{version}/")
-                .replace("@clients/httpapi/", "/http-api/{version}/")
                 .replace("@httpapi/data/", projectionSamplesPath)
-                .replace("@httpapi/", "/http-api/{version}/")
+                .replace("@httpapi/", "/server/v5/http-api/")
                 // Add tutorial and use case redirects
                 .replace(/^\/tutorials\/(.*)/, "/dev-center/tutorials/$1")
                 .replace(/^\/getting-started\/use-cases\/(.*)\/tutorial-([1-5])\.(md|html)/, "/dev-center/use-cases/$1/tutorial/tutorial-$2.$3")
@@ -67,7 +77,6 @@ export default defineUserConfig({
     },
     theme: hopeTheme(themeOptions,{custom: true}),
     head: [
-
         // Business Institution 247, before the user accepts cookie
         ['script', {
             type: 'text/javascript',

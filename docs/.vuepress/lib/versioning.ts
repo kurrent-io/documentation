@@ -1,48 +1,56 @@
-import * as fs from "fs";
-import {path} from 'vuepress/utils';
-import log from "./log";
-import {createRequire} from 'node:module';
-import references from "../versions.json";
+import * as fs from 'fs'
+import { createRequire } from 'node:module'
+import { path } from 'vuepress/utils'
+import references from '../versions.json'
+import log from './log'
 
-interface VersionDetail {
-    version: string,
-    path: string,
-    startPage: string,
-    preview: boolean,
-    deprecated: boolean,
-    hide: boolean
+export interface VersionDetail {
+  version: string;
+  path: string;
+  startPage: string;
+  preview: boolean;
+  deprecated: boolean;
+  hide: boolean;
+  lts: boolean;
 }
 
-interface Version {
-    id: string,
-    group: string,
-    basePath: string,
-    versions: VersionDetail[]
+export interface Version {
+  id: string;
+  group: string;
+  basePath: string;
+  versions: VersionDetail[];
 }
 
-export class versioning {
-    versions: Version[] = [];
+export interface VersionLink {
+  text: string;
+  link: string;
+}
 
-    constructor() {
-        const require = createRequire(import.meta.url)
-        references.forEach(p => {
-            const fileName = path.resolve(__dirname, p);
-            if (fs.existsSync(fileName)) {
-                log.info(`Importing versions from ${fileName}`);
-                const list: Version[] = require(fileName);
-                list.forEach(v => {
-                    const existing = this.versions.find(x => x.id === v.id);
-                    if (existing === undefined) {
-                        this.versions.push(v);
-                    } else {
-                        existing.versions.push(...v.versions);
-                    }
-                });
-            } else {
-                log.info(`File ${fileName} doesn't exist, ignoring`);
-            }
-        });
-    }
+export class Versioning {
+  readonly versions: Version[] = [];
+
+  constructor() {
+    const require = createRequire(import.meta.url);
+    
+    references.forEach(p => {
+      const fileName = path.resolve(__dirname, p);
+      
+      if (fs.existsSync(fileName)) {
+        log.info(`Importing versions from ${fileName}`);
+        const list: Version[] = require(fileName);
+        
+        list.forEach(v => {
+          const existing = this.versions.find(x => x.id === v.id);
+          if (existing === undefined)
+            this.versions.push(v);
+          else
+            existing.versions.push(...v.versions);
+        })
+      } else {
+        log.info(`File ${fileName} doesn't exist, ignoring`);
+      }
+    })
+  }
 
     get latestSemver(): string {
         const serverDocs = this.versions.find(v => v.id === "server");
@@ -62,41 +70,21 @@ export class versioning {
         return `${serverDocs.basePath}/${releases[0].path}`;
     }
 
-    get all() {
-        return this.versions
+    get all(): Version[] {
+        return this.versions;
     }
 
     // Generate a single object that represents all versions from each sidebar
-    getSidebars() {
+    getSidebars(): Record<string, string> {
         const r = this.versions.map(v => v.versions.map(x => `/${v.basePath}/${x.path}/`)).flat();
         return r.reduce((result, curr) => ({...result, [curr]: "structure"}), {});
     }
 
-    version(id: string) {
-        const ret = this.versions.find(x => x.id === id);
-        if (ret === undefined) log.error(`Version ${id} not defined`);
-        return ret;
-    }
-
-    getRecords(id: string, deprecated: boolean) {
-        const version = this.version(id);
-        if (version === undefined) return [];
-        const filter = deprecated ? (v: VersionDetail) => v.deprecated && !v.hide : (v: VersionDetail) => !v.deprecated;
-        return version.versions.filter(filter);
-    }
-
-    // Build dropdown items for each version
-    linksFor(id: string, deprecated: boolean) {
-        const version = this.version(id);
-        if (version === undefined) return [];
-
-        const getLink = (v: VersionDetail) => {
-            const path = `${version.basePath}/${v.path}`;
-            const pageUrl = v.startPage ? v.startPage : "";
-            return {text: v.version, link: `/${path}/${pageUrl}`};
-        }
-        return this.getRecords(id, deprecated).map(v => getLink(v));
-    }
+    // version(id: string): Version | undefined {
+    //     const ret = this.versions.find(x => x.id === id);
+    //     if (ret === undefined) log.error(`Version ${id} not defined`);
+    //     return ret;
+    // }
 }
 
-export const instance: versioning = new versioning();
+export const instance: Versioning = new Versioning();

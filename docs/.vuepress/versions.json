@@ -1,5 +1,4 @@
 [
-  "../../http-api/generated-versions.json",
   "../../server/generated-versions.json",
   "../../server/kubernetes-operator/versions.json"
 ]

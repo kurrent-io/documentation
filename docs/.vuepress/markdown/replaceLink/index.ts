@@ -5,6 +5,7 @@ import { logInfo } from "../../util/log";
 import {ensureLocalLink} from "../linkCheck";
 import {resolveVersionedPath} from "../resolver";
 import type {MdEnv, MdToken} from "../types";
+import version from "../../lib/version";
 
 export interface ReplaceLinkPluginOptions {
     replaceLink?: (link: string, env: MdEnv) => string;
