@@ -15,22 +15,22 @@ export interface VersionDetail {
 }
 
 export interface Version {
-    id: string;
-    group: string;
-    basePath: string;
-    versions: VersionDetail[];
+  id: string;
+  group: string;
+  basePath: string;
+  versions: VersionDetail[];
 }
 
 export interface VersionLink {
-    text: string;
-    link: string;
+  text: string;
+  link: string;
 }
 
 export class Versioning {
     readonly versions: Version[] = [];
 
-    constructor() {
-        const require = createRequire(import.meta.url);
+  constructor() {
+    const require = createRequire(import.meta.url);
 
         references.forEach(p => {
             const fileName = path.resolve(__dirname, p);
@@ -42,15 +42,15 @@ export class Versioning {
                 list.forEach(v => {
                     const existing = this.versions.find(x => x.id === v.id);
                     if (existing === undefined)
-                        this.versions.push(v);
-                    else
+            this.versions.push(v);
+          else
                         existing.versions.push(...v.versions);
-                })
-            } else {
-                log.info(`File ${fileName} doesn't exist, ignoring`);
-            }
         })
-    }
+      } else {
+        log.info(`File ${fileName} doesn't exist, ignoring`);
+      }
+    })
+  }
 
     get latestSemver(): string {
         const serverDocs = this.versions.find(v => v.id === "server");

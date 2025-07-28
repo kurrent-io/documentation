@@ -2,8 +2,8 @@
 import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import {useRoute, useRouter} from "vuepress/client";
 import type {VersionDetail} from "../lib/versioning";
-import VersionSection from "./VersionSection.vue";
 import VersionText from "./VersionText.vue";
+import VersionSection from "./VersionSection.vue";
 
 interface Props {
   versions: VersionDetail[];
@@ -36,12 +36,12 @@ const closeDropdown = (): void => {
 const handleVersionSelect = (version: VersionDetail): void => {
   const currentVersionPath = `/${props.current.path}/`;
   const newVersionPath = `/${version.path}/`;
-  
+
   if (route.path.includes(currentVersionPath)) {
     const basePart = route.path.split(currentVersionPath)[0];
     router.replace(`${basePart}${newVersionPath}${version.startPage}`);
-  } 
-  
+  }
+
   closeDropdown();
 }
 

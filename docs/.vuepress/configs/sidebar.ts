@@ -41,7 +41,7 @@ export const sidebarEn: EsSidebarOptions = {
     "/clients/tcp/dotnet/21.2/": "structure",
     "/dev-center/": "structure",
 
-    // The way these docs were setup in server v22.10 and v5 are not compatible with the new sidebar structure. 
+    // The way these docs were setup in server v22.10 and v5 are not compatible with the new sidebar structure.
     "/server/v22.10/": [
       "introduction",
       "installation",

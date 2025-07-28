@@ -1,16 +1,16 @@
-import {defineClientConfig, useRoute} from 'vuepress/client';
 import "iconify-icon";
 import {onMounted} from "vue";
-import type {RouteLocationNormalized, Router} from "vue-router";
+import type {RouteLocationNormalized} from "vue-router";
+import {defineClientConfig, useRoute} from 'vuepress/client';
 import CloudBanner from "./components/CloudBanner.vue";
 import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
-import {usePostHog} from "./lib/usePosthog";
 import SidebarLayout from "./layouts/SidebarLayout.vue";
+import {usePostHog} from "./lib/usePosthog";
 
-declare const __VERSIONS__: { 
-    latest: string, 
-    selected: string, 
+declare const __VERSIONS__: {
+    latest: string,
+    selected: string,
     all: {
         id: string,
         group: string,
