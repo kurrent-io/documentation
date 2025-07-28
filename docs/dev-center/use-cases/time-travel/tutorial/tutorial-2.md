@@ -40,7 +40,7 @@ In this part, you will start a KurrentDB instance and initialize it with a few h
    
    ![KurrentDB Admin UI Dashboard](../images/admin-ui.png =300x)
 
-## Step 3: Browse OrderPlaced Events in KurrentDB's Admin UI
+## Step 3: Browse OrderPlaced Events in KurrentDB Admin UI
 
 1. Click the `Stream Browser` link from the top navigation bar.
 

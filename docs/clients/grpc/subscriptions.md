@@ -3,14 +3,14 @@
 
 To continue, please select your client:
 
-[.NET](/clients/grpc/dotnet/subscriptions.md)
+[.NET](/clients/dotnet/subscriptions.md)
 
-[Python](/clients/grpc/python/subscriptions.md)
+[Python](/clients/python/subscriptions.md)
 
-[Node.js](/clients/grpc/nodejs/subscriptions.md)
+[Node.js](/clients/nodejs/subscriptions.md)
 
-[Java](/clients/grpc/java/subscriptions.md)
+[Java](/clients/java/subscriptions.md)
 
-[Go](/clients/grpc/go/subscriptions.md)
+[Go](/clients/go/subscriptions.md)
 
-[Rust](/clients/grpc/rust/subscriptions.md)
+[Rust](/clients/rust/subscriptions.md)

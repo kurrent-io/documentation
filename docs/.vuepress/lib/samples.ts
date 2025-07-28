@@ -35,7 +35,7 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
     
     if (!includesCat && srcCat === undefined) return def(src);
 
-    const cats: Record<string, Record<string, {path: string, version?: string, label?: string}>> = {
+    const cats: Record<string, Record<string, {path: string, version?: string, subPath?: string, label?: string}>> = {
         "@samples": {
             "default": {
                 path: "server",
@@ -44,11 +44,10 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
         },
         "@httpapi": {
             "default": {
-                path: "http-api",
-                version: "{version}"
+                path: "server/v5/http-api",
             }
         },
-        "@grpc": {          
+        "@grpc": {
             "js": {
                 label: "JavaScript",
                 path: "clients/node/6.2.1"

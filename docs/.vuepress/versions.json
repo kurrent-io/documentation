@@ -1,5 +1,10 @@
 [
-  "../../http-api/generated-versions.json",
   "../../server/generated-versions.json",
-  "../../server/kubernetes-operator/versions.json"
+  "../../server/kubernetes-operator/versions.json",
+  "../../clients/dotnet/generated-versions.json",
+  "../../clients/node/generated-versions.json",
+  "../../clients/python/generated-versions.json",
+  "../../clients/rust/generated-versions.json",
+  "../../clients/golang/generated-versions.json",
+  "../../clients/java/generated-versions.json"
 ]

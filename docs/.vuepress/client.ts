@@ -6,8 +6,25 @@ import CloudBanner from "./components/CloudBanner.vue";
 import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import {usePostHog} from "./lib/usePosthog";
+import SidebarLayout from "./layouts/SidebarLayout.vue";
 
-declare const __VERSIONS__: { latest: string, selected: string, all: string[] }
+declare const __VERSIONS__: { 
+    latest: string, 
+    selected: string, 
+    all: {
+        id: string,
+        group: string,
+        basePath: string,
+        versions: {
+            version: string,
+            path: string,
+            startPage: string,
+            preview?: boolean,
+            deprecated?: boolean,
+            hide?: boolean
+        }[]
+    }[]
+}
 
 const storageKey = "VUEPRESS_TAB_STORE";
 
@@ -30,15 +47,6 @@ const findEsMeta = (route) => {
     }
 }
 
-interface ClientConfig {
-    enhance?: (context: {
-        app: any;
-        router: Router;
-        siteData: any;
-    }) => void | Promise<void>;
-    setup?: () => void;
-}
-
 const removeHtml = (path: string) => path.replace(".html", "");
 
 const reload = () => {
@@ -55,14 +63,16 @@ const leave = (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     }
 }
 
-const { posthog } = usePostHog();
+const {posthog} = usePostHog();
 
 export default defineClientConfig({
+    layouts: {
+        Layout: SidebarLayout
+    },
     enhance({app, router, _}) {
         app.component("CloudBanner", CloudBanner);
         app.component("KapaWidget", KapaWidget);
         app.component("UserFeedback", UserFeedback);
-        const apiPath = __VERSIONS__.latest.replace("server", "http-api");
         const addFixedRoute = (from: string, to: string) => router.addRoute({
             path: from, redirect: _ => {
                 reload();
@@ -79,16 +89,16 @@ export default defineClientConfig({
             });
 
         // Router configuration
-        addFixedRoute("/http-api/", `${apiPath}/introduction`);
+        addFixedRoute("/server/http-api/", `/${__VERSIONS__.latest}/http-api/introduction`);
         addFixedRoute("/cloud/", `/cloud/introduction.html`);
         router.afterEach(() => {
             setTimeout(() => { // to ensure this runs after DOM updates
                 try {
-                    const {code} = JSON.parse(localStorage.getItem('VUEPRESS_TAB_STORE'));
+                    const {code} = JSON.parse(localStorage.getItem('VUEPRESS_TAB_STORE')!);
                     if (code) { // If a valid 'code' is found in localStorage
                         Array.from(document.querySelectorAll('.vp-tab-nav'))
                             .forEach((button: HTMLButtonElement) => {
-                                if (button.textContent.trim() === code) {
+                                if (button.textContent!.trim() === code) {
                                     button.click(); // click the button to switch the tab
                                 }
                             });
@@ -98,18 +108,36 @@ export default defineClientConfig({
                 }
             }, 0);
         });
-        const operatorLatest = __VERSIONS__.all.filter(x => x.id == 'kubernetes-operator')[0].versions[0].version;
+        const operatorLatest = __VERSIONS__.all.filter(x => x.id === 'kubernetes-operator')[0].versions[0].version;
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
+        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/legacy/:version', to => {
+          const version = to.params.version;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === `legacy/${version}`)
+          return `/clients/${to.params.lang}/legacy/${to.params.version}/${latestVersion?.startPage}`;
+        });
+        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/legacy', to => {
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path.startsWith('legacy/'))
+          return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
+        })
+
+        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/:version', to => {
+          const version = to.params.version;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === version)
+          return `/clients/${to.params.lang}/${version}/${latestVersion?.startPage}`;
+        });
+        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)', to => {
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+          return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
+        })
+
+
+        // Add fixed routes for server versions because they don't use the same sidebar structure as the other versions
+        addFixedRoute("/server/v22.10", "/server/v22.10/introduction.html");
+        addFixedRoute("/server/v5", "/server/v5/introduction.html");
+
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
-        addDynamicRoute('/client/:lang',
-            to => {
-                const lang = to.params.lang === "csharp" ? "C#" : to.params.lang;
-                const stored = JSON.parse(localStorage.getItem(storageKey) ?? "{}");
-                localStorage.setItem(storageKey, JSON.stringify({...stored, code: lang}));
-                return '/clients/grpc/getting-started.html';
-            });
         addDynamicRoute('/latest/:pathMatch(.*)*', to => to.path.replace(/^\/latest/, `/${__VERSIONS__.latest}`));
         addFixedRoute("/server/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest", `/${__VERSIONS__.latest}/quick-start/`);
@@ -135,13 +163,13 @@ export default defineClientConfig({
                     });
                 }, 1000);
             }
-            
+
             // Check for 404 page after navigation completes
             setTimeout(() => {
                 // Check for the specific elements with classes error-code and error-hint
                 const errorCodeElement = document.querySelector('p.error-code');
                 const errorHintElement = document.querySelector('p.error-hint');
-                
+
                 // If both elements exist, we're on a 404 page
                 if (errorCodeElement && errorHintElement) {
                     // Capture the 404 event in PostHog
@@ -154,15 +182,15 @@ export default defineClientConfig({
                         });
                     }
                 }
-            }, 50); 
+            }, 50);
         });
         router.beforeEach((to, from) => leave(to, from));
     },
     setup() {
         onMounted(() => {
             const route = useRoute();
-            if (route.path !== "/");
+            if (route.path !== "/") ;
         });
 
     },
-} satisfies ClientConfig);
+});
