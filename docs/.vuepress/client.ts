@@ -73,7 +73,6 @@ export default defineClientConfig({
         app.component("CloudBanner", CloudBanner);
         app.component("KapaWidget", KapaWidget);
         app.component("UserFeedback", UserFeedback);
-        const apiPath = __VERSIONS__.latest.replace("server", "http-api");
         const addFixedRoute = (from: string, to: string) => router.addRoute({
             path: from, redirect: _ => {
                 reload();
@@ -90,7 +89,7 @@ export default defineClientConfig({
             });
 
         // Router configuration
-        addFixedRoute("/http-api/", `${apiPath}/introduction`);
+        addFixedRoute("/server/http-api/", `/${__VERSIONS__.latest}/http-api/introduction`);
         addFixedRoute("/cloud/", `/cloud/introduction.html`);
         router.afterEach(() => {
             setTimeout(() => { // to ensure this runs after DOM updates
@@ -113,25 +112,19 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
-        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/legacy/:version', to => {
-          const version = to.params.version;
-          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === `legacy/${version}`)
-          return `/clients/${to.params.lang}/legacy/${to.params.version}/${latestVersion?.startPage}`;
-        });
         addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/legacy', to => {
           const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path.startsWith('legacy/'))
-          return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
+          return `/clients/${to.params.lang}/${latestVersion?.path}/`;
         })
 
-        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/:version', to => {
-          const version = to.params.version;
-          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === version)
-          return `/clients/${to.params.lang}/${version}/${latestVersion?.startPage}`;
-        });
         addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)', to => {
           const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
-          return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
+          return `/clients/${to.params.lang}/${latestVersion?.path}/`;
         })
+
+        // Add fixed routes for server versions because they don't use the same sidebar structure as the other versions
+        addFixedRoute("/server/v22.10", "/server/v22.10/introduction.html");
+        addFixedRoute("/server/v5", "/server/v5/introduction.html");
 
         addDynamicRoute("/server/:version", to => `/server/${to.params.version}/quick-start/`);
         addDynamicRoute('/latest/:pathMatch(.*)*', to => to.path.replace(/^\/latest/, `/${__VERSIONS__.latest}`));
