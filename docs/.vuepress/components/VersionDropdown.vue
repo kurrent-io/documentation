@@ -2,8 +2,8 @@
 import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import {useRoute, useRouter} from "vuepress/client";
 import type {VersionDetail} from "../lib/versioning";
-import VersionText from "./VersionText.vue";
 import VersionSection from "./VersionSection.vue";
+import VersionText from "./VersionText.vue";
 
 interface Props {
   versions: VersionDetail[];
@@ -21,7 +21,9 @@ const latestVersion = computed(() => props.versions[0]?.version);
 const currentVersions = computed(() => props.versions.filter(v => !v.deprecated && !v.hide));
 const deprecatedVersions = computed(() => props.versions.filter(v => v.deprecated && !v.hide));
 
-watch(() => props.current, (newCurrent) => selectedVersion.value = newCurrent);
+watch(() => props.current, (newCurrent) => {
+  selectedVersion.value = newCurrent;
+});
 
 const toggleDropdown = (): void => {
   isOpen.value = !isOpen.value;
@@ -32,12 +34,14 @@ const closeDropdown = (): void => {
 }
 
 const handleVersionSelect = (version: VersionDetail): void => {
-  const segments = route.path.split('/').filter(seg => seg);
-  const versionIndex = segments.findIndex(seg => seg === props.current.path);
-  const base = versionIndex > 0 ? segments.slice(0, versionIndex).join('/') : segments[0] || '';
-
-  router.replace(`/${base}/${version.path}/${version.startPage}`);
-
+  const currentVersionPath = `/${props.current.path}/`;
+  const newVersionPath = `/${version.path}/`;
+  
+  if (route.path.includes(currentVersionPath)) {
+    const basePart = route.path.split(currentVersionPath)[0];
+    router.replace(`${basePart}${newVersionPath}${version.startPage}`);
+  } 
+  
   closeDropdown();
 }
 
