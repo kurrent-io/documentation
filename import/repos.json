@@ -68,14 +68,14 @@
       {
         "version": "v1.0",
         "name": "release/v1.0",
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       },
       {
         "version": "legacy/v23.3",
         "alias": "Legacy v23.3",
         "name": "release/legacy/v23.3",
         "deprecated": true,
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       }
     ]
   },
@@ -91,14 +91,14 @@
       {
         "version": "v1.0",
         "name": "release/v1.0",
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       },
       {
         "version": "legacy/v5.4",
         "alias": "Legacy v5.4",
         "name": "release/legacy/v5.4",
         "deprecated": true,
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       }
     ]
   },
@@ -114,14 +114,14 @@
       {
         "version": "v1.0",
         "name": "release/v1.0",
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       },
       {
         "version": "legacy/v4.0",
         "alias": "Legacy v4.0",
         "name": "release/legacy/v4.0",
         "deprecated": true,
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       }
     ]
   },
@@ -137,19 +137,19 @@
       {
         "version": "v1.0",
         "name": "release/v1.0",
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       },
       {
         "version": "legacy/v6.2",
         "alias": "Legacy v6.2",
         "name": "release/legacy/v6.2",
         "deprecated": true,
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       }
     ]
   },
   {
-    "id": "go-client",
+    "id": "golang-client",
     "group": "Go SDK",
     "basePath": "clients/golang",
     "docsRelativePath": [ "docs", "api" ],
@@ -160,14 +160,14 @@
       {
         "version": "v1.0",
         "name": "release/v1.0",
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       },
       {
         "version": "legacy/v4.2",
         "alias": "Legacy v4.2",
         "name": "release/legacy/v4.2",
         "deprecated": true,
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       }
     ]
   },
@@ -183,7 +183,7 @@
       {
         "version": "v1.0",
         "name": "docs/v1.0",
-        "startPage": "getting-started.html"
+        "startPage": "getting-started"
       }
     ]
   }

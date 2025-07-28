@@ -21,7 +21,7 @@ export const navbarEn: NavbarOptions = [
                     {text: "Python", link: "/clients/python/"},
                     {text: "Node.js", link: "/clients/node/"},
                     {text: "Java", link: "/clients/java/"},
-                    {text: "Go", link: "/clients/go/"},
+                    {text: "Go", link: "/clients/golang/"},
                     {text: "Rust", link: "/clients/rust/"},
                 ]
             },
