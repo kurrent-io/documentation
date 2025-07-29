@@ -25,7 +25,7 @@
 # ######################
 
 # redirect for internet search on "esdb .net client
-/clients/dotnet/5.0/connecting.html   /clients/grpc/getting-started.html#connecting-to-eventstoredb    301
+/clients/dotnet/5.0/connecting.html   /clients/dotnet/    301
 
 # TCP Clients
 /clients/dotnet/21.2/migration-to-gRPC.html#appending-events       /clients/tcp/dotnet/21.2/migration-to-gRPC.html#appending-events    301
@@ -80,10 +80,6 @@
 /http-api/v5/reading-subscribing-events.html                 /http-api/v5/introduction.html    301
 /http-api/v5/stream-metadata.html                            /http-api/v5/introduction.html    301
 /http-api/v5/writing-events.html                             /http-api/v5/introduction.html    301
-
-# General clients redirect
-# This rule should be last in this clients list otherwise it takes precedence.
-/clients                                   /clients/grpc/getting-started.html   301
 
 # ######################
 # Cloud
@@ -215,46 +211,32 @@
 # Clients
 # ######################
 
-# TCP Clients redirects
-/samples/clients/dotnet/22.0/*              /clients/tcp/dotnet/21.2                       301
-/clients/dotnet/5.0/*                       /clients/tcp/dotnet/21.2/:splat                301
-/clients/dotnet/21.2/*                      /clients/tcp/dotnet/21.2/:splat                301
-/clients/dotnet/20.10/*                     /clients/tcp/dotnet/21.2/:splat                301
-/clients/tcp/dotnet/5.0/*                   /clients/tcp/dotnet/21.2/:splat                301
-/clients/tcp/dotnet/20.10/*                 /clients/tcp/dotnet/21.2/:splat                301
-
-# TCP Clients from Vuepress v1 to v2
-/clients/dotnet/:version/getting-started/*  /clients/tcp/dotnet/:version/:splat            301
-/clients/dotnet/:version/:firstpart.html    /clients/tcp/dotnet/:version/:firstpart.html   200
-/clients/dotnet/:version/:firstpart/*       /clients/tcp/dotnet/:version/:firstpart.html   301
-
 # gRPC Clients from Vuepress v1 to v2
-/clients/grpc/subscribing-to-streams/*                               /clients/grpc/subscriptions.html             301
-/clients/grpc/:firstpart/*                                           /clients/grpc/:firstpart.html                301
+/clients/grpc/subscribing-to-streams/*                               /clients             301
 
 # HTTP API from Vuepress v1 to v2
 /server/v5/docs/http-api/:firstpart.html    /http-api/v5/                      301
 /server/v5/docs/http-api/:firstpart/*       /http-api/v5/:firstpart/:splat     301
-/clients/http-api/v5/:firstpart/:filename.html /http-api/v5/:firstpart/        301
+/clients/http-api/v5/:firstpart/:filename.html /server/http-api/v5/:firstpart/        301
 
-/clients/http-api/v5/*                                            /http-api/v5/:splat
+/clients/http-api/v5/*                                            /server/http-api/v5/:splat
 
 # HTTP API v5 directory structure change (fde9dd319a406350292fd2fd4a2809fd36338794@eventstore)
-/http-api/v5/introduction/*                                  /http-api/v5/introduction.html    301
-/http-api/v5/optional-http-headers/*                         /http-api/v5/introduction.html    301
-/http-api/v5/projections/*                                   /http-api/v5/introduction.html    301
+/http-api/v5/introduction/*                                  /server/http-api/v5/introduction.html    301
+/http-api/v5/optional-http-headers/*                         /server/http-api/v5/introduction.html    301
+/http-api/v5/projections/*                                   /server/http-api/v5/introduction.html    301
 
 # HTTP API deprecated
-/http-api/5.0.8/*                   /http-api/v5/introduction.html                      301
-/http-api/v24.2/*                   /http-api/v24.10/introduction.html                  301
-/http-api/v24.10%20Preview%201/*    /http-api/v24.10/:splat                             301
+/http-api/5.0.8/*                   /server/http-api/v5/introduction.html                      301
+/http-api/v24.2/*                   /server/http-api/v24.10/introduction.html                  301
+/http-api/v24.10%20Preview%201/*    /server/http-api/v24.10/:splat                             301
 
-/clients/http-api/v20.10/*          /http-api/v24.10/introduction.html                  301
-/clients/http-api/v21.10/*          /http-api/v24.10/introduction.html                  301
-/clients/http-api/v22.10/*          /http-api/v22.10/introduction.html                  301
-/clients/http-api/v23.6/*           /http-api/v23.10/introduction.html                  301
-/clients/http-api/v23.10/*          /http-api/v23.10/introduction.html                  301
-/clients/http-api/v24.2/*           /http-api/v24.10/introduction.html                  301
+/clients/http-api/v20.10/*          /server/http-api/v24.10/introduction.html                  301
+/clients/http-api/v21.10/*          /server/http-api/v24.10/introduction.html                  301
+/clients/http-api/v22.10/*          /server/http-api/v22.10/introduction.html                  301
+/clients/http-api/v23.6/*           /server/http-api/v23.10/introduction.html                  301
+/clients/http-api/v23.10/*          /server/http-api/v23.10/introduction.html                  301
+/clients/http-api/v24.2/*           /server/http-api/v24.10/introduction.html                  301
 
 # ######################
 # Db Server

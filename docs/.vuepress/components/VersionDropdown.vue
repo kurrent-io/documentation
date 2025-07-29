@@ -21,7 +21,9 @@ const latestVersion = computed(() => props.versions[0]?.version);
 const currentVersions = computed(() => props.versions.filter(v => !v.deprecated && !v.hide));
 const deprecatedVersions = computed(() => props.versions.filter(v => v.deprecated && !v.hide));
 
-watch(() => props.current, (newCurrent) => selectedVersion.value = newCurrent);
+watch(() => props.current, (newCurrent) => {
+  selectedVersion.value = newCurrent;
+});
 
 const toggleDropdown = (): void => {
   isOpen.value = !isOpen.value;
@@ -32,8 +34,13 @@ const closeDropdown = (): void => {
 }
 
 const handleVersionSelect = (version: VersionDetail): void => {
-  const base = route.path.split('/').filter(seg => seg)[0];
-  router.replace(`/${base}/${version.path}/${version.startPage}`);
+  const currentVersionPath = `/${props.current.path}/`;
+  const newVersionPath = `/${version.path}/`;
+
+  if (route.path.includes(currentVersionPath)) {
+    const basePart = route.path.split(currentVersionPath)[0];
+    router.replace(`${basePart}${newVersionPath}${version.startPage}`);
+  }
 
   closeDropdown();
 }

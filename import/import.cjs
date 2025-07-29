@@ -38,7 +38,7 @@ async function copyDocsAndSamples(destinationPath, samplesPath, branch, repo) {
         await copyDocs(repo.repo, destination, branch.name, repPath);
         result = {
             path: branch.version,
-            version: branch.version,
+            version: branch?.alias ?? branch.version,
             startPage: branch.startPage,
             preview: branch.preview,
             deprecated: branch.deprecated,

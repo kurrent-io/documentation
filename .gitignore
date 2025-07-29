@@ -344,3 +344,7 @@ generated-versions.json
 docs/.vuepress/.temp/
 docs/.vuepress/.cache/
 docs/.vuepress/dist/
+
+config.ts.*.mjs
+
+docs/clients/grpc/**/* 

@@ -149,7 +149,7 @@ They enable subscriptions to resume from their last position after interruptions
    ::: warning Performance Note
    While frequent checkpointing provides better recovery guarantees, it's not necessarily the best practice for production environments. Each checkpoint operation triggers a disk write, so excessive checkpointing can introduce significant performance overhead. In production, you should balance recovery needs with performance considerations. 
    
-   See [Step 4](/getting-started/use-cases/outbox/tutorial-3.md#step-4-create-a-kurrentdb-persistent-subscription-consumer-group) for more information.
+   See [Step 4](tutorial-3.md#step-4-create-a-kurrentdb-persistent-subscription-consumer-group) for more information.
    :::
    
    ::::
@@ -284,7 +284,7 @@ In this step, you'll see how these retries prevent data loss when database conne
 
    Because of this, you should always design your event handling logic to be idempotent. In other words, processing the same event more than once—or receiving it out of order—should not break your application or result in inconsistent data.
 
-   See [Step 7](/getting-started/use-cases/outbox/tutorial-3.md#step-7-examine-the-order-processor-application-codebase) for more information.
+   See [Step 7](tutorial-3.md#step-7-examine-the-order-processor-application-codebase) for more information.
    :::
 
 9. Run this command in the terminal to start PostgreSQL CLI:

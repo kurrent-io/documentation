@@ -27,7 +27,7 @@ For instance, the read model could also be saved as a PDF for emailing to manage
 
 You have complete flexibility in choosing the data model and storage method for your read model.
 
-[Click here](/getting-started/use-cases/mix-and-match-database/introduction.md) for more information about this.
+[Click here](../introduction.md) for more information about this.
 :::
 
 1. Run this command in the terminal to start the report projection application:
@@ -258,8 +258,8 @@ The Report Projection Application performs the following steps:
    ::: info Different Types of Subscriptions
    This sample uses catch-up subscriptions to subscribe to events. You can also use persistent subscriptions or connectors to achieve a similar result. 
 
-   For more information about catch-up subscriptions, [click here](/clients/grpc/subscriptions.html).
-   For more information about persistent subscriptions, [click here](/clients/grpc/persistent-subscriptions.html). 
+   For more information about catch-up subscriptions, [click here](/clients/subscriptions.html).
+   For more information about persistent subscriptions, [click here](/clients/persistent-subscriptions.html). 
    For more information about connectors, [click here](/server/v24.10/features/connectors/).
    :::
 

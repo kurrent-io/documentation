@@ -164,7 +164,7 @@ Configuration for sidebars can be found in the `/docs/.vuepress/configs/sidebar.
 
 ```typescript
 export const sidebarEn: EsSidebarOptions = {
-  "/clients/grpc/": "structure",
+  "/clients/": "structure",
   "/cloud/": "structure",
 }
 ```

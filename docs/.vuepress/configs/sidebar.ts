@@ -39,5 +39,63 @@ export const sidebarEn: EsSidebarOptions = {
     "/cloud/": "structure",
     ...ver.getSidebars(),
     "/clients/tcp/dotnet/21.2/": "structure",
-    "/dev-center/": "structure"
+    "/dev-center/": "structure",
+
+    // The way these docs were setup in server v22.10 and v5 are not compatible with the new sidebar structure.
+    "/server/v22.10/": [
+      "introduction",
+      "installation",
+      "configuration",
+      "streams",
+      "indexes",
+      "projections",
+      "persistent-subscriptions",
+      "operations",
+      "diagnostics",
+      "networking",
+      "cluster",
+      "security",
+      "upgrade-guide",
+      "release-notes",
+      "release-schedule",
+      {
+        text: "HTTP API",
+        children: [
+          "http-api/introduction.md",
+          "http-api/security.md",
+          "http-api/persistent.md",
+          "http-api/projections.md",
+          "http-api/optional-http-headers.md",
+          "http-api/api.md"
+        ],
+        collapsible: true,
+      }
+    ],
+    "/server/v5/": [
+      "introduction",
+      "installation",
+      "configuration",
+      "security",
+      "networking",
+      "cluster",
+      "server-settings",
+      "admin-ui",
+      "indexes",
+      "projections",
+      "persistent-subscriptions",
+      "operations",
+      "diagnostics",
+      {
+        text: "HTTP API",
+        children: [
+          "http-api/introduction.md",
+          "http-api/security.md",
+          "http-api/persistent.md",
+          "http-api/projections.md",
+          "http-api/optional-http-headers.md",
+          "http-api/api.md"
+        ],
+        collapsible: true,
+      }
+    ],
 };

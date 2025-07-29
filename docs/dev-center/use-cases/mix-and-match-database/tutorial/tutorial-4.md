@@ -107,6 +107,6 @@ Are the contents of the Top 10 Products (Redis) table and the Carts Table (Postg
 
    ::: info 
 
-   For more info on subscribing to a stream for live updates, [click here](https://docs.kurrent.io/clients/grpc/subscriptions.html#subscribing-to-a-stream-for-live-updates)
+   For more info on subscribing to a stream for live updates, [click here](https://docs.kurrent.io/clients/subscriptions.html#subscribing-to-a-stream-for-live-updates)
 
    :::
