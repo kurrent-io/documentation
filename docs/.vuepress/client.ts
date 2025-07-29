@@ -3,6 +3,7 @@ import {onMounted} from "vue";
 import type {RouteLocationNormalized} from "vue-router";
 import {defineClientConfig, useRoute} from 'vuepress/client';
 import CloudBanner from "./components/CloudBanner.vue";
+import ClientsGrid from "./components/ClientsGrid.vue";
 import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import SidebarLayout from "./layouts/SidebarLayout.vue";
@@ -27,6 +28,8 @@ declare const __VERSIONS__: {
 }
 
 const storageKey = "VUEPRESS_TAB_STORE";
+
+const clients = ":lang(dotnet|golang|java|node|python|rust)"
 
 const findMetaKey = (record: any[], key: string) => {
     if (record[0] !== "meta") return null;
@@ -71,6 +74,7 @@ export default defineClientConfig({
     },
     enhance({app, router, _}) {
         app.component("CloudBanner", CloudBanner);
+        app.component("ClientsGrid", ClientsGrid);
         app.component("KapaWidget", KapaWidget);
         app.component("UserFeedback", UserFeedback);
         const addFixedRoute = (from: string, to: string) => router.addRoute({
@@ -112,22 +116,32 @@ export default defineClientConfig({
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
-        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/legacy/:version', to => {
+        // Clients routes
+        addFixedRoute(`/clients/grpc/:pathMatch(.*)*`, "/clients/");
+
+        addDynamicRoute(`/clients/${clients}/latest/:pathMatch(.*)*`, to => {
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+          return `/clients/${to.params.lang}/${latestVersion?.version}/${to.params.pathMatch}`;
+        });
+        addDynamicRoute(`/clients/${clients}/latest`, to => {
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+          return `/clients/${to.params.lang}/${latestVersion?.version}/${latestVersion?.startPage}`;
+        });
+        addDynamicRoute(`/clients/${clients}/legacy/:version`, to => {
           const version = to.params.version;
           const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === `legacy/${version}`)
           return `/clients/${to.params.lang}/legacy/${to.params.version}/${latestVersion?.startPage}`;
         });
-        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/legacy', to => {
+        addDynamicRoute(`/clients/${clients}/legacy`, to => {
           const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path.startsWith('legacy/'))
           return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
         })
-
-        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)/:version', to => {
+        addDynamicRoute(`/clients/${clients}/:version`, to => {
           const version = to.params.version;
           const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === version)
           return `/clients/${to.params.lang}/${version}/${latestVersion?.startPage}`;
         });
-        addDynamicRoute('/clients/:lang(dotnet|golang|java|node|python|rust)', to => {
+        addDynamicRoute(`/clients/${clients}`, to => {
           const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
           return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
         })
