@@ -22,7 +22,7 @@ This resource type is used to define a database deployment.
 | `network` _[KurrentDbNetwork](#kurrentdbnetwork)_                                                                                           | Yes                                                               | Defines the network configuration to use with the database                                                                               |
 | `configuration` _yaml_                                                                                                                      | No                                                                | Additional configuration to use with the database                                                                                        |
 | `sourceBackup` _string_                                                                                                                     | No                                                                | Backup name to restore a cluster from                                                                                                    |
-| `security` _[KurrentDbSecurity](#kurrentdbecurity)_                                                                                         | No                                                                | Security configuration to use for the database. This is optional, if not specified the cluster will be created without security enabled. |
+| `security` _[KurrentDbSecurity](#kurrentdbsecurity)_                                                                                        | No                                                                | Security configuration to use for the database. This is optional, if not specified the cluster will be created without security enabled. |
 | `licenseSecret` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secret-v1-core)_                  | No | A secret that contains the Enterprise license for the database                                                                           |
 
 #### KurrentDbNetwork
@@ -59,7 +59,7 @@ This resource type is used to define a database deployment.
 
 ## KurrentDBBackup
 
-This resource type is used to define a backup for an existing database deployment. 
+This resource type is used to define a backup for an existing database deployment.
 
 :::important
 Resources of this type must be created within the same namespace as the target database cluster to backup.

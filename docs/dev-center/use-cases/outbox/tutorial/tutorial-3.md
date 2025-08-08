@@ -182,7 +182,7 @@ For demonstration purposes in this tutorial, an insert into a table would suffic
    ::: info Different Types of Subscriptions
    This sample uses persistent subscriptions to subscribe to events. You can also use catch-up subscriptions or connectors to achieve a similar result. 
 
-   [Click here](https://docs.kurrent.io/clients/grpc/subscriptions.html) for more information about catch-up subscriptions
+   [Click here](https://docs.kurrent.io/clients/subscriptions.html) for more information about catch-up subscriptions
 
    [Click here](https://docs.kurrent.io/server/v25.0/features/connectors/) for more information about connectors
    :::
