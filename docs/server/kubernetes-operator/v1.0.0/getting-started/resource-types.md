@@ -23,7 +23,7 @@ This resource type is used to define a database deployment.
 | `configuration` _yaml_                                                                                                                      | No                                                                | Additional configuration to use with the database                                                                                        |
 | `sourceBackup` _string_                                                                                                                     | No                                                                | Backup name to restore a cluster from                                                                                                    |
 | `security` _[KurrentDbSecurity](#kurrentdbsecurity)_                                                                                        | No                                                                | Security configuration to use for the database. This is optional, if not specified the cluster will be created without security enabled. |
-| `licenseSecret` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secret-v1-core)_                  | No | A secret that contains the Enterprise license for the database                                                                           |
+| `licenseSecret` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secretkeyselector-v1-core)_                  | No | A secret that contains the Enterprise license for the database                                                                           |
 
 #### KurrentDbNetwork
 
