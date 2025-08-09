@@ -5,7 +5,7 @@ order: 1
 
 ## What is Kurrent Cloud?
 
-Kurrent Cloud enables seamless deployment of managed KurrentDB clusters with major cloud providers. Deployments on both `shared` and `dedicated` infrastructure are supported.
+Kurrent Cloud enables seamless deployment of managed KurrentDB clusters with major cloud providers.
 
 ::: tip Learn more
 Not using Kurrent Cloud and want to learn more? Find more information and sign up links [on our website](https://www.kurrent.io/kurrent-cloud).
@@ -14,12 +14,6 @@ Not using Kurrent Cloud and want to learn more? Find more information and sign u
 As a customer of Kurrent Cloud, you get access to the [Cloud console](https://console.kurrent.cloud), where you can provision and manage KurrentDB clusters, backup and restore your data, and establish the connection between Kurrent Cloud networks and your own cloud infrastructure.
 
 Kurrent Cloud operations can be automated using the [Terraform provider](https://github.com/kurrent-io/terraform-provider-eventstorecloud), [Pulumi provider](https://www.pulumi.com/registry/packages/eventstorecloud/), and the [CLI tool](https://github.com/kurrent-io/esc) which is built on top of the same API.
-
-## What is shared infrastructure?
-
-With this option, KurrentDB clusters are hosted in shared compute infrastructure. Each deployment is isolated from other tenants, making them highly secure and cost-effective.
-
-If you're looking to get started or experiment with KurrentDB, this option is best.
 
 ## What is dedicated infrastructure?
 
@@ -108,4 +102,4 @@ Within the project context, you can manage project clusters, backups, networks, 
 
 ### Provision a cluster
 
-You are now ready to start provisioning cloud resources with Kurrent Cloud. Please proceed to the [Getting Started guide](shared/getting-started/README.md) to learn how to provision your first cluster.
+You are now ready to start provisioning cloud resources with Kurrent Cloud. Please proceed to the [Getting Started guide](dedicated/getting-started/README.md) to learn how to provision your first cluster.
