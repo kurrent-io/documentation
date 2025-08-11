@@ -20,12 +20,13 @@ This resource type is used to define a database deployment.
 | `resources` _[ResourceRequirements](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#resourcerequirements-v1-core)_     | No       | Database container resource limits and requests                                                                                          |
 | `storage` _[PersistentVolumeClaim](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#persistentvolumeclaimspec-v1-core)_ | Yes      | Persistent volume claim settings for the underlying data volume                                                                          |
 | `network` _[KurrentDBNetwork](#kurrentdbnetwork)_                                                                                           | Yes      | Defines the network configuration to use with the database                                                                               |
-| `configuration` _yaml_                                                                                                                      | No       | Additional configuration to use with the database                                                                                        |
+| `configuration` _yaml_                                                                                                                      | No       | Additional configuration to use with the database, see [below](#configuring-kurrent-db)                                                  |
 | `sourceBackup` _string_                                                                                                                     | No       | Backup name to restore a cluster from                                                                                                    |
 | `security` _[KurrentDBSecurity](#kurrentdbsecurity)_                                                                                        | No       | Security configuration to use for the database. This is optional, if not specified the cluster will be created without security enabled. |
-| `licenseSecret` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secretkeyselector-v1-core)_                  | No       | A secret that contains the Enterprise license for the database                                                                           |
+| `licenseSecret` _[SecretKeySelector](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#secretkeyselector-v1-core)_       | No       | A secret that contains the Enterprise license for the database                                                                           |
 | `constraints` _[KurrentDBConstraints](#kurrentdbconstraints)_                                                                               | No       | Scheduling constraints for the Kurrent DB pod.                                                                                           |
 | `readOnlyReplias` _[KurrentDBReadOnlyReplicasSpec](#kurrentdbreadonlyreplicasspec)_                                                         | No       | Read-only replica configuration the Kurrent DB Cluster.                                                                                  |
+| `extraMetadata` _[KurrentDBExtraMetadataSpec](#kurrentdbextrametadataspec)_                                                                 | No       | Additional annotations and labels for child resources.                                                                                   |
 
 #### KurrentDBReadOnlyReplicasSpec
 
@@ -47,6 +48,26 @@ Other than `replicas`, each of the fields in `KurrentDBReadOnlyReplicasSpec` def
 | `affinity` _[Affinity](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#affinity-v1-core)_                                                          | No       | The node affinity, pod affinity, and pod anti-affinity for scheduling the Kurrent DB pod. |
 | `tolerations` _list of [Toleration](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#toleration-v1-core)_                                           | No       | The tolerations for scheduling the Kurrent DB pod.                                        |
 | `topologySpreadConstraints` _list of [TopologySpreadConstraint](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.26/#topologyspreadconstraint-v1-core)_ | No       | The topology spread constraints for scheduling the Kurrent DB pod.                        |
+
+#### KurrentDBExtraMetadataSpec
+
+| Field                                                            | Required | Description                                                         |
+|------------------------------------------------------------------|----------|---------------------------------------------------------------------|
+| All _[ExtraMetadataSpec](#extrametadataspec)_                    | No       | Extra annotations and labels for all child resource types.          |
+| ConfigMaps _[ExtraMetadataSpec](#extrametadataspec)_             | No       | Extra annotations and labels for ConfigMaps.                        |
+| StatefulSets _[ExtraMetadataSpec](#extrametadataspec)_           | No       | Extra annotations and labels for StatefulSets.                      |
+| Pods _[ExtraMetadataSpec](#extrametadataspec)_                   | No       | Extra annotations and labels for Pods.                              |
+| PersistentVolumeClaims _[ExtraMetadataSpec](#extrametadataspec)_ | No       | Extra annotations and labels for PersistentVolumeClaims.            |
+| HeadlessServices _[ExtraMetadataSpec](#extrametadataspec)_       | No       | Extra annotations and labels for the per-cluster headless Services. |
+| HeadlessPodServices _[ExtraMetadataSpec](#extrametadataspec)_    | No       | Extra annotations and labels for the per-pod headless Services.     |
+| LoadBalancers _[ExtraMetadataSpec](#extrametadataspec)_          | No       | Extra annotations and labels for LoadBalancer-type Services.        |
+
+#### ExtraMetadataSpec
+
+| Field                 | Required  | Description
+|-----------------------|-----------|-----------------------------------|
+| Labels _object_       | No        | Extra labels for a resource.      |
+| Annotations _object_  | No        | Extra annotations for a resource. |
 
 #### KurrentDBNetwork
 
@@ -76,10 +97,10 @@ When `fqdnTemplate` is empty, it defaults to `{podName}.{name}{nodeTypeSuffix}.{
 
 | Field                                                                  | Required | Description                                                                                                           |
 |------------------------------------------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------|
-| `certificateSubjectName` _string_                                      | No       | Subject name used in the TLS certificate (this maps directly to the database property `CertificateSubjectName`)       |
 | `certificateReservedNodeCommonName` _string_                           | No       | Common name for the TLS certificate (this maps directly to the database property `CertificateReservedNodeCommonName`) |
-| `certificateAuthoritySecret` _[CertificateSecret](#certificatesecret)_ | No       | Secret containing the CA TLS certificate                                                                              |
-| `certificateSecret` _[CertificateSecret](#certificatesecret)_          | Yes      | Secret containing the TLS certificate to use                                                                          |
+| `certificateAuthoritySecret` _[CertificateSecret](#certificatesecret)_ | No       | Secret containing the CA TLS certificate.                                                                             |
+| `certificateSecret` _[CertificateSecret](#certificatesecret)_          | Yes      | Secret containing the TLS certificate to use.                                                                         |
+| `certificateSubjectName` _string_                                      | No       | Deprecated field.  The value of this field is always ignored.                                                         |
 
 #### CertificateSecret
 
@@ -100,8 +121,64 @@ Resources of this type must be created within the same namespace as the target d
 
 ### API
 
-| Field                              | Required | Description                                                                                                                             |
-|------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| `clusterName` _string_             | Yes      | Name of the source database cluster                                                                                                     |
-| `nodeName` _string_                | No       | Specific node name within the database cluster to use as the backup. If this is not specified, the leader will be picked as the source. |
-| `volumeSnapshotClassName` _string_ | Yes      | The name of the underlying volume snapshot class to use.                                                                                |
+| Field                                                                                   | Required | Description                                                                                                                             |
+|-----------------------------------------------------------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `clusterName` _string_                                                                  | Yes      | Name of the source database cluster                                                                                                     |
+| `nodeName` _string_                                                                     | No       | Specific node name within the database cluster to use as the backup. If this is not specified, the leader will be picked as the source. |
+| `volumeSnapshotClassName` _string_                                                      | Yes      | The name of the underlying volume snapshot class to use.                                                                                |
+| `extraMetadata` _[KurrentDBBackupExtraMetadataSpec](#kurrentdbbackupextrametadataspec)_ | No       | Additional annotations and labels for child resources.                                                                                  |
+
+#### KurrentDBBackupExtraMetadataSpec
+
+| Field                                                            | Required | Description                                                                                 |
+|------------------------------------------------------------------|----------|---------------------------------------------------------------------------------------------|
+| All _[ExtraMetadataSpec](#extrametadataspec)_                    | No       | Extra annotations and labels for all child resource types (currently only VolumeSnapshots). |
+| VolumeSnapshots _[ExtraMetadataSpec](#extrametadataspec)_        | No       | Extra annotations and labels for VolumeSnapshots.                                           |
+
+## Configuring Kurrent DB
+
+The [`KurrentDB.spec.configuration` yaml field](#kurrentdb) may contain any valid configuration values for Kurrent
+DB.  However, some values may be unnecessary, as the Operator provides some defaults, while other
+values may be ignored, as the Operator may override them.
+
+The Operator-defined default configuration values, which may be overridden by the user's
+`KurrentDB.spec.configuration` are:
+
+| Default Field                | Default Value |
+|------------------------------|---------------|
+| DisableLogFile               | true          |
+| EnableAtomPubOverHTTP        | true          |
+| Insecure                     | false         |
+| PrepareTimeoutMs             | 3000          |
+| CommitTimeoutMs              | 3000          |
+| GossipIntervalMs             | 2000          |
+| GossipTimeoutMs              | 5000          |
+| LeaderElectionTimeoutMs      | 2000          |
+| ReplicationHeartbeatInterval | 1000          |
+| ReplicationHeartbeatTimeout  | 2500          |
+| NodeHeartbeatInterval        | 1000          |
+| NodeHeartbeatTimeout         | 2500          |
+
+The Operator-managed configuration values, which take precedence over the user's
+`KurrentDB.spec.configuration`, are:
+
+<!-- Values until ReplicationIp are from pkg/db/config.go -->
+<!-- Values after ReplicationIp are from pkg/kubernetes/db/factory.go, as pod commandArgs -->
+
+| Managed Field                | Value                                                        |
+|------------------------------| -------------------------------------------------------------|
+| Db                           | hard-coded volume mount point                                |
+| Index                        | hard-coded volume mount point                                |
+| Log                          | hard-coded volume mount point                                |
+| Insecure                     | true if `KurrentDB.spec.security.certificateSecret` is empty |
+| DiscoverViaDns               | false (`GossipSeed` is used instead)                         |
+| AllowAnonymousEndpointAccess | true                                                         |
+| AllowUnknownOptions          | true                                                         |
+| NodeIp                       | 0.0.0.0 (to accept traffic from outside pod)                 |
+| ReplicationIp                | 0.0.0.0 (to accept traffic from outside pod)                 |
+| NodeHostAdvertiseAs          | Derived from pod name                                        |
+| ReplicationHostAdvertiseAs   | Derived from pod name                                        |
+| AdveritseHostToClientAs      | Derived from `KurrentDB.spec.newtork.fqdnTemplate`           |
+| ClusterSize                  | Derived from `KurrentDB.spec.replicas`                       |
+| GossipSeed                   | Derived from pod list                                        |
+| ReadOnlyReplica              | Automatically set for ReadOnlyReplica pods                   |
