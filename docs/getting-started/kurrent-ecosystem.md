@@ -10,7 +10,7 @@ At the heart of Kurrent’s platform is KurrentDB, the core database engine (for
 
 ### Kurrent Cloud
 
-Kurrent Cloud is the fully managed cloud offering of the Kurrent platform, aimed at eliminating the operational overhead of running KurrentDB clusters. It allows one-click (or API-driven) deployment of managed KurrentDB clusters on all major cloud providers – Amazon Web Services, Microsoft Azure, and Google Cloud Platform. With Kurrent Cloud, developers can spin up a KurrentDB cluster in minutes through a web console, without having to manually provision VMs or containers. The service supports multiple deployment modes: shared infrastructure and dedicated infrastructure. 
+Kurrent Cloud is the fully managed cloud offering of the Kurrent platform, aimed at eliminating the operational overhead of running KurrentDB clusters. It allows one-click (or API-driven) deployment of managed KurrentDB clusters on all major cloud providers – Amazon Web Services, Microsoft Azure, and Google Cloud Platform. With Kurrent Cloud, developers can spin up a KurrentDB cluster in minutes through a web console, without having to manually provision VMs or containers.
 
 ### Kurrent Clients and APIs
 
