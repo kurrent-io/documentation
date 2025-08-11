@@ -44,7 +44,7 @@ export function resolveSamplesPath(src: string, srcCat: string | undefined) {
         },
         "@httpapi": {
             "default": {
-                path: "server/v5/http-api",
+                path: "server/{version}/http-api",
             }
         },
         "@grpc": {
