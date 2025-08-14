@@ -1,73 +1,135 @@
-import { SeoPluginOptions } from "@vuepress/plugin-seo";
-import { App, HeadConfig, Page } from "vuepress";
+import type { SeoPluginOptions } from "@vuepress/plugin-seo";
 import { match } from "ts-pattern";
+import type { App, HeadConfig, Page } from "vuepress";
 import { hostname } from "./shared";
 
-const LEGACY = "Legacy";
-const EXCLUDED_VERSIONS = ["v5", "v24.6"];
-const LATEST_VERSION = "v25.0"; // fallback latest version
+interface DocumentationPath {
+  version: string | null;
+  section: string;
+};
+
+type Section = string;
+type Version = string;
+
+const SITE = "https://docs.kurrent.io";
+
+/**
+ * Configuration for excluding specific versions from SEO indexing.
+ */
+const EXCLUDED_VERSIONS: Record<Section, readonly Version[]> = {
+  "server": ["v5", "v24.6"],
+};
+
+/**
+ * Extracts version and section from path.
+ * @example
+ *    parsePathInfo("/clients/dotnet/v1.0/auth") // { version: "v1.0", section: "clients/dotnet" }
+ *    parsePathInfo("/cloud/introduction.html") // { version: null, section: "cloud" }
+ */
+const parsePathInfo = (path: string): DocumentationPath => {
+  const segments = path.split("/");
+  const versionIndex = segments.findIndex((s, i) => i > 1 && /^(v\d+(\.\d+)*|\d+\.\d+)$/.test(s));
+  const hasVersion = versionIndex > 1;
+
+  return {
+    version: hasVersion ? segments[versionIndex] : null,
+    section: segments.slice(1, hasVersion ? versionIndex : 2).join("/")
+  };
+}
+
+/**
+ * Checks if a specific version of a section is excluded for SEO.
+ * @param section The section to check.
+ * @param version The version to check.
+ * @returns True if the version is excluded, false otherwise.
+ */
+const isExcluded = (section: Section, version: Version | null): boolean =>
+  !!version && !!EXCLUDED_VERSIONS[section]?.includes(version);
+
+/**
+ * Converts kebab case to title case.
+ * @param str The input string.
+ * @returns The normalized string.
+ * 
+ * @example
+ * normalize("dev-center") // "Dev Center"
+ */
+const normalize = (str: string): string =>
+  str.split(/[-/]/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 
 export const seoPlugin: SeoPluginOptions = {
   hostname,
 
-  canonical: (page: Page) => {
-    const segments = page.pathInferred?.split("/") ?? [];
-    const section = segments[1];
-    const version = segments[2];
+  /**
+   * Redirects versioned pages to their "latest" equivalent for SEO purposes:
+   * - `/server/v25.0/config` -> `/server/latest/config`
+   * - `/clients/dotnet/v1.0/auth` -> `/clients/dotnet/latest/auth`
+   * 
+   * Excludes legacy and TCP clients from redirection
+   */
+  canonical: ({ path }: Page) => {
+    const { version, section } = parsePathInfo(path);
 
-    // don’t index/remove unwanted versions
-    if (EXCLUDED_VERSIONS.includes(version)) {
+    const isLegacy = ["legacy", "tcp"].some(exclude => section.includes(exclude));
+    const isVersionized = ["server", "clients"].some(s => section.startsWith(s))
+
+    const fallback = `${SITE}${path}`;
+
+    if (!version) return fallback;
+
+    if (isExcluded(section, version))
       return null;
-    }
 
-    // cloud & tutorials always point at root of that section
-    if (section === "cloud" || section === "tutorials") {
-      return `https://docs.kurrent.io/${section}${page.path.slice(
-        section.length + 1
-      )}`;
-    }
+    // redirect to latest for server and gRPC clients
+    if (isVersionized && !isLegacy)
+      return `${SITE}${path.replace(`/${section}/${version}`, `/${section}/latest`)}`;
 
-    if (version?.startsWith("v")) {
-      const rest = page.path.slice(`/${section}/${version}`.length);
-      return `https://docs.kurrent.io/${section}/${LATEST_VERSION}${rest}`;
-    }
-
-    return `https://docs.kurrent.io${page.path}`;
+    return fallback;
   },
 
-  customHead: (head: HeadConfig[], page: Page, app: App) => {
-    if (!page.pathInferred) return;
+  /**
+   * Used to set custom head tags for the page unless it's excluded for SEO.
+   * Algolia will automatically pick up these tags for groupings.
+   *
+   * Sets the following tags:
+   * e.g. <meta name="es:category" content=".NET Client" />
+   *      <meta name="es:version" content="v1.0" />
+   * 
+   * If it's a legacy or tcp client, it will be labelled as "Legacy"
+   */
+  customHead: (head: HeadConfig[], { path }: Page, app: App) => {
+    const { version, section } = parsePathInfo(path);
 
-    const segments = page.pathInferred.split("/");
-    let version = segments.length > 2 ? segments[2] : null;
-
-    // drop indexing on unwanted versions
-    if (version && EXCLUDED_VERSIONS.includes(version)) {
+    if (isExcluded(section, version)) {
       head.push(["meta", { name: "robots", content: "noindex,nofollow" }]);
       return;
     }
 
-    // map “tcp” to Legacy, then tag es:version if it applies
-    if (version === "tcp") version = LEGACY;
-    if (
-      version &&
-      (version === LEGACY ||
-        (version.startsWith("v") && (version.includes(".") || version === "v5")))
-    ) {
+    if (version)
       head.push(["meta", { name: "es:version", content: version }]);
-    }
 
-    const category = segments[1];
-    if (!category) return;
-    const readable = match(category)
-      .with("server", () => "Server")
-      .with("clients", () => "Client")
+    const category = match(section)
+      .with("clients/dotnet", () => ".NET Client")
+      .with("clients/golang", () => "Golang Client")
+      .with("clients/java", () => "Java Client")
+      .with("clients/node", () => "Node.JS Client")
+      .with("clients/python", () => "Python Client")
+      .with("clients/rust", () => "Rust Client")
+      .with("clients/dotnet/legacy", () => "Legacy gRPC .NET Client")
+      .with("clients/golang/legacy", () => "Legacy gRPC Golang Client")
+      .with("clients/java/legacy", () => "Legacy gRPC Java Client")
+      .with("clients/node/legacy", () => "Legacy gRPC Node.JS Client")
+      .with("clients/python/legacy", () => "Legacy gRPC Python Client")
+      .with("clients/rust/legacy", () => "Legacy gRPC Rust Client")
+      .with("clients/tcp/dotnet", () => "Legacy TCP .NET Client")
       .with("cloud", () => "Cloud")
-      .with("http-api", () => "HTTP API")
-      .with("connectors", () => "Connectors")
       .with("getting-started", () => "Getting Started")
-      .otherwise(() => category);
+      .with("server/kubernetes-operator", () => "Kubernetes Operator")
+      .with("server", () => "Server")
+      .otherwise(() => normalize(section));
 
-    head.push(["meta", { name: "es:category", content: readable }]);
-  },
+    head.push(["meta", { name: "es:category", content: category }]);
+  }
 };

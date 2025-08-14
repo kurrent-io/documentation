@@ -114,6 +114,7 @@ export default defineClientConfig({
         });
         const operatorLatest = __VERSIONS__.all.filter(x => x.id === 'kubernetes-operator')[0].versions[0].version;
         addDynamicRoute("/server/kubernetes-operator", to => `/server/kubernetes-operator/${operatorLatest}/getting-started/`);
+        addDynamicRoute("/server/kubernetes-operator/latest/:pathMatch(.*)*", to => to.path.replace(/^\/server\/kubernetes-operator\/latest/, `/server/kubernetes-operator/${operatorLatest}`));
         addDynamicRoute("/server/kubernetes-operator/:version", to => `/server/kubernetes-operator/${to.params.version}/getting-started/`);
 
         // Clients routes
