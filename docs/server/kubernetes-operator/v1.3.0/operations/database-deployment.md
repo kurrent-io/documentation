@@ -7,10 +7,6 @@ The sections below detail the different deployment options for KurrentDB. For de
 
 ## Prerequisites
 
-::: tip
-To get the best out of this guide, a basic understanding of [Kubernetes concepts](https://kubernetes.io/docs/concepts/) is essential.
-:::
-
 Before deploying a `KurrentDB` cluster, the following requirements should be met:
 
 * The Operator has been installed as per the [Installation](../getting-started/installation.md) section.
@@ -650,53 +646,4 @@ spec:
     domain: kurrentdb-cluster.kurrent.test
     loadBalancer:
       enabled: true
-```
-
-## Updating Deployments
-
-`KurrentDB` instances support updates to:
-
-- Container Image
-- Memory
-- CPU
-- Volume Size (increases only)
-- Replicas (node count)
-- Configuration
-
-To update the specification of a `KurrentDB` instance, simply issue a patch command via the kubectl tool. In the examples below, the cluster name is `kurrentdb-cluster`. Once patched, the Operator will take care of augmenting the underlying resources, which will cause database pods to be recreated.
-
-### Container Image
-
-```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"image": "docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0"}}'
-```
-
-### Memory
-
-```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"resources": {"requests": {"memory": "2048Mi"}}}}'
-```
-
-### CPU
-
-```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"resources": {"requests": {"cpu": "2000m"}}}}'
-```
-
-### Volume Size
-
-```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"storage": {"resources": {"requests": {"storage": "2048Mi"}}}}}'
-```
-
-### Replicas
-
-```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"replicas": 3}}'
-```
-
-### Configuration
-
-```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"configuration": {"ProjectionsLevel": "all", "StartStandardProjections": "true"}}}'
 ```

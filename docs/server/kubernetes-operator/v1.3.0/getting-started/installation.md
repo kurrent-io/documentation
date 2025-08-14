@@ -15,12 +15,12 @@ The Operator is an Enterprise only feature, please [contact us](https://www.kurr
 To get the best out of this guide, a basic understanding of [Kubernetes concepts](https://kubernetes.io/docs/concepts/) is essential.
 :::
 
-* A Kubernetes cluster running `v1.23.1` or later.
+* A Kubernetes cluster running any [non-EOL version of kubernetes](https://kubernetes.io/releases/).
 * Permission to create resources, deploy the Operator and install CRDs in the target cluster.
 * The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster:
-  * kubectl [install guide](https://kubernetes.io/docs/tasks/tools/install-kubectl)
-  * k9s [install guide](https://k9scli.io/topics/install/)
-  * Helm 3 CLI [install guide](https://helm.sh/docs/intro/install/)
+  * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl)
+  * [k9s](https://k9scli.io/topics/install/)
+  * [Helm 3 CLI](https://helm.sh/docs/intro/install/)
   * A valid Operator license. Please [contact us](https://www.kurrent.io/contact) for more information.
 
 ## Configure Helm Repository
@@ -52,15 +52,18 @@ If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
-helm pull kurrent-latest/kurrentdb-operator --version 1.2.0 --untar
+helm pull kurrent-latest/kurrentdb-operator --version 1.3.0 --untar
 # Install the CRDs
-kubectl apply -f kurrentdb-operator/templates/crds
+kubectl apply -f kurrentdb-operator/crds
 ```
 *Expected Output*:
 ```
 customresourcedefinition.apiextensions.k8s.io/kurrentdbbackups.kubernetes.kurrent.io created
 customresourcedefinition.apiextensions.k8s.io/kurrentdbs.kubernetes.kurrent.io created
 ```
+
+After installing CRDs manually, you should include the `--skip-crds` flag for the `helm install` and
+`helm upgrade` commands.
 
 ## Deployment Modes
 
@@ -74,10 +77,9 @@ To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.2.0 \
+  --version 1.3.0 \
   --namespace kurrent \
   --create-namespace \
-  --set crds.enabled=true \
   --set-file operator.license.key=/path/to/license.key \
   --set-file operator.license.file=/path/to/license.lic
 ```
@@ -85,7 +87,7 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
 This command:
 - Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace.
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
-- Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
+- Deploys CRDs (this can be skipped by removing `--skip-crds`)
 - Applys the Operator license
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace.
 
@@ -109,10 +111,9 @@ To deploy the Operator in this mode, the following command can be used:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.2.0 \
+  --version 1.3.0 \
   --namespace kurrent \
   --create-namespace \
-  --set crds.enabled=true \
   --set-file operator.license.key=/path/to/license.key \
   --set-file operator.license.file=/path/to/license.lic \
   --set operator.namespaces='{kurrent, foo}'
@@ -121,7 +122,7 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
 Here's what the command does:
 - Sets the namespace of where the Operator will be deployed i.e. `kurrent` (feel free to change this)
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
-- Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
+- Deploys CRDs (this can be skipped by setting `--skip-crds`)
 - Configures the Operator license
 - Sets the underlying Operator configuration to target the namespaces: `kurrent` and `foo`
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace
@@ -148,7 +149,7 @@ The Operator deployment can be updated to adjust which namespaces are watched. F
 
 ```bash
 helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.2.0 \
+  --version 1.3.0 \
   --namespace kurrent \
   --reuse-values \
   --set operator.namespaces='{kurrent,foo,bar}'
@@ -175,3 +176,21 @@ Pods may also be viewed using the `:pods` command, for example:
 Pressing the `Return` key on the selected Operator pod will allow you to drill through the container hosted in the pod, and then finally to the logs:
 
 ![Operator Logs](images/install/logs.png)
+
+
+## Upgrading an Installation
+
+The Operator can be upgraded using the following `helm` commands:
+
+```bash
+helm repo update
+helm upgrade kurrentdb-operator kurrentdb-operator-repo/kurrentdb-operator \
+  --namespace kurrent \
+  --version {version}
+```
+
+Here's what these commands do:
+- Refresh the local Helm repository index
+- Locates an existing operator installation in namespace `kurrent`
+- Selects the target upgrade version `{version}` e.g. `1.3.0`
+- Performs the upgrade, preserving values that were set during installation
