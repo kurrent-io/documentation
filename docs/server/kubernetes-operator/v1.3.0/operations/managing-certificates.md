@@ -1,6 +1,6 @@
 ---
 title: Managing Certificates
-order: 3
+order: 5
 ---
 
 The Operator expects consumers to leverage a thirdparty tool to generate TLS certificates that can be wired in to [KurrentDB](../getting-started/resource-types.md#kurrentdb) deployments using secrets. The sections below describe how certificates can be generated using popular vendors.
