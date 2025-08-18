@@ -6,7 +6,7 @@ order: 2
 This section covers the various aspects of installing the Operator.
 
 ::: important
-The Operator is an Enterprise only feature, please [contact us](https://www.kurrent.io/contact) for more information.
+The Operator is an Enterprise-only feature, please [contact us](https://www.kurrent.io/contact) for more information.
 :::
 
 ## Prerequisites
@@ -15,7 +15,7 @@ The Operator is an Enterprise only feature, please [contact us](https://www.kurr
 To get the best out of this guide, a basic understanding of [Kubernetes concepts](https://kubernetes.io/docs/concepts/) is essential.
 :::
 
-* A Kubernetes cluster running any [non-EOL version of kubernetes](https://kubernetes.io/releases/).
+* A Kubernetes cluster running any [non-EOL version of Kubernetes](https://kubernetes.io/releases/).
 * Permission to create resources, deploy the Operator and install CRDs in the target cluster.
 * The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster:
   * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl)
@@ -86,9 +86,9 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
 
 This command:
 - Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace.
-- Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
-- Deploys CRDs (this can be skipped by removing `--skip-crds`)
-- Applys the Operator license
+- Creates the namespace (if it already exists, leave out the `--create-namespace` flag).
+- Deploys CRDs (this can be skipped by removing `--skip-crds`).
+- Applys the Operator license.
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace.
 
 *Expected Output*:
@@ -124,11 +124,11 @@ Here's what the command does:
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
 - Deploys CRDs (this can be skipped by setting `--skip-crds`)
 - Configures the Operator license
-- Sets the underlying Operator configuration to target the namespaces: `kurrent` and `foo`
+- Configures the Operator to operate on resources the namespaces `kurrent` and `foo`
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace
 
 ::: important
-Make sure the namespaces listed as part of the `operator.namespaces` parameter already exist before running the command (unless you are using the Operator to target the namespace that it will be deployed in to).
+Make sure the namespaces listed as part of the `operator.namespaces` parameter already exist before running the command.
 :::
 
 *Expected Output*:

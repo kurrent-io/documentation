@@ -3,7 +3,7 @@ title: Database Backup
 order: 3
 ---
 
-The sections below details how database backups can be performed. Refer to the [KurrentDBBackup API](../getting-started/resource-types.md#kurrentdbbackup) for detailed information.
+The sections below detail how database backups can be performed. Refer to the [KurrentDBBackup API](../getting-started/resource-types.md#kurrentdbbackup) for detailed information.
 
 ## Backing up the leader
 
