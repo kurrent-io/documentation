@@ -106,8 +106,7 @@
 # Cloud hope migration
 /cloud/intro/                               /cloud/introduction.html      301
 
-# Cloud docs update Jan 2025 (3184c4eda8e2746de38a1659e8db176c3821aa94@documentation, a9961eb03643546f018bfa82eab7672056e06a53@documentation)
-# Also redirects old and past links to the latest link
+# Redirects old links to the latest link
 
 /cloud/automation/api.html                    /cloud/automation/                                             301
 /cloud/faq/                                   /cloud/faq.html                           301
@@ -153,6 +152,7 @@
 /cloud/use/migration/replicator.html          /cloud/guides/migration.html#executing-the-migration           301
 /cloud/use/tailscale.html                     /cloud/guides/tailscale.html                                   301
 
+# Cloud docs update Aug 2025 - From Dedicated/Shared back to one dir level  (7888518c9d5e36b0a0b4ac490bf162a3b9b97db2@documentation)
 /cloud/dedicated/*                             /cloud/:splat                                                 301
 /cloud/shared/*                                /cloud/                                                       301
 
