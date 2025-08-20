@@ -16,8 +16,8 @@ To get the best out of this guide, a basic understanding of [Kubernetes concepts
 :::
 
 * A Kubernetes cluster running `v1.23.1` or later.
-* Permission to create resources, deploy the Operator and install CRDs in the target cluster. 
-* The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster: 
+* Permission to create resources, deploy the Operator and install CRDs in the target cluster.
+* The following CLI tools installed, on your shell’s `$PATH`, with `$KUBECONFIG` pointing to your cluster:
   * kubectl [install guide](https://kubernetes.io/docs/tasks/tools/install-kubectl)
   * k9s [install guide](https://k9scli.io/topics/install/)
   * Helm 3 CLI [install guide](https://helm.sh/docs/intro/install/)
@@ -54,7 +54,7 @@ If you prefer to install CRDs yourself:
 # Download the kurrentdb-operator Helm chart
 helm pull kurrent-latest/kurrentdb-operator --version 1.1.0 --untar
 # Install the CRDs
-kubectl apply -f kurrentdb-operator/templates/crds
+helm template -s 'templates/crds/*.yaml' kurrentdb-operator | kubectl apply -f -
 ```
 *Expected Output*:
 ```
@@ -62,13 +62,23 @@ customresourcedefinition.apiextensions.k8s.io/kurrentdbbackups.kubernetes.kurren
 customresourcedefinition.apiextensions.k8s.io/kurrentdbs.kubernetes.kurrent.io created
 ```
 
+After installing CRDs manually, you should include the `--set crds.enabled=false` flag for the `helm
+install` command, and include one of `--set crds.enabled=false`, `--reuse-values`, or
+`--reset-then-reuse-values` for the `helm upgrade` command.
+
+::: caution
+If `crds.enabled` transitions from `true` to `false` during an upgrade or rollback, the CRDs will be
+removed from the cluster, deleting all `KurrentDBs` and `KurrentDBBackups` and their associated
+child resources, including the PVCs and VolumeSnapshots containing your data!
+:::
+
 ## Deployment Modes
 
 The Operator can be scoped to track Kurrent resources across **all** or **specific** namespaces.
 
 ### Cluster-wide
 
-In cluster-wide mode, the Operator tracks Kurrent resources across **all** namespaces and requires `ClusterRole`. Helm creates the ClusteRole automatically.
+In cluster-wide mode, the Operator tracks Kurrent resources across **all** namespaces and requires `ClusterRole`. Helm creates the `ClusterRole` automatically.
 
 To deploy the Operator in this mode, run:
 
@@ -82,11 +92,11 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
   --set-file operator.license.file=/path/to/license.lic
 ```
 
-This command: 
-- Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace. 
+This command:
+- Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace.
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
-- Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
-- Applys the Operator license
+- Deploys CRDs (this can be skipped by changing to `--set crds.enabled=false`)
+- Applies the Operator license
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace.
 
 *Expected Output*:
@@ -121,7 +131,7 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
 Here's what the command does:
 - Sets the namespace of where the Operator will be deployed i.e. `kurrent` (feel free to change this)
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
-- Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
+- Deploys CRDs (this can be skipped by changing to `--set crds.enabled=false`)
 - Configures the Operator license
 - Sets the underlying Operator configuration to target the namespaces: `kurrent` and `foo`
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace

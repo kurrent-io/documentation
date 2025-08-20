@@ -72,6 +72,6 @@ From here, press the `Return` key on the namespace where the `KurrentDBBackup` w
 
 ## Periodic Backups
 
-You can use [Kubernetes ChronJobs](
+You can use [Kubernetes CronJobs](
 https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) for basic periodic backup
 functionality.
