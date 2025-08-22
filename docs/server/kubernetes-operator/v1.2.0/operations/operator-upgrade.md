@@ -26,12 +26,11 @@ helm repo update
 helm upgrade kurrentdb-operator kurrentdb-operator-repo/kurrentdb-operator \
   --version {version} \
   --namespace kurrent \
-  --set enable.crds=true
+  --reset-then-reuse-values
 ```
 
 Here's what the command does:
 - Refreshes the local Helm repository index
 - Defines where Operator is installed i.e. `kurrent` (feel free to change this)
 - Define the upgrade `{version}` version e.g. 1.2.0
-- Deploys CRDs (this can be skipped by removing `--set crds.enabled=true`)
 - Performs the upgrade (leverages existing release values)

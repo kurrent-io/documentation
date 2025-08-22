@@ -52,9 +52,9 @@ If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
-helm pull kurrent-latest/kurrentdb-operator --version 1.3.0 --untar
+helm pull kurrent-latest/kurrentdb-operator --version 1.3.1 --untar
 # Install the CRDs
-kubectl apply -f kurrentdb-operator/crds
+kubectl apply -f kurrentdb-operator/templates/crds
 ```
 *Expected Output*:
 ```
@@ -62,8 +62,17 @@ customresourcedefinition.apiextensions.k8s.io/kurrentdbbackups.kubernetes.kurren
 customresourcedefinition.apiextensions.k8s.io/kurrentdbs.kubernetes.kurrent.io created
 ```
 
-After installing CRDs manually, you should include the `--skip-crds` flag for the `helm install` and
-`helm upgrade` commands.
+After installing CRDs manually, you should include the `--set crds.enabled=false` flag for the `helm
+install` command, and include one of `--set crds.enabled=false`, `--reuse-values`, or
+`--reset-then-reuse-values` for the `helm upgrade` command.
+
+::: caution
+If you set the value of `crds.keep` to `false` (the default is `true`), helm upgrades and rollbacks
+can result in data loss.  If `crds.keep` is `false` and `crds.enabled` transitions from `true` to
+`false` during an upgrade or rollback, the CRDs will be removed from the cluster, deleting all
+`KurrentDBs` and `KurrentDBBackups` and their associated child resources, including the PVCs and
+VolumeSnapshots containing your data!
+:::
 
 ## Deployment Modes
 
@@ -71,15 +80,16 @@ The Operator can be scoped to track Kurrent resources across **all** or **specif
 
 ### Cluster-wide
 
-In cluster-wide mode, the Operator tracks Kurrent resources across **all** namespaces and requires `ClusterRole`. Helm creates the ClusteRole automatically.
+In cluster-wide mode, the Operator tracks Kurrent resources across **all** namespaces and requires `ClusterRole`. Helm creates the `ClusterRole` automatically.
 
 To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.3.0 \
+  --version 1.3.1 \
   --namespace kurrent \
   --create-namespace \
+  --set crds.enabled=true \
   --set-file operator.license.key=/path/to/license.key \
   --set-file operator.license.file=/path/to/license.lic
 ```
@@ -87,8 +97,8 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
 This command:
 - Deploys the Operator into the `kurrent` namespace (use `--create-namespace` to create it). Feel free to modify this namespace.
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag).
-- Deploys CRDs (this can be skipped by removing `--skip-crds`).
-- Applys the Operator license.
+- Deploys CRDs (this can be skipped by changing to `--set crds.enabled=false`).
+- Applies the Operator license.
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace.
 
 *Expected Output*:
@@ -111,9 +121,10 @@ To deploy the Operator in this mode, the following command can be used:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.3.0 \
+  --version 1.3.1 \
   --namespace kurrent \
   --create-namespace \
+  --set crds.enabled=true \
   --set-file operator.license.key=/path/to/license.key \
   --set-file operator.license.file=/path/to/license.lic \
   --set operator.namespaces='{kurrent, foo}'
@@ -122,7 +133,7 @@ helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
 Here's what the command does:
 - Sets the namespace of where the Operator will be deployed i.e. `kurrent` (feel free to change this)
 - Creates the namespace (if it already exists, leave out the `--create-namespace` flag)
-- Deploys CRDs (this can be skipped by setting `--skip-crds`)
+- Deploys CRDs (this can be skipped by changing to `--set crds.enabled=false`)
 - Configures the Operator license
 - Configures the Operator to operate on resources the namespaces `kurrent` and `foo`
 - Deploys a new Helm release called `kurrentdb-operator` in the `kurrent` namespace
@@ -149,7 +160,7 @@ The Operator deployment can be updated to adjust which namespaces are watched. F
 
 ```bash
 helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.3.0 \
+  --version 1.3.1 \
   --namespace kurrent \
   --reuse-values \
   --set operator.namespaces='{kurrent,foo,bar}'
@@ -186,11 +197,12 @@ The Operator can be upgraded using the following `helm` commands:
 helm repo update
 helm upgrade kurrentdb-operator kurrentdb-operator-repo/kurrentdb-operator \
   --namespace kurrent \
-  --version {version}
+  --version {version} \
+  --reset-then-reuse-values
 ```
 
 Here's what these commands do:
 - Refresh the local Helm repository index
-- Locates an existing operator installation in namespace `kurrent`
-- Selects the target upgrade version `{version}` e.g. `1.3.0`
-- Performs the upgrade, preserving values that were set during installation
+- Locate an existing operator installation in namespace `kurrent`
+- Select the target upgrade version `{version}` e.g. `1.3.1`
+- Perform the upgrade, preserving values that were set during installation
