@@ -123,6 +123,9 @@ export default defineUserConfig({
         // Reo.Dev
         ['script', { src: "/js/reoDev.js"}],
 
+        // CommonRoom
+        ['script', { src: "/js/commonRoom.js"}],
+
         // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `
           .redirect-modal-mask,
