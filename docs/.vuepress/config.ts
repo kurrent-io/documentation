@@ -120,9 +120,6 @@ export default defineUserConfig({
             'data-project-logo': '/logo-white.png'
         }],
 
-        // Reo.Dev
-        ['script', { src: "/js/reoDev.js"}],
-
         // CommonRoom
         ['script', { src: "/js/commonRoom.js"}],
 
