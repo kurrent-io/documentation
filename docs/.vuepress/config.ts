@@ -13,6 +13,8 @@ import {instance as ver} from "./lib/versioning";
 import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
+import { llmsPlugin } from '@vuepress/plugin-llms'
+
 
 dotenv.config({path: path.join(__dirname, '..', '..', '.algolia', '.env')});
 
@@ -135,5 +137,6 @@ export default defineUserConfig({
     alias: {
         "@theme-hope/components/BreadCrumb": path.resolve(__dirname, "./components/breadCrumb.ts"),
         "@theme-hope/modules/info/components/TOC": path.resolve(__dirname, "./components/TocWithFeedback.ts"),
-    }
+    },
+    plugins: [ llmsPlugin() ],
 });
