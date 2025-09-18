@@ -1,5 +1,5 @@
 ---
-terraform_current_version: 1.5.29
+terraform_current_version: 2.0.0
 order: 1
 ---
 
