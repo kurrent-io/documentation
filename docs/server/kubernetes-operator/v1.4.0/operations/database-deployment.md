@@ -1,33 +1,50 @@
 ---
-title: Database Deployment
+title: Example Deployments
 order: 1
 ---
 
-The sections below detail the different deployment options for KurrentDB. For detailed information on the various properties, visit the [KurrentDB API](../getting-started/resource-types.md#kurrentdb) section.
+This page shows various deployment examples of KurrentDB.  Each example assumes the that the
+Operator has been installed in a way that it can at least control KurrentDB resources in the
+`kurrent` namespace.
 
-## Prerequisites
+Each example is designed to illustrate specific techniques:
 
-Before deploying a `KurrentDB` cluster, the following requirements should be met:
+* [Single Node Insecure Cluster](#single-node-insecure-cluster) is the "hello world" example
+  that illustrates the most basic features possible.  An insecure cluster should not be used in
+  production.
 
-* The Operator has been installed as per the [Installation](../getting-started/installation.md) section.
-* The following CLI tools are installed and configured to interact with your Kubernetes cluster. This means the tool must be accessible from your shell's `$PATH`, and your `$KUBECONFIG` environment variable must point to the correct Kubernetes configuration file:
-    * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl)
-    * [k9s](https://k9scli.io/topics/install/)
+* [Three Node Insecure Cluster with Two Read-Only Replicas](
+  #three-node-insecure-cluster-with-two-read-only-replicas) illustrates how to deploy a clustered
+  KurrentDB instance and how to add read-only replicas to it.
 
-:::important
-With the examples listed in this guide, the Operator is assumed to have been deployed such that it can track the `kurrent` namespace for deployments.
-:::
+* [Three Node Secure Cluster (using self-signed certificates)](
+  #three-node-secure-cluster-using-self-signed-certificates) illustrates how to secure a cluster with
+  self-signed certificates using cert-manager.
+
+* [Three Node Secure Cluster (using LetsEncrypt)](
+  #three-node-secure-cluster-using-letsencrypt) illustrates how to secure a cluster with LetsEncrypt.
+
+* [Deploying Standalone Read-only Replicas](#deploying-standalone-read-only-replicas) illustrates
+  an advanced topology where a pair of read-only replicas is deployed in a different Kubernetes
+  cluster than where the quorum nodes are deployed.
+
+* [Deploying With Scheduling Constraints](#deploying-with-scheduling-constraints): illustrates how
+  to deploy a cluster with customized scheduling constraints for the KurrentDB pods.
+
+* [Custom Database Configuration](#custom-database-configuration) illustrates how to make direct
+  changes to the KurrentDB configuration file.
 
 ## Single Node Insecure Cluster
 
 The following `KurrentDB` resource type defines a single node cluster with the following properties:
+
 - The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
 - Security is not enabled
 - KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited)
-- 1gb of memory will be used
-- 512mb of storage will be allocated for the data disk
-- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-0.kurrentdb-cluster.kurrent.test`
+- 1 vCPU will be requested as the minimum (upper bound is unlimited)
+- 1 GB of memory will be used
+- 512 MB of storage will be allocated for the data disk
+- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-0.kurrent.test`
 
 ```yaml
 apiVersion: kubernetes.kurrent.io/v1
@@ -50,84 +67,22 @@ spec:
       requests:
         storage: 512Mi
   network:
-    domain: kurrentdb-cluster.kurrent.test
+    domain: kurrent.test
     loadBalancer:
       enabled: true
+    fqdnTemplate: '{podName}.{domain}'
 ```
-
-This can be deployed using the following steps:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
-
-```bash
-kubectl apply -f cluster.yaml
-```
-
-Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
-
-## Three Node Insecure Cluster
-
-The following `KurrentDB` resource type defines a three node cluster with the following properties:
-- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
-- Security is not enabled
-- KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited) per node
-- 1gb of memory will be used per node
-- 512mb of storage will be allocated for the data disk per node
-- The KurrentDB instances that are provisioned will be exposed as `kurrentdb-{idx}.kurrentdb-cluster.kurrent.test`
-
-```yaml
-apiVersion: kubernetes.kurrent.io/v1
-kind: KurrentDB
-metadata:
-  name: kurrentdb-cluster
-  namespace: kurrent
-spec:
-  replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
-  resources:
-    requests:
-      cpu: 1000m
-      memory: 1Gi
-  storage:
-    volumeMode: "Filesystem"
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 512Mi
-  network:
-    domain: kurrentdb-cluster.kurrent.test
-    loadBalancer:
-      enabled: true
-```
-
-This can be deployed using the following steps:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
-
-```bash
-kubectl apply -f cluster.yaml
-```
-
-Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
 
 ## Three Node Insecure Cluster with Two Read-Only Replicas
 
 Note that read-only replicas are only supported by KurrentDB in clustered configurations, that is,
-with multiple primary nodes.
+with multiple quorum nodes.
 
 The following `KurrentDB` resource type defines a three node cluster with the following properties:
-- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
 - Security is not enabled
-- KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited) per node
-- 1gb of memory will be used per primary node, but read-only replicas will have 2gb of memory
-- 512mb of storage will be allocated for the data disk per node
-- The main KurrentDB instances that are provisioned will be exposed as `kurrentdb-{idx}.kurrentdb-cluster.kurrent.test`
-- The read-only replicas that are provisioned will be exposed as `kurrentdb-replica-{idx}.kurrentdb-cluster.kurrent.test`
+- 1 GB of memory will be used per quorum node, but read-only replicas will have 2 GB of memory
+- The quorum nodes will be exposed as `kurrentdb-{idx}.kurrent.test`
+- The read-only replicas will be exposed as `kurrentdb-replica-{idx}.kurrent.test`
 
 ```yaml
 apiVersion: kubernetes.kurrent.io/v1
@@ -150,129 +105,22 @@ spec:
       requests:
         storage: 512Mi
   network:
-    domain: kurrentdb-cluster.kurrent.test
+    domain: kurrent.test
     loadBalancer:
       enabled: true
+    fqdnTemplate: '{podName}.{domain}'
   readOnlyReplicas:
     replicas: 2
-    resources:
-      requests:
-        cpu: 1000m
-        memory: 1Gi
-
 ```
-
-This can be deployed using the following steps:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
-
-```bash
-kubectl apply -f cluster.yaml
-```
-
-Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
-
-## Single Node Secure Cluster (using self-signed certificates)
-
-The following `KurrentDB` resource type defines a single node cluster with the following properties:
-- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
-- Security is enabled using self-signed certificates
-- KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited)
-- 1gb of memory will be used
-- 512mb of storage will be allocated for the data disk
-- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-cluster-0.kurrentdb-cluster.kurrent.test`
-
-```yaml
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: kurrentdb-cluster
-  namespace: kurrent
-spec:
-  secretName: kurrentdb-cluster-tls
-  isCA: false
-  usages:
-    - client auth
-    - server auth
-    - digital signature
-    - key encipherment
-  commonName: kurrentdb-node
-  subject:
-    organizations:
-      - Kurrent
-    organizationalUnits:
-      - Cloud
-  dnsNames:
-    - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster.kurrent.test'
-    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster-replica.kurrent.test'
-  privateKey:
-    algorithm: RSA
-    encoding: PKCS1
-    size: 2048
-  issuerRef:
-    name: ca-issuer
-    kind: Issuer
----
-apiVersion: kubernetes.kurrent.io/v1
-kind: KurrentDB
-metadata:
-  name: kurrentdb-cluster
-  namespace: kurrent
-spec:
-  replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
-  resources:
-    requests:
-      cpu: 1000m
-      memory: 1Gi
-  storage:
-    volumeMode: "Filesystem"
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 512Mi
-  network:
-    domain: kurrentdb-cluster.kurrent.test
-    loadBalancer:
-      enabled: true
-  security:
-    certificateAuthoritySecret:
-      name: ca-tls
-      keyName: ca.crt
-    certificateSecret:
-      name: kurrentdb-cluster-tls
-      keyName: tls.crt
-      privateKeyName: tls.key
-```
-
-Before deploying this cluster, ensure that the steps described in section [Using Self-Signed certificates](managing-certificates.md#using-self-signed-certificates) have been followed.
-
-Follow these steps to deploy the cluster:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
-
-```bash
-kubectl apply -f cluster.yaml
-```
-
-Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
 
 ## Three Node Secure Cluster (using self-signed certificates)
 
 The following `KurrentDB` resource type defines a three node cluster with the following properties:
-- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
 - Security is enabled using self-signed certificates
-- KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited) per node
-- 1gb of memory will be used per node
-- 512mb of storage will be allocated for the data disk per node
-- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-{idx}.kurrentdb-cluster.kurrent.test`
+- The KurrentDB servers will be exposed as `kurrentdb-{idx}.kurrent.test`
+- Servers will dial each other by Kubernetes service name (`*.kurrent.svc.cluster.local`)
+- Clients will dial servers by the FQDN (`*.kurrent.test`)
+- The self-signed certificate is valid for both service name and FQDN.
 
 ```yaml
 apiVersion: cert-manager.io/v1
@@ -296,9 +144,7 @@ spec:
       - Cloud
   dnsNames:
     - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster.kurrent.test'
     - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster-replica.kurrent.test'
   privateKey:
     algorithm: RSA
     encoding: PKCS1
@@ -327,10 +173,14 @@ spec:
       requests:
         storage: 512Mi
   network:
-    domain: kurrentdb-cluster.kurrent.test
+    domain: kurrent.test
     loadBalancer:
       enabled: true
+    fqdnTemplate: '{podName}.{domain}'
+    internodeTrafficStrategy: ServiceName
+    clientTrafficStrategy: ServiceName
   security:
+    certificateReservedNodeCommonName: kurrentdb-node
     certificateAuthoritySecret:
       name: ca-tls
       keyName: ca.crt
@@ -340,29 +190,18 @@ spec:
       privateKeyName: tls.key
 ```
 
-Before deploying this cluster, ensure that the steps described in section [Using Self-Signed certificates](managing-certificates.md#using-self-signed-certificates) have been followed.
+Before deploying this cluster, be sure to follow the steps in [Using Self-Signed Certificates](
+managing-certificates.md#using-self-signed-certificates).
 
-Follow these steps to deploy the cluster:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
+## Three Node Secure Cluster (using LetsEncrypt)
 
-```bash
-kubectl apply -f cluster.yaml
-```
-
-Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
-
-## Single Node Secure Cluster (using LetsEncrypt)
-
-The following `KurrentDB` resource type defines a single node cluster with the following properties:
-- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
+The following `KurrentDB` resource type defines a three node cluster with the following properties:
 - Security is enabled using certificates from LetsEncrypt
-- KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited)
-- 1gb of memory will be used
-- 512mb of storage will be allocated for the data disk
-- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-cluster-0.kurrentdb-cluster.kurrent.test`
+- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-{idx}.kurrent.test`
+- The LetsEncrypt certificate is only valid for the FQDN (`*.kurrent.test`)
+- Clients will dial servers by FQDN
+- Server will dial each other by FQDN but because of the `SplitDNS` feature, they will still connect
+  via direct pod-to-pod networking, as if they had dialed each other by Kubernetes service name.
 
 ```yaml
 apiVersion: cert-manager.io/v1
@@ -378,17 +217,14 @@ spec:
     - server auth
     - digital signature
     - key encipherment
-  commonName: kurrentdb-node
+  commonName: '*.kurrent.test'
   subject:
     organizations:
       - Kurrent
     organizationalUnits:
       - Cloud
   dnsNames:
-    - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster.kurrent.test'
-    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster-replica.kurrent.test'
+    - '*.kurrent.test'
   privateKey:
     algorithm: RSA
     encoding: PKCS1
@@ -417,35 +253,152 @@ spec:
       requests:
         storage: 512Mi
   network:
-    domain: kurrentdb-cluster.kurrent.test
+    domain: kurrent.test
     loadBalancer:
       enabled: true
+    fqdnTemplate: '{podName}.{domain}'
+    internodeTrafficStrategy: SplitDNS
+    clientTrafficStrategy: FQDN
   security:
+    certificateReservedNodeCommonName: '*.kurrent.test'
     certificateSecret:
       name: kurrentdb-cluster-tls
       keyName: tls.crt
       privateKeyName: tls.key
 ```
 
-Before deploying this cluster, ensure that the steps described in section [Using LetsEncrypt certificates](managing-certificates.md#using-trusted-certificates-via-letsencrypt) have been followed.
+Before deploying this cluster, be sure to follow the steps in [Using LetsEncrypt Certificates](
+managing-certificates.md#using-trusted-certificates-via-letsencrypt).
 
-Follow these steps to deploy the cluster:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
+## Deploying Standalone Read-only Replicas
 
-```bash
-kubectl apply -f cluster.yaml
+This example illustrates an advanced topology where a pair of read-only replicas is deployed in a
+different Kubernetes cluster than where the quorum nodes are deployed.
+
+We make the following assumptions:
+- LetsEncrypt certificates are used everywhere, to ease certificate management
+- LoadBalancers are enabled to ensure each node is accessible through its FQDN
+- `internodeTrafficStrategy` is `"SplitDNS"` to avoid hairpin traffic patterns between servers
+- the quorum nodes will have `-qn` suffixes in their FQDN while the read-only replicas will have
+  `-rr` suffixes
+
+This `Certificate` should be deployed in **both** clusters:
+
+```yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mydb
+  namespace: kurrent
+spec:
+  secretName: mydb-tls
+  isCA: false
+  usages:
+    - client auth
+    - server auth
+    - digital signature
+    - key encipherment
+  commonName: '*.kurrent.test'
+  subject:
+    organizations:
+      - Kurrent
+    organizationalUnits:
+      - Cloud
+  dnsNames:
+    - '*.kurrent.test'
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+  issuerRef:
+    name: letsencrypt
+    kind: Issuer
 ```
 
-## Three Node Secure Cluster (using LetsEncrypt)
+This `KurrentDB` resource defines the quorum nodes in one cluster:
 
-Using LetsEncrypt, or any publicly trusted certificate, in an operator-managed KurrentDB cluster
-is not supported.
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDB
+metadata:
+  name: mydb
+  namespace: kurrent
+spec:
+  replicas: 3
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  storage:
+    volumeMode: "Filesystem"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 512Mi
+  network:
+    domain: kurrent.test
+    loadBalancer:
+      enabled: true
+    fqdnTemplate: '{podName}-qn.{domain}'
+    internodeTrafficStrategy: SplitDNS
+    clientTrafficStrategy: FQDN
+  security:
+    certificateReservedNodeCommonName: '*.kurrent.test'
+    certificateSecret:
+      name: mydb-tls
+      keyName: tls.crt
+      privateKeyName: tls.key
+```
 
-The recommended workaround is to combine [self-signed certificates within the cluster](
-#three-node-secure-cluster-using-self-signed-certificates) with an Ingress that does TLS
-termination using the LetsEncrypt certificate.
+And this `KurrentDB` resource defines the standalone read-only replica in another cluster.  Notice
+that:
+
+- `.replicas` is 0, but `.quorumNodes` is set instead
+- `.readOnlyReplicas.replicas` is set
+- `fqdnTemplate` differs slightly from above
+
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDB
+metadata:
+  name: mydb
+  namespace: kurrent
+spec:
+  replicas: 0
+  quorumNodes:
+    - mydb-0-qn.kurrent.test:2113
+    - mydb-1-qn.kurrent.test:2113
+    - mydb-2-qn.kurrent.test:2113
+  readOnlyReplicas:
+    - replicas: 2
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  storage:
+    volumeMode: "Filesystem"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 512Mi
+  network:
+    domain: kurrent.test
+    loadBalancer:
+      enabled: true
+    fqdnTemplate: '{podName}-sa.{domain}'
+    internodeTrafficStrategy: SplitDNS
+    clientTrafficStrategy: FQDN
+  security:
+    certificateReservedNodeCommonName: '*.kurrent.test'
+    certificateSecret:
+      name: mydb-tls
+      keyName: tls.crt
+      privateKeyName: tls.key
+```
 
 ## Deploying With Scheduling Constraints
 
@@ -483,9 +436,10 @@ spec:
       requests:
         storage: 512Mi
   network:
-    domain: kurrentdb-cluster.kurrent.test
+    domain: kurrent.test
     loadBalancer:
       enabled: true
+    fqdnTemplate: '{podName}.{domain}'
   constraints:
     nodeSelector:
       machine-size: large
@@ -497,51 +451,18 @@ spec:
           app.kubernetes.io/part-of: kurrentdb-operator
           app.kubernetes.io/name: my-kurrentdb-cluster
       whenUnsatisfiable: DoNotSchedule
-
 ```
 
 If no scheduling constraints are configured, the operator sets a default soft constraint configuring
 pod anti-affinity such that multiple replicas will prefer to run on different nodes, for better
 fault tolerance.
 
-## Viewing Deployments
-
-Using the k9s tool, navigate to the namespaces list using the command `:namespaces`, it should show a screen similar to:
-
-![Namespaces](images/database-deployment/namespace-list.png)
-
-From here, press the `Return` key on the namespace where `KurrentDB` was deployed. In the screen above the namespace is `kurrent`. Now enter the k9s command `:kurrentdbs` and press the `Return` key. The following screen will show a list of deployed databases for the selected namespace, as shown below:
-
-![Databases](images/database-deployment/database-list.png)
-
-Summary information is shown on this screen. For more information press the `d` key on the selected database. The following screen will provide additional information about the deployment:
-
-![Database Details](images/database-deployment/db-decribe.png)
-
-Scrolling further will also show the events related to the deployment, such as:
-
-- transitions between states
-- gossip endpoint
-- leader details
-- database version
-
-## Accessing Deployments
-
-### External
-
-The Operator will create services of type `LoadBalancer` to access a KurrentDB cluster (for each node) when the `spec.network.loadBalancer.enabled` flag is set to `true`.
-
-Each service is annotated with `external-dns.alpha.kubernetes.io/hostname: {external cluster endpoint}` to allow the third-party tool [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) to configure external access.
-
-### Internal
-
-The Operator will create headless services to access a KurrentDB cluster internally. This includes:
-- One for the underlying statefulset (selects all pods)
-- One per pod in the statefulset to support `Ingress` rules that require one target endpoint
-
 ## Custom Database Configuration
 
-If custom parameters are required in the underlying database configuration then these can be specified using the `configuration` YAML block within a `KurrentDB`. Note, these values will be passed through as-is.
+If custom parameters are required in the underlying database configuration then these can be
+specified using the `configuration` YAML block within a `KurrentDB`. The parameters which are
+defaulted or overridden by the operator are listed [in the CRD reference](
+../getting-started/resource-types.md#configuring-kurrent-db).
 
 For example, to enable projections, the deployment configuration looks as follows:
 
@@ -569,7 +490,23 @@ spec:
       requests:
         storage: 512Mi
   network:
-    domain: kurrentdb-cluster.kurrent.test
+    domain: kurrent.test
     loadBalancer:
       enabled: true
+    fqdnTemplate: '{podName}.{domain}'
 ```
+
+## Accessing Deployments
+
+### External
+
+The Operator will create one service of type `LoadBalancer` per KurrentDB node when the
+`spec.network.loadBalancer.enabled` flag is set to `true`.
+
+Each service is annotated with `external-dns.alpha.kubernetes.io/hostname: {external cluster endpoint}` to allow the third-party tool [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) to configure external access.
+
+### Internal
+
+The Operator will create headless services to access a KurrentDB cluster internally. This includes:
+- One for the underlying statefulset (selects all pods)
+- One per pod in the statefulset to support `Ingress` rules that require one target endpoint

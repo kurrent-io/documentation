@@ -37,8 +37,9 @@ helm repo add kurrent-latest \
 The Operator uses Custom Resource Definitions (CRDs) to extend Kubernetes. You can install them automatically with Helm or manually.
 
 The following resource types are supported:
-- [KurrentDB](resource-types.md#kurrentdb)
-- [KurrentDBBackup](resource-types.md#kurrentdbbackup)
+- [KurrentDB](resource-types.md#kurrentdbspec)
+- [KurrentDBBackup](resource-types.md#kurrentdbbackupspec)
+- [KurrentDBBackupSchedules](resource-types.md#kurrentdbbackupschedulesspec)
 
 Since CRDs are managed globally by Kubernetes, special care must be taken to install them.
 
@@ -52,7 +53,7 @@ If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
-helm pull kurrent-latest/kurrentdb-operator --version 1.3.1 --untar
+helm pull kurrent-latest/kurrentdb-operator --version 1.4.0 --untar
 # Install the CRDs
 kubectl apply -f kurrentdb-operator/templates/crds
 ```
@@ -86,7 +87,7 @@ To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.3.1 \
+  --version 1.4.0 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -121,7 +122,7 @@ To deploy the Operator in this mode, the following command can be used:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.3.1 \
+  --version 1.4.0 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -160,7 +161,7 @@ The Operator deployment can be updated to adjust which namespaces are watched. F
 
 ```bash
 helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.3.1 \
+  --version 1.4.0 \
   --namespace kurrent \
   --reuse-values \
   --set operator.namespaces='{kurrent,foo,bar}'
@@ -204,5 +205,5 @@ helm upgrade kurrentdb-operator kurrentdb-operator-repo/kurrentdb-operator \
 Here's what these commands do:
 - Refresh the local Helm repository index
 - Locate an existing operator installation in namespace `kurrent`
-- Select the target upgrade version `{version}` e.g. `1.3.1`
+- Select the target upgrade version `{version}` e.g. `1.4.0`
 - Perform the upgrade, preserving values that were set during installation

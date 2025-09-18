@@ -441,11 +441,7 @@ kubectl apply -f cluster.yaml
 ## Three Node Secure Cluster (using LetsEncrypt)
 
 Using LetsEncrypt, or any publicly trusted certificate, in an operator-managed KurrentDB cluster
-is not supported.
-
-The recommended workaround is to combine [self-signed certificates within the cluster](
-#three-node-secure-cluster-using-self-signed-certificates) with an Ingress that does TLS
-termination using the LetsEncrypt certificate.
+is not supported in v1.0.0; please upgrade to v1.4.0.
 
 ## Deploying With Scheduling Constraints
 

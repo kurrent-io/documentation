@@ -23,16 +23,6 @@ In the example above, the backup definition leverages the `ebs-vs` volume snapsh
 
 The `KurrentDBBackup` type takes an optional `nodeName`. If left blank, the leader will be derived based on the gossip state of the database cluster.
 
-The example above can be deployed using the following steps:
-- Copy the YAML snippet above to a file called `backup.yaml`
-- Run the following command:
-
-```bash
-kubectl -n kurrent apply -f backup.yaml
-```
-
-Once deployed, navigate to the [Viewing Backups](#viewing-backups) section.
-
 ## Backing up a specific node
 
 Assuming there is a cluster called `kurrentdb-cluster` that resides in the `kurrent` namespace, the following `KurrentDBBackup` resource can be defined:
@@ -50,28 +40,76 @@ spec:
 
 In the example above, the backup definition leverages the `ebs-vs` volume snapshot class to perform the underlying volume snapshot. This class name will vary per Kubernetes cluster, please consult with your Kubernetes administrator to determine this value.
 
-The example above can be deployed using the following steps:
-- Copy the YAML snippet above to a file called `backup.yaml`
-- Run the following command:
+## Restoring from a backup
 
-```bash
-kubectl -n kurrent apply -f backup.yaml
+A `KurrentDB` cluster can be restored from a backup by specifying an additional field `sourceBackup` as part of the cluster definition.
+
+For example, if an existing `KurrentDBBackup` exists called `kurrentdb-cluster-backup`, the following snippet could be used to restore it:
+
+
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDB
+metadata:
+  name: kurrentdb-cluster
+  namespace: kurrent
+spec:
+  replicas: 1
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  sourceBackup: kurrentdb-cluster-backup
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  network:
+    domain: kurrent.test
+    loadBalancer:
+      enabled: true
 ```
 
-Once deployed, navigate to the [Viewing Backups](#viewing-backups) section.
+## Automatically delete backups with a TTL
 
-## Viewing Backups
+A TTL can be set on a backup to delete the backup after a certain amount of time has passed since
+its creation.  For example, to delete the backup 5 days after it was created:
 
-Using the k9s tool, navigate to the namespaces list using the command `:namespaces`, it should show a screen similar to:
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDBBackup
+metadata:
+  name: kurrentdb-cluster
+spec:
+  volumeSnapshotClassName: ebs-vs
+  clusterName: kurrentdb-cluster
+  ttl: 5d
+```
 
-![Namespaces](images/database-backup/namespace-list.png)
+## Scheduling Backups
 
-From here, press the `Return` key on the namespace where the `KurrentDBBackup` was created, in the screen above the namespace is `kurrent`. Now enter the k9s command `:kurrentdbbackups` and press the `Return` key. The following screen will show a list of database backups for the selected namespace.
+A `KurrentDBBackupSchedule` can be created with a CronJob-like schedule.
 
-![Backup Listing](images/database-backup/backup-list.png)
+Schedules also support a `.spec.keep` setting to automatically limit how many backups created by
+that schedule are retained.  Using a schedule with `.keep` is slightly safer than using TTLs on the
+individual backups.  This is because if, for some reason, you ceased to be able to create new
+backups, the TTL will continue to delete backups until you have none left, while in the same
+situation .keep would leave all your old snapshots in place until a new one could be created.
 
-## Periodic Backups
+For example, to create a new backup every midnight (UTC), and to
+keep the last 7 such backups at any time, you could create a `KurrentDBBackupSchedule` resource like
+this:
 
-You can use [Kubernetes CronJobs](
-https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/) for basic periodic backup
-functionality.
+```yaml
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDBBackupSchedule
+metadata:
+  name: my-backup-schedule
+spec:
+  schedule: "0 0 * * *"
+  timeZone: Etc/UTC
+  template:
+    metadata:
+      name: my-backup
+    spec:
+      volumeSnapshotClassName: ebs-vs
+      clusterName: kurrentdb-cluster
+  keep: 7
+```
