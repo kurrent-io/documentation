@@ -1,5 +1,5 @@
 ---
-terraform_current_version: 1.5.29
+terraform_current_version: 2.0.0
 order: 1
 ---
 
@@ -7,7 +7,11 @@ order: 1
 
 Kurrent Cloud provider for Terraform is available in the public [provider registry][terraform registry].
 
-Provider documentation is available there as well, on the [Documentation tab](https://registry.terraform.io/providers/EventStore/eventstorecloud/latest/docs).
+Provider documentation is available there as well, on the [Documentation tab](https://registry.terraform.io/providers/kurrent-io/kurrentcloud/latest/docs).
+
+::: warning Provider Migration Notice
+The legacy `EventStore/eventstorecloud` provider is deprecated. Users should migrate to the new `kurrent-io/kurrentcloud` provider registry location. See our [Migration Guide](#migration-from-eventstore-cloud-provider) below for detailed instructions.
+:::
 
 ## Installation
 
@@ -28,7 +32,7 @@ The binaries are available for the following platforms:
 
 Terraform supports third party modules installed via the plugin registry. Add the following to your terraform module configuration:
 
-@[code](snippets/providers_eventstore.tf.hcl)
+@[code](snippets/providers_kurrentcloud.tf.hcl)
 
 ### Terraform 0.12
 
@@ -108,7 +112,7 @@ Using the Terraform provider, you can create, manipulate, and delete the followi
 | `kurrentcloud_project`         | [Project](#projects)                                            |
 | `kurrentcloud_network`         | [Network](#networks)                                            |
 | `kurrentcloud_peering`         | [Network peering](#network-peerings)                            |
-| `kurrentcloud_managed_cluster` | Managed KurrentDB instance or cluster                           |
+| `kurrentcloud_managed_cluster` | [Managed KurrentDB instance or cluster](#managed-kurrentdb)                           |
 
 ### Projects
 
@@ -136,11 +140,11 @@ You will need the project ID to provision other resources within the project.
 
 Here is an example of a Terraform script to create a project in Kurrent Cloud:
 
-@[code](./snippets/eventstorecloud_project.create.tf.hcl)
+@[code](./snippets/kurrentcloud_project.create.tf.hcl)
 
 ### Networks
 
-Before provisioning a database cluster, you need a network, which the cluster will connect to. Use the `eventstorecloud_network` resource to provision a new Kurrent Cloud network. The network should be in the same cloud provider, which you plan to use for the database cluster.
+Before provisioning a database cluster, you need a network, which the cluster will connect to. Use the `kurrentcloud_network` resource to provision a new Kurrent Cloud network. The network should be in the same cloud provider, which you plan to use for the database cluster.
 
 #### Arguments
 
@@ -170,14 +174,14 @@ Smaller networks can hold fewer managed clusters, but may be easier to peer to i
 
 #### Creating a network
 
-@[code](./snippets/eventstorecloud_network.create.tf.hcl)
+@[code](./snippets/kurrentcloud_network.create.tf.hcl)
 
 ### Network peerings
 
 When you got a network provisioned, you can already start creating database clusters. However, you won't be able to connect to your new cluster, unless you create a peering link between the network in Kurrent Cloud, and the network on your own cloud account or project.
 
 
-Use the `eventstorecloud_peering` resource to initiate the peering link. You will need to collect the details about your own cloud network (VPC or Virtual Network) as described in the arguments list below. Depending on the cloud provider, you'll need to complete some actions on your side to confirm the peering.
+Use the `kurrentcloud_peering` resource to initiate the peering link. You will need to collect the details about your own cloud network (VPC or Virtual Network) as described in the arguments list below. Depending on the cloud provider, you'll need to complete some actions on your side to confirm the peering.
 
 At the moment, you can only peer the networks, which are in the same cloud region.
 
@@ -245,11 +249,11 @@ For GCP, you need to initiate a peering from your cloud account to Kurrent Cloud
 
 Here is an example how to initiate a peering from Kurrent Cloud to your own AWS account:
 
-@[code](./snippets/eventstorecloud_peering.create.tf.hcl)
+@[code](./snippets/kurrentcloud_peering.create.tf.hcl)
 
 ### Managed KurrentDB
 
-Use the `eventstorecloud_managed_cluster` resource to provision a KurrentDB cluster or instance. You will need the [Project](#projects) and the [Network](#networks) resource information from previously created resources.
+Use the `kurrentcloud_managed_cluster` resource to provision a KurrentDB cluster or instance. You will need the [Project](#projects) and the [Network](#networks) resource information from previously created resources.
 
 #### Arguments
 
@@ -264,7 +268,7 @@ Use the `eventstorecloud_managed_cluster` resource to provision a KurrentDB clus
 | `disk_type`        | `string` | *Required*, `GP2`, `GP3` (AWS), `premium-ssd-lrs` (Azure), `ssd` (GCP).                                                                                          |
 | `disk_iops`        | `int`    | *Optional*, the number of IOPS for data disk. *Required* if disk_type is `GP3`.                                                                                  |
 | `disk_throughput`  | `int`    | *Optional*, throughput in MB/s for data disk. *Required* if disk_type is `GP3`.                                                                                  |
-| `server_version`   | `string` | *Required*, `20.6`, `20.10`, `21.6`, `21.10`.                                                                                                                    |
+| `server_version`   | `string` | *Required*, `23.10`, `24.10`, `25.0`|
 | `projection_level` | `string` | *Optional*, default: `off` , the mode in which to enable projections. Valid values are `off` , `system` , `user`.                                                |
 
 Supported instance sizes are:
@@ -308,11 +312,11 @@ Here are the cloud-specific examples of a Terraform script to create a managed K
 
 ::: code-tabs
 @tab AWS
-@[code](./snippets/eventstorecloud_managed_cluster.create.aws.tf.hcl)
+@[code](./snippets/kurrentcloud_managed_cluster.create.aws.tf.hcl)
 @tab Azure
-@[code](./snippets/eventstorecloud_managed_cluster.create.az.tf.hcl)
+@[code](./snippets/kurrentcloud_managed_cluster.create.az.tf.hcl)
 @tab GCP
-@[code](./snippets/eventstorecloud_managed_cluster.create.gcp.tf.hcl)
+@[code](./snippets/kurrentcloud_managed_cluster.create.gcp.tf.hcl)
 :::
 
 ## Data sources
@@ -321,11 +325,11 @@ The following data source is available:
 
 | Terraform resource        | Kurrent Cloud resource |
 |:--------------------------|:---------------------------|
-| `eventstorecloud_project` | [Project](#project)        |
+| `kurrentcloud_project` | [Project](#project)        |
 
 ### Project
 
-Use the `eventstorecloud_project` data source to query your Kurrent Cloud projects.
+Use the `kurrentcloud_project` data source to query your Kurrent Cloud projects.
 
 #### Arguments
 
@@ -336,10 +340,197 @@ Use the `eventstorecloud_project` data source to query your Kurrent Cloud projec
 
 #### Looking up a project
 
-@[code](./snippets/eventstorecloud_project.lookup.tf.hcl)
+@[code](./snippets/kurrentcloud_project.lookup.tf.hcl)
 
 ::: tip
-The value of `eventstorecloud_project.name` is case-sensitive, so `Production Project` is not the same as `^production project`.
+The value of `kurrentcloud_project.name` is case-sensitive, so `Production Project` is not the same as `^production project`.
+:::
+
+## Migration from EventStore Cloud Provider
+
+If you're migrating from the legacy `EventStore/eventstorecloud` provider to `kurrent-io/kurrentcloud`, this section provides comprehensive migration instructions.
+
+### Quick Migration Summary
+
+1. **Provider Registry**: Change from `EventStore/eventstorecloud` to `kurrent-io/kurrentcloud`
+2. **Resource Prefixes**: `eventstorecloud_*` resources are deprecated, use `kurrentcloud_*` instead
+3. **Version 2.0.0+**: Both prefixes supported for backward compatibility
+
+### Provider Source Migration
+
+#### Before (deprecated)
+```hcl
+terraform {
+  required_providers {
+    eventstorecloud = {
+      source  = "EventStore/eventstorecloud"
+      version = "~> 1.0"
+    }
+  }
+}
+
+provider "eventstorecloud" {
+  token           = "your-token"
+  organization_id = "your-org-id"
+}
+```
+
+#### After (recommended)
+```hcl
+terraform {
+  required_providers {
+    kurrentcloud = {
+      source  = "kurrent-io/kurrentcloud"
+      version = "~> 2.0"
+    }
+  }
+}
+
+provider "kurrentcloud" {
+  token           = "your-token"
+  organization_id = "your-org-id"
+}
+```
+
+### Terraform State Migration
+
+If you have existing resources managed by the old provider, migrate them using the `terraform state replace-provider` command:
+
+#### Step 1: Backup Your State
+::: danger Important
+Always backup your Terraform state before making changes:
+:::
+
+```bash
+# Create a backup of your current state
+terraform state pull > terraform.tfstate.backup
+```
+
+#### Step 2: Replace Provider in State
+```bash
+terraform state replace-provider \
+  registry.terraform.io/EventStore/eventstorecloud \
+  registry.terraform.io/kurrent-io/kurrentcloud
+```
+
+For automatic approval (useful in CI/CD pipelines):
+```bash
+terraform state replace-provider -auto-approve \
+  registry.terraform.io/EventStore/eventstorecloud \
+  registry.terraform.io/kurrent-io/kurrentcloud
+```
+
+#### Step 3: Update Configuration and Reinitialize
+```bash
+terraform init
+```
+
+### Resource Prefix Migration
+
+#### Available Resources
+
+**New `kurrentcloud_` resources (recommended):**
+- `kurrentcloud_project`
+- `kurrentcloud_acl`
+- `kurrentcloud_network`
+- `kurrentcloud_peering`
+- `kurrentcloud_managed_cluster`
+- `kurrentcloud_scheduled_backup`
+- `kurrentcloud_integration`
+
+**Deprecated `eventstorecloud_` resources (still supported):**
+- `eventstorecloud_project`
+- `eventstorecloud_acl`
+- `eventstorecloud_network`
+- `eventstorecloud_peering`
+- `eventstorecloud_managed_cluster`
+- `eventstorecloud_scheduled_backup`
+- `eventstorecloud_integration`
+
+#### Updating Resource Prefixes
+
+##### Method 1: Using terraform state mv
+```bash
+# Backup your state first
+terraform state pull > terraform.tfstate.backup
+
+# Update configuration files, then move resources in state
+terraform state mv eventstorecloud_project.my_project kurrentcloud_project.my_project
+terraform state mv eventstorecloud_managed_cluster.my_cluster kurrentcloud_managed_cluster.my_cluster
+
+# Verify no changes needed
+terraform plan
+```
+
+##### Method 2: Using moved Blocks (Terraform v1.1+)
+Add temporary `moved` blocks to your configuration:
+
+```hcl
+# Temporary moved block - remove after successful migration
+moved {
+  from = eventstorecloud_managed_cluster.my_cluster
+  to   = kurrentcloud_managed_cluster.my_cluster
+}
+
+# Updated resource with new prefix
+resource "kurrentcloud_managed_cluster" "my_cluster" {
+  name         = "production-cluster"
+  project_id   = "my-project-id"
+  network_id   = "my-network-id"
+  instance_type = "F1"
+  disk_size    = 24
+  disk_type    = "GP2"
+  server_version = "23.10"
+}
+```
+
+Then run:
+```bash
+terraform plan  # Should show move operations
+terraform apply
+```
+
+### Migration Best Practices
+
+1. **Test in Non-Production First** - Always test the migration process in a development environment
+2. **Plan Your Migration** - Review all resources that will be affected
+3. **Gradual Migration** - Migrate one resource type at a time
+4. **Version Pinning** - Pin your provider version during migration for consistency
+
+### Troubleshooting Common Issues
+
+#### Issue: `terraform init` fails after state migration
+```
+Error: Failed to query available provider packages
+```
+**Solution**: Clear the `.terraform` directory and run `terraform init` again:
+```bash
+rm -rf .terraform .terraform.lock.hcl
+terraform init
+```
+
+#### Issue: Provider not found during plan/apply
+```
+Error: Registry does not have a provider named registry.terraform.io/EventStore/eventstorecloud
+```
+**Solution**: Ensure you've completed both state migration and configuration updates, then run `terraform init`.
+
+#### Issue: Plan shows destroy/create operations
+::: danger Warning
+If you see destroy/create operations, **DO NOT APPLY** - this would destroy your infrastructure.
+:::
+
+**Solution**:
+1. Check that you updated your configuration files correctly
+2. Verify the state mv command syntax
+3. Ensure both resource types point to the same underlying resource schema
+
+### Getting Help
+
+::: tip Additional Resources
+- **Detailed Migration Guide**: See our [GitHub MIGRATION.md](https://github.com/kurrent-io/terraform-provider-kurrentcloud/blob/trunk/MIGRATION.md) for comprehensive technical documentation
+- **Provider Documentation**: [Terraform Registry Documentation](https://registry.terraform.io/providers/kurrent-io/kurrentcloud/latest/docs)
+- **Support**: Open an issue in the [GitHub repository](https://github.com/kurrent-io/terraform-provider-kurrentcloud/issues)
 :::
 
 ## FAQ
@@ -356,10 +547,10 @@ Make sure you used the correct organisation ID. Use [these guidelines](#provider
 
 Ensure you entered the correct project name. Remember that data source names are case-sensitive. See [here](#project).
 
-[terraform github releases]: https://github.com/kurrent-io/terraform-provider-eventstorecloud/releases
-[terraform github]: https://github.com/kurrent-io/terraform-provider-eventstorecloud
-[terraform github samples]: https://github.com/kurrent-io/terraform-provider-eventstorecloud/tree/trunk/examples
-[terraform registry]: https://registry.terraform.io/providers/EventStore/eventstorecloud/latest
+[terraform github releases]: https://github.com/kurrent-io/terraform-provider-kurrentcloud/releases
+[terraform github]: https://github.com/kurrent-io/terraform-provider-kurrentcloud
+[terraform github samples]: https://github.com/kurrent-io/terraform-provider-kurrentcloud/tree/trunk/examples
+[terraform registry]: https://registry.terraform.io/providers/kurrent-io/kurrentcloud/latest
 [esc]: https://eventstore.com/event-store-cloud/
 [esc cli github]: https://github.com/kurrent-io/esc
 [esc cli github releases]: https://github.com/kurrent-io/esc/releases

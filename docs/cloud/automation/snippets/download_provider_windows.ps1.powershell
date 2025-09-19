@@ -1,5 +1,5 @@
-$source="https://github.com/kurrent-io/terraform-provider-eventstorecloud/releases/download/v1.5.12/terraform-provider-eventstorecloud_1.5.12_windows_amd64.zip"
-$zip= "./terraform-provider-eventstorecloud.zip"
-$tfPlugin="$env:APPDATA/terraform.d/plugins/terraform-provider-eventstorecloud/"
+$source="https://github.com/kurrent-io/terraform-provider-kurrentcloud/releases/download/v2.0.0/terraform-provider-kurrentcloudcloud_2.0.0_windows_amd64.zip"
+$zip= "./terraform-provider-kurrentcloud.zip"
+$tfPlugin="$env:APPDATA/terraform.d/plugins/terraform-provider-kurrentcloud/"
 Invoke-WebRequest -Uri $source -OutFile $zip
 Expand-Archive -Path $zip -DestinationPath $tfPlugin
