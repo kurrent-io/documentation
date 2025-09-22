@@ -82,31 +82,31 @@ highlights:
       - title: Java
         icon: devicon:java
         details: Build event-driven Java applications using the gRPC Java SDK
-        link: /client/Java
+        link: /clients/java/
       - title: Python
         icon: devicon:python
         details: Build scripts or applications using our async Python client
-        link: /client/Python
+        link: /clients/python/
       - title: NodeJS
         icon: logos:nodejs-icon
         details: Use JavaScript or TypeScript to connect via the NodeJS SDK
-        link: /client/TypeScript
+        link: /clients/node/
       - title: Go
         icon: skill-icons:golang
         details: Connect KurrentDB to Go-based applications with our official SDK
-        link: /client/Go
+        link: /clients/golang/
       - title: Rust
         icon: skill-icons:rust
         details: Use the Rust client for high-performance native event apps
-        link: /client/Rust
+        link: /clients/rust/
       - title: C#
         icon: devicon:csharp
         details: Build .NET apps using the .NET or legacy .NET Framework clients
-        link: /client/csharp
+        link: /clients/dotnet/
       - title: HTTP API
         icon: catppuccin:http
         details: Interact with KurrentDB from any stack using the REST-style HTTP API
-        link: /http-api/v25.0/introduction.html
+        link: /server/v25.0/http-api/introduction.html
 
   - header: 🔌 Connect and Manage
     description: Manage and integrate KurrentDB
