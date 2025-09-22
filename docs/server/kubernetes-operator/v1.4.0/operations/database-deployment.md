@@ -239,7 +239,7 @@ metadata:
   name: kurrentdb-cluster
   namespace: kurrent
 spec:
-  replicas: 1
+  replicas: 3
   image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
   resources:
     requests:
@@ -372,7 +372,7 @@ spec:
     - mydb-1-qn.kurrent.test:2113
     - mydb-2-qn.kurrent.test:2113
   readOnlyReplicas:
-    - replicas: 2
+    replicas: 2
   image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
   resources:
     requests:
@@ -444,7 +444,7 @@ spec:
     nodeSelector:
       machine-size: large
     topologySpreadConstraints:
-      maxSkew: 1
+    - maxSkew: 1
       topologyKey: zone
       labelSelector:
         matchLabels:
