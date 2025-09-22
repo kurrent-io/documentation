@@ -444,91 +444,12 @@ kubectl apply -f cluster.yaml
 
 ## Three Node Secure Cluster (using LetsEncrypt)
 
-The following `KurrentDB` resource type defines a three node cluster with the following properties:
-- The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
-- Security is enabled using certificates from LetsEncrypt
-- KurrentDB version 25.0.0 will be used
-- 1vcpu will be requested as the minimum (upper bound is unlimited) per node
-- 1gb of memory will be used per node
-- 512mb of storage will be allocated for the data disk per node
-- The KurrentDB instance that is provisioned will be exposed as `kurrentdb-{idx}.kurrentdb-cluster.kurrent.test`
+Using LetsEncrypt, or any publicly trusted certificate, in an operator-managed KurrentDB cluster
+is not supported.
 
-```yaml
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: kurrentdb-cluster
-  namespace: kurrent
-spec:
-  secretName: kurrentdb-cluster-tls
-  isCA: false
-  usages:
-    - client auth
-    - server auth
-    - digital signature
-    - key encipherment
-  commonName: kurrentdb-node
-  subject:
-    organizations:
-      - Kurrent
-    organizationalUnits:
-      - Cloud
-  dnsNames:
-    - '*.kurrentdb-cluster.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster.kurrent.test'
-    - '*.kurrentdb-cluster-replica.kurrent.svc.cluster.local'
-    - '*.kurrentdb-cluster-replica.kurrent.test'
-  privateKey:
-    algorithm: RSA
-    encoding: PKCS1
-    size: 2048
-  issuerRef:
-    name: letsencrypt
-    kind: Issuer
----
-apiVersion: kubernetes.kurrent.io/v1
-kind: KurrentDB
-metadata:
-  name: kurrentdb-cluster
-  namespace: kurrent
-spec:
-  replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
-  resources:
-    requests:
-      cpu: 1000m
-      memory: 1Gi
-  storage:
-    volumeMode: "Filesystem"
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 512Mi
-  network:
-    domain: kurrentdb-cluster.kurrent.test
-    loadBalancer:
-      enabled: true
-  security:
-    certificateSecret:
-      name: kurrentdb-cluster-tls
-      keyName: tls.crt
-      privateKeyName: tls.key
-```
-
-Before deploying this cluster, ensure that the steps described in section [Using LetsEncrypt certificates](managing-certificates.md#using-trusted-certificates-via-letsencrypt) have been followed.
-
-Follow these steps to deploy the cluster:
-- Copy the YAML snippet above to a file called `cluster.yaml`
-- Ensure that the `kurrent` namespace has been created
-- Run the following command:
-
-```bash
-kubectl apply -f cluster.yaml
-```
-
-Once deployed, navigate to the [Viewing Deployments](#viewing-deployments) section.
-
+The recommended workaround is to combine [self-signed certificates within the cluster](
+#three-node-secure-cluster-using-self-signed-certificates) with an Ingress that does TLS
+termination using the LetsEncrypt certificate.
 
 ## Deploying With Scheduling Constraints
 
