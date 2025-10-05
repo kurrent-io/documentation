@@ -53,7 +53,7 @@ If you prefer to install CRDs yourself:
 
 ```bash
 # Download the kurrentdb-operator Helm chart
-helm pull kurrent-latest/kurrentdb-operator --version 1.4.0 --untar
+helm pull kurrent-latest/kurrentdb-operator --version 1.4.1 --untar
 # Install the CRDs
 kubectl apply -f kurrentdb-operator/templates/crds
 ```
@@ -87,7 +87,7 @@ To deploy the Operator in this mode, run:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.4.0 \
+  --version 1.4.1 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -122,7 +122,7 @@ To deploy the Operator in this mode, the following command can be used:
 
 ```bash
 helm install kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.4.0 \
+  --version 1.4.1 \
   --namespace kurrent \
   --create-namespace \
   --set crds.enabled=true \
@@ -161,7 +161,7 @@ The Operator deployment can be updated to adjust which namespaces are watched. F
 
 ```bash
 helm upgrade kurrentdb-operator kurrent-latest/kurrentdb-operator \
-  --version 1.4.0 \
+  --version 1.4.1 \
   --namespace kurrent \
   --reuse-values \
   --set operator.namespaces='{kurrent,foo,bar}'
@@ -205,5 +205,5 @@ helm upgrade kurrentdb-operator kurrentdb-operator-repo/kurrentdb-operator \
 Here's what these commands do:
 - Refresh the local Helm repository index
 - Locate an existing operator installation in namespace `kurrent`
-- Select the target upgrade version `{version}` e.g. `1.4.0`
+- Select the target upgrade version `{version}` e.g. `1.4.1`
 - Perform the upgrade, preserving values that were set during installation
