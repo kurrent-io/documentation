@@ -46,6 +46,16 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 [ror]: ../operations/database-deployment.md#deploying-standalone-read-only-replicas
 [em]: resource-types.md#kurrentdbextrametadataspec
 
+### New in 1.4.1
+
+* Fix rolling restarts to be quorum-aware for extra data safety.
+* Add quorum-aware full restarts for changes that must be applied to all nodes at once, like adding
+  TLS.
+* Fix the `internodeTrafficStrategy: SplitDNS` setting to run correctly on more container runtimes.
+* Fix a hang caused adding to pod labels in `extraMetadata` after a KurrentDB was deployed.
+* Correctly enforce the immutability of the `sourceBackup` setting to prevent confusing behavior.
+* Fix the helm chart to prevent allowing two operator instances to briefly conflict during upgrades.
+
 ## Supported KurrentDB Versions
 
 The Operator supports running the following major versions of KurrentDB:
