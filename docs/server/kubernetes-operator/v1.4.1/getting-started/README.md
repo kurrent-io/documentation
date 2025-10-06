@@ -52,8 +52,9 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 * Add quorum-aware full restarts for changes that must be applied to all nodes at once, like adding
   TLS.
 * Fix the `internodeTrafficStrategy: SplitDNS` setting to run correctly on more container runtimes.
-* Fix a hang where adding to pod labels in `extraMetadata` would cause the KurrentDB to hang.
+* Fix a hang caused adding to pod labels in `extraMetadata` after a KurrentDB was deployed.
 * Correctly enforce the immutability of the `sourceBackup` setting to prevent confusing behavior.
+* Fix the helm chart to prevent allowing two operator instances to briefly conflict during upgrades.
 
 ## Supported KurrentDB Versions
 
