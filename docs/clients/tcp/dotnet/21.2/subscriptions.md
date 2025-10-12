@@ -40,7 +40,7 @@ For regular streams, the checkpoint is a sequence number of the event, which is 
 Catch-up subscriptions are typically used for producing _read models_ in event-sourced systems that use the CQRS pattern. Subscribers that update read models are often called _projections_ because they project the event payload to a piece of state in another database. Client-side projections use the same concept as EventStoreDB server-side projections but have a different purpose.
 
 ::: tip Storing checkpoints
-The best practice for subscriptions that project events to another storage, is to store checkpoints in the same storage. Projecting an event and storing the checkpoint in one transaction allows you t achieve the _exactly once_ event processing.
+The best practice for subscriptions that project events to another storage, is to store checkpoints in the same storage. Projecting an event and storing the checkpoint in one transaction allows you to achieve the _exactly once_ event processing.
 :::
 
 ### Subscribing to a stream
