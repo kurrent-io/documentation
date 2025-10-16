@@ -56,6 +56,15 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 * Correctly enforce the immutability of the `sourceBackup` setting to prevent confusing behavior.
 * Fix the helm chart to prevent allowing two operator instances to briefly conflict during upgrades.
 
+### New in 1.4.2
+
+* Fix bug where deleting KurrentDBs with LoadBalancers enabled could leave dangling cloud resources.
+* Automatically grow PVC requested storage size to match the `restoreSize` of a VolumeSnapshot, when
+  starting new nodes from VolumeSnapshots.  This could happen when a user had SourceBackup set or
+  when adding new quorum nodes or read-only replicas to an existing cluster.
+* Allow extra metadata for resources deployed by the Helm chart.  See `values.yaml` in the Helm
+  chart for details.
+
 ## Supported KurrentDB Versions
 
 The Operator supports running the following major versions of KurrentDB:
