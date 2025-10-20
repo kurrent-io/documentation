@@ -9,10 +9,18 @@
     "repo": "https://github.com/kurrent-io/KurrentDB",
     "branches": [
       {
+        "version": "v25.1",
+        "name": "release/v25.1",
+        "relativePath": ["server"],
+        "startPage": "quick-start/"
+      },
+      {
         "version": "v25.0",
         "name": "release/v25.0",
         "relativePath": ["server"],
-        "startPage": "quick-start/"
+        "startPage": "quick-start/",
+        "deprecated": true,
+        "hide": true
       },
       {
         "version": "v24.10",
