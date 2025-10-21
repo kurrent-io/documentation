@@ -57,7 +57,7 @@ jobs:
         run: |
           # compute branch‑based preview URL
           BRANCH="${{ github.event.pull_request.head.ref }}"
-          PREVIEW_URL="https://${BRANCH}.documentation-21k.pages.dev"
+          PREVIEW_URL="https://${BRANCH//\//-}.documentation-21k.pages.dev"
           LOG_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           if [ "${{ steps.build.outcome }}" = "success" ]; then
             STATUS="✅ Build succeeded"
@@ -68,7 +68,7 @@ jobs:
             # always link to last branch preview if available
             LINK="${LINK} | Previous preview: [${PREVIEW_URL}](${PREVIEW_URL})"
           fi
-          BODY="### Docs Preview
+          BODY="### Docs build
           - Status: ${STATUS}
           - ${LINK}
           **Changed pages:**"
