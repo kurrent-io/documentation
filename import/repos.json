@@ -74,6 +74,11 @@
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Dotnet",
     "branches": [
       {
+        "version": "v1.1",
+        "name": "release/v1.1",
+        "startPage": "getting-started"
+      },
+      {
         "version": "v1.0",
         "name": "release/v1.0",
         "startPage": "getting-started"
@@ -96,6 +101,11 @@
     "currentBranch": "trunk",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Java",
     "branches": [
+      {
+        "version": "v1.1",
+        "name": "release/v1.1",
+        "startPage": "getting-started"
+      },
       {
         "version": "v1.0",
         "name": "release/v1.0",
@@ -143,6 +153,11 @@
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-NodeJS",
     "branches": [
       {
+        "version": "v1.1",
+        "name": "release/v1.1",
+        "startPage": "getting-started"
+      },
+      {
         "version": "v1.0",
         "name": "release/v1.0",
         "startPage": "getting-started"
@@ -165,6 +180,11 @@
     "currentBranch": "main",
     "repo": "https://github.com/kurrent-io/KurrentDB-Client-Go",
     "branches": [
+      {
+        "version": "v1.1",
+        "name": "release/v1.1",
+        "startPage": "getting-started"
+      },
       {
         "version": "v1.0",
         "name": "release/v1.0",
