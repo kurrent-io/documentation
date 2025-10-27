@@ -272,8 +272,9 @@
 
 # k8 Operator
 /server/kubernetes-operator/v1.3.0/*                             /server/kubernetes-operator/v1.3.1/:splat                     301
-/server/kubernetes-operator/v1.4.0/*                             /server/kubernetes-operator/v1.4.2/:splat                     301
-/server/kubernetes-operator/v1.4.1/*                             /server/kubernetes-operator/v1.4.2/:splat                     301
+/server/kubernetes-operator/v1.4.0/*                             /server/kubernetes-operator/v1.4.3/:splat                     301
+/server/kubernetes-operator/v1.4.1/*                             /server/kubernetes-operator/v1.4.3/:splat                     301
+/server/kubernetes-operator/v1.4.2/*                             /server/kubernetes-operator/v1.4.3/:splat                     301
 
 # ######################
 # Other
