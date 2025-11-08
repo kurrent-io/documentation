@@ -89,7 +89,7 @@ export default defineUserConfig({
 
         // Scarf
         ['noscript', {},
-            '<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=3a844c5b-73c9-48ea-b891-687780d7b4a5" />'
+            '<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a2c83cb1-95a4-4437-91e2-ab0211cc0298" />'
         ],
 
         // Cookiebot banner
