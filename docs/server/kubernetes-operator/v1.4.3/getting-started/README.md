@@ -65,6 +65,12 @@ Kubernetes is the modern enterprise standard for deploying containerized applica
 * Allow extra metadata for resources deployed by the Helm chart.  See `values.yaml` in the Helm
   chart for details.
 
+### New in 1.4.3
+
+* Officially support running in RedHat OpenShift clusters.
+* Support deploying through the Operator Lifecycle Manager (OLM) in addition to Helm.  OLM is the
+  recommended mechanism for deploying operators in OpenShift.
+
 ## Supported KurrentDB Versions
 
 The Operator supports running the following major versions of KurrentDB:
