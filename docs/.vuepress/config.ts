@@ -13,7 +13,7 @@ import {instance as ver} from "./lib/versioning";
 import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
-import { llmsPlugin } from '@vuepress/plugin-llms'
+import {llmsPlugin} from '@vuepress/plugin-llms'
 
 
 dotenv.config({path: path.join(__dirname, '..', '..', '.algolia', '.env')});
@@ -43,10 +43,10 @@ export default defineUserConfig({
         headers: {level: [2, 3]},
     },
     pagePatterns: [
-      '**/*.md',
-      '!**/v*/README.md',
-      '!.vuepress',
-      '!node_modules'
+        '**/*.md',
+        '!**/v*/README.md',
+        '!.vuepress',
+        '!node_modules'
     ],
     extendsMarkdown: md => {
         md.use(replaceLinkPlugin, {
@@ -70,51 +70,56 @@ export default defineUserConfig({
         const originalHighlight = md.options.highlight || ((code, lang, attrs) => code);
 
         md.options.highlight = (code, lang, attrs) => {
-        if (lang === "env") {
-            lang = "bash";
-        }
-        return originalHighlight(code, lang, attrs);
+            if (lang === "env") {
+                lang = "bash";
+            }
+            return originalHighlight(code, lang, attrs);
         };
     },
-    theme: hopeTheme(themeOptions,{custom: true}),
+    theme: hopeTheme(themeOptions, {custom: true}),
     head: [
         // Business Institution 247, before the user accepts cookie
         ['script', {
             type: 'text/javascript',
             src: 'https://secure.businessintuition247.com/js/264384.js',
-          }],
-          ['noscript', {},
+        }],
+        ['noscript', {},
             '<img alt="" src="https://secure.businessintuition247.com/264384.png" style="display:none;" />'
-          ],
-      
-          // Cookiebot banner 
-          ['script', {
+        ],
+
+        // Scarf
+        ['noscript', {},
+            '<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=3a844c5b-73c9-48ea-b891-687780d7b4a5" />'
+        ],
+
+        // Cookiebot banner
+        ['script', {
             id: 'Cookiebot',
             src: 'https://consent.cookiebot.com/uc.js',
             'data-cbid': 'ee971b30-e872-46e8-b421-706ef26d9dcc',
             'data-blockingmode': 'auto',
             type: 'text/javascript',
-          }],
-      
-          // Cookiebot declaration
-          ['script', {
+        }],
+
+        // Cookiebot declaration
+        ['script', {
             id: 'CookieDeclaration',
             src: 'https://consent.cookiebot.com/ee971b30-e872-46e8-b421-706ef26d9dcc/cd.js',
             type: 'text/javascript',
             async: true,
-          }],
+        }],
 
-          ['script', { src: '/js/snippet.js' }],
-      
-          // Business Institution 247 “consent‑only” loader 
-          ['script', {
+        ['script', {src: '/js/snippet.js'}],
+
+        // Business Institution 247 “consent‑only” loader
+        ['script', {
             type: 'text/plain',
             'data-cookiecategory': 'marketing',
             src: 'https://secure.businessintuition247.com/js/sc/264384.js',
-          }],
+        }],
 
-          // Kapa helper widget
-          ['script', {
+        // Kapa helper widget
+        ['script', {
             src: 'https://widget.kapa.ai/kapa-widget.bundle.js',
             'data-website-id': '9ff147dd-2c68-495d-9859-de159901d8c5',
             'data-project-name': 'Kurrent',
@@ -123,7 +128,7 @@ export default defineUserConfig({
         }],
 
         // CommonRoom
-        ['script', { src: "/js/commonRoom.js"}],
+        ['script', {src: "/js/commonRoom.js"}],
 
         // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `
@@ -132,11 +137,11 @@ export default defineUserConfig({
             display: none !important;
           }
         `],
-    ],   
+    ],
     // add our own components for blog theme (Tutorials & Guides)
     alias: {
         "@theme-hope/components/BreadCrumb": path.resolve(__dirname, "./components/breadCrumb.ts"),
         "@theme-hope/modules/info/components/TOC": path.resolve(__dirname, "./components/TocWithFeedback.ts"),
     },
-    plugins: [ llmsPlugin() ],
+    plugins: [llmsPlugin()],
 });
