@@ -109,10 +109,11 @@ export default defineUserConfig({
             async: true,
         }],
 
-        ['script', {src: '/js/snippet.js'}],
-
-        // Business Institution 247 “consent‑only” loader
-        ['script', {
+          // Segment
+          // ['script', { src: '/js/snippet.js' }],
+      
+          // Business Institution 247 “consent‑only” loader 
+          ['script', {
             type: 'text/plain',
             'data-cookiecategory': 'marketing',
             src: 'https://secure.businessintuition247.com/js/sc/264384.js',
@@ -127,8 +128,8 @@ export default defineUserConfig({
             'data-project-logo': '/logo-white.png'
         }],
 
-        // CommonRoom
-        ['script', {src: "/js/commonRoom.js"}],
+        // Reo
+        ['script', { src: "/js/reo.js"}],
 
         // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `

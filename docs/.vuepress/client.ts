@@ -166,10 +166,9 @@ export default defineClientConfig({
                 version: esData?.version,
                 category: esData?.category,
             });
-            const a = window.analytics;
-            if (a) {
+            if (window && window.posthog) {
                 setTimeout(() => {
-                    a.page({
+                    window.posthog.capture('$pageview', {
                         site: "docs",
                         url: window.location.origin + to.fullPath,
                         title: to.meta.t,
