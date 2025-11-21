@@ -104,7 +104,8 @@ export default defineUserConfig({
             async: true,
           }],
 
-          ['script', { src: '/js/snippet.js' }],
+          // Segment
+          // ['script', { src: '/js/snippet.js' }],
       
           // Business Institution 247 “consent‑only” loader 
           ['script', {
