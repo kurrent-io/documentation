@@ -121,28 +121,46 @@ export default defineClientConfig({
 
         addDynamicRoute(`/clients/${clients}/latest/:pathMatch(.*)*`, to => {
             const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+            if (!latestVersion?.version) {
+                return `/clients/`;
+            }
             return `/clients/${to.params.lang}/${latestVersion?.version}/${to.params.pathMatch}`;
         });
         addDynamicRoute(`/clients/${clients}/latest`, to => {
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
-            return `/clients/${to.params.lang}/${latestVersion?.version}/${latestVersion?.startPage}`;
+            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions?.[0];
+            if (!latestVersion?.version || !latestVersion?.startPage) {
+                return `/clients/`;
+            }
+            return `/clients/${to.params.lang}/${latestVersion.version}/${latestVersion.startPage}`;
         });
         addDynamicRoute(`/clients/${clients}/legacy/:version`, to => {
             const version = to.params.version;
             const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === `legacy/${version}`)
+            if (!latestVersion?.version || !latestVersion?.startPage) {
+                return `/clients/`;
+            }
             return `/clients/${to.params.lang}/legacy/${to.params.version}/${latestVersion?.startPage}`;
         });
         addDynamicRoute(`/clients/${clients}/legacy`, to => {
             const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path.startsWith('legacy/'))
+            if (!latestVersion?.version || !latestVersion?.startPage) {
+                return `/clients/`;
+            }
             return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
         })
         addDynamicRoute(`/clients/${clients}/:version`, to => {
             const version = to.params.version;
             const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === version)
+            if (!latestVersion?.version || !latestVersion?.startPage) {
+                return `/clients/`;
+            }
             return `/clients/${to.params.lang}/${version}/${latestVersion?.startPage}`;
         });
         addDynamicRoute(`/clients/${clients}`, to => {
             const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+            if (!latestVersion?.version || !latestVersion?.startPage) {
+                return `/clients/`;
+            }
             return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
         })
 
