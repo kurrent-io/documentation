@@ -78,15 +78,6 @@ export default defineUserConfig({
     },
     theme: hopeTheme(themeOptions, {custom: true}),
     head: [
-        // Business Institution 247, before the user accepts cookie
-        ['script', {
-            type: 'text/javascript',
-            src: 'https://secure.businessintuition247.com/js/264384.js',
-        }],
-        ['noscript', {},
-            '<img alt="" src="https://secure.businessintuition247.com/264384.png" style="display:none;" />'
-        ],
-
         // Scarf
         ['noscript', {},
             '<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=a2c83cb1-95a4-4437-91e2-ab0211cc0298" />'
@@ -96,9 +87,9 @@ export default defineUserConfig({
         ['script', {
             id: 'Cookiebot',
             src: 'https://consent.cookiebot.com/uc.js',
+            type: 'text/javascript',
             'data-cbid': 'ee971b30-e872-46e8-b421-706ef26d9dcc',
             'data-blockingmode': 'auto',
-            type: 'text/javascript',
         }],
 
         // Cookiebot declaration
@@ -109,14 +100,12 @@ export default defineUserConfig({
             async: true,
         }],
 
-          // Segment
-          // ['script', { src: '/js/snippet.js' }],
-      
-          // Business Institution 247 “consent‑only” loader 
-          ['script', {
-            type: 'text/plain',
-            'data-cookiecategory': 'marketing',
+        // Business Institution 247 “consent‑only” loader
+        ['script', {
             src: 'https://secure.businessintuition247.com/js/sc/264384.js',
+            type: 'text/plain',
+            async: true,
+            'data-cookiecategory': 'marketing',
         }],
 
         // Kapa helper widget
@@ -129,7 +118,12 @@ export default defineUserConfig({
         }],
 
         // Reo
-        ['script', { src: "/js/reo.js"}],
+        ['script', {
+            src: "/js/reo.js",
+            type: 'text/plain',
+            async: true,
+            'data-cookiecategory': 'marketing',
+        }],
 
         // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `
