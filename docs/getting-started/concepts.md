@@ -10,9 +10,9 @@ This section discusses some of the fundamental concepts of event sourcing and Ku
 
 In KurrentDB, an event is a factual occurrence from the past. It has an *event type* that headlines what happened and an *event body* that outlines the details:
 
-![What are events](./images/what-are-events.png#light =x200)
+![What are events](./images/what-are-events.png#light)
 
-![What are events](./images/what-are-events-dark.png#dark =x200)
+![What are events](./images/what-are-events-dark.png#dark)
 
 An event usually represents a state change in an application, its entities, or business processes. In this case below:
 
