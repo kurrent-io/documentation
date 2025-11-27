@@ -90,7 +90,6 @@ export default defineUserConfig({
             type: 'text/javascript',
             'data-cbid': 'ee971b30-e872-46e8-b421-706ef26d9dcc',
             'data-blockingmode': 'auto',
-            async: true,
         }],
 
         // Cookiebot declaration
@@ -104,7 +103,7 @@ export default defineUserConfig({
         // Business Institution 247 “consent‑only” loader
         ['script', {
             src: 'https://secure.businessintuition247.com/js/sc/264384.js',
-            type: 'text/javascript',
+            type: 'text/plain',
             async: true,
             'data-cookiecategory': 'marketing',
         }],
@@ -121,7 +120,7 @@ export default defineUserConfig({
         // Reo
         ['script', {
             src: "/js/reo.js",
-            type: 'text/javascript',
+            type: 'text/plain',
             async: true,
             'data-cookiecategory': 'marketing',
         }],
