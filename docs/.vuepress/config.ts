@@ -127,9 +127,6 @@ export default defineUserConfig({
             'data-project-logo': '/logo-white.png'
         }],
 
-        // CommonRoom
-        ['script', {src: "/js/commonRoom.js"}],
-
         // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `
           .redirect-modal-mask,
