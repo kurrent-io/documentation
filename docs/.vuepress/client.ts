@@ -1,4 +1,5 @@
 import "iconify-icon";
+import {onMounted} from "vue";
 import type {RouteLocationNormalized} from "vue-router";
 import {defineClientConfig, useRoute} from 'vuepress/client';
 import CloudBanner from "./components/CloudBanner.vue";
@@ -120,49 +121,32 @@ export default defineClientConfig({
         addFixedRoute(`/clients/grpc/:pathMatch(.*)*`, "/clients/");
 
         addDynamicRoute(`/clients/${clients}/latest/:pathMatch(.*)*`, to => {
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
-            if (!latestVersion?.version) {
-                return `/clients/`;
-            }
-            return `/clients/${to.params.lang}/${latestVersion?.version}/${to.params.pathMatch}`;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+          return `/clients/${to.params.lang}/${latestVersion?.version}/${to.params.pathMatch}`;
         });
         addDynamicRoute(`/clients/${clients}/latest`, to => {
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions?.[0];
-            if (!latestVersion?.version || !latestVersion?.startPage) {
-                return `/clients/`;
-            }
-            return `/clients/${to.params.lang}/${latestVersion.version}/${latestVersion.startPage}`;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+          return `/clients/${to.params.lang}/${latestVersion?.version}/${latestVersion?.startPage}`;
         });
         addDynamicRoute(`/clients/${clients}/legacy/:version`, to => {
-            const version = to.params.version;
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === `legacy/${version}`)
-            if (!latestVersion?.version || !latestVersion?.startPage) {
-                return `/clients/`;
-            }
-            return `/clients/${to.params.lang}/legacy/${to.params.version}/${latestVersion?.startPage}`;
+          const version = to.params.version;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === `legacy/${version}`)
+          return `/clients/${to.params.lang}/legacy/${to.params.version}/${latestVersion?.startPage}`;
         });
         addDynamicRoute(`/clients/${clients}/legacy`, to => {
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path.startsWith('legacy/'))
-            if (!latestVersion?.version || !latestVersion?.startPage) {
-                return `/clients/`;
-            }
-            return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path.startsWith('legacy/'))
+          return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
         })
         addDynamicRoute(`/clients/${clients}/:version`, to => {
-            const version = to.params.version;
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === version)
-            if (!latestVersion?.version || !latestVersion?.startPage) {
-                return `/clients/`;
-            }
-            return `/clients/${to.params.lang}/${version}/${latestVersion?.startPage}`;
+          const version = to.params.version;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions.find(v => v.path === version)
+          return `/clients/${to.params.lang}/${version}/${latestVersion?.startPage}`;
         });
         addDynamicRoute(`/clients/${clients}`, to => {
-            const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
-            if (!latestVersion?.version || !latestVersion?.startPage) {
-                return `/clients/`;
-            }
-            return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
+          const latestVersion = __VERSIONS__.all.find(x => x.id === `${to.params.lang}-client`)?.versions[0]
+          return `/clients/${to.params.lang}/${latestVersion?.path}/${latestVersion?.startPage}`;
         })
+
 
         // Add fixed routes for server versions because they don't use the same sidebar structure as the other versions
         addFixedRoute("/server/v22.10", "/server/v22.10/introduction.html");
@@ -215,5 +199,12 @@ export default defineClientConfig({
             }, 50);
         });
         router.beforeEach((to, from) => leave(to, from));
+    },
+    setup() {
+        onMounted(() => {
+            const route = useRoute();
+            if (route.path !== "/") ;
+        });
+
     },
 });
