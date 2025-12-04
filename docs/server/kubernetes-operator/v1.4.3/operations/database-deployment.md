@@ -77,7 +77,7 @@ spec:
 
 The Operator license provided during Helm installation is different from the KurrentDB license used to unlock enterprise features.
 
-You configure your KurrentDB license by creating a Secret containing the license key, and provide
+Configure your KurrentDB license by creating a Secret containing the license key, and provide
 a reference to that Secret in the `.spec.licenseSecret` field.  Note that the Secret resource and
 the KurrentDB resource must be in the same namespace.
 
