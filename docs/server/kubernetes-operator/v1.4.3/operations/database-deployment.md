@@ -90,7 +90,7 @@ metadata:
   namespace: kurrent
 type: Opaque
 stringData:
-  licenseKey: 000000-111111-222222-AAAAAA-BBBBBB-CC
+  licenseKey: <YOUR_LICENSE_KEY>
 ---
 apiVersion: kubernetes.kurrent.io/v1
 kind: KurrentDB
