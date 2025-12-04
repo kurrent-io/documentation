@@ -54,7 +54,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -71,6 +71,54 @@ spec:
     loadBalancer:
       enabled: true
     fqdnTemplate: '{podName}.{domain}'
+```
+
+## Enable Enterprise Features
+
+The Operator license provided during Helm installation is different than the KurrentDB license used
+to unlock the Enterprise features of KurrentDB.
+
+You configure your KurrentDB license by creating a Secret containing the license key, and provide
+a reference to that Secret in the `.spec.licenseSecret` field.  Note that the Secret resource and
+the KurrentDB resource must be in the same namespace.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-license-secret
+  namespace: kurrent
+type: Opaque
+stringData:
+  licenseKey: 000000-111111-222222-AAAAAA-BBBBBB-CC
+---
+apiVersion: kubernetes.kurrent.io/v1
+kind: KurrentDB
+metadata:
+  name: kurrentdb-cluster
+  namespace: kurrent
+spec:
+  replicas: 1
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi
+  storage:
+    volumeMode: "Filesystem"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 512Mi
+  network:
+    domain: kurrent.test
+    loadBalancer:
+      enabled: true
+    fqdnTemplate: '{podName}.{domain}'
+  licenseSecret:
+    name: my-license-secret
+    key: licenseKey
 ```
 
 ## Three Node Insecure Cluster with Two Read-Only Replicas
@@ -92,7 +140,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -160,7 +208,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -240,7 +288,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -325,7 +373,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -373,7 +421,7 @@ spec:
     - mydb-2-qn.kurrent.test:2113
   readOnlyReplicas:
     replicas: 2
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -423,7 +471,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   resources:
     requests:
       cpu: 1000m
@@ -474,7 +522,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
   configuration:
     RunProjections: all
     StartStandardProjections: true
