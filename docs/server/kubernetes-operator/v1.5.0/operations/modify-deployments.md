@@ -116,3 +116,29 @@ The steps that the Operator takes to increase the number of read-only replicas a
 
 - Take a VolumeSnapshot of a primary node.
 - Start new read-only replica node(s) based on that snapshot.
+
+Since an archiver node is a special kind of read-only replica, the logic for enabling or disabling
+an archiver is identical to the read-only replica logic.
+
+## Manually Triggering Reload or Restart
+
+The Operator will automatically trigger a configuration reload, a rolling restart, or a full restart
+(where all nodes are brought down before bringing them back up) whenever it is required.  For
+example, a configuration reload happens automatically when the database log level is changed or a
+TLS certificate or certificate authority is changed, since those are the only hot-reloadable
+configurations.  Full restarts are triggered any time that a rolling restart would not be possible,
+such as converting an insecure cluster to a secure cluster, when old nodes and new nodes would not
+be able to talk to each other.
+
+Additionally, the Operator allows you to manually trigger any of those operations by altering one
+of:
+
+- `KurrentDB.spec.configReloadKey`
+- `KurrentDB.spec.rollingRestartKey`
+- `KurrentDB.spec.fullRestartKey`
+
+Each key starts as an empty string and each time a key is changed, the corresponding operation will
+be executed.  Administrators may safely ignore these settings.  Still, they may prove useful in
+specific scenarios, such as evaluating the Operator, or testing application performance while the
+database executes a rolling restart in a staging environment, before applying a reconfiguration to
+the production environment.
