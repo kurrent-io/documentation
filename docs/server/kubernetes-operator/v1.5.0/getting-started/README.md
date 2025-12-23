@@ -9,67 +9,63 @@ dir:
 <CloudBanner />
 
 ---
-Welcome to the **KurrentDB Kubernetes Operator** guide. In this guide, we’ll refer to the KurrentDB Kubernetes Operator simply as “the Operator.” Use the Operator to simplify backup, scaling, and upgrades of KurrentDB clusters on Kubernetes.
+Welcome to the **KurrentDB Kubernetes Operator** guide. In this guide, we’ll refer to the KurrentDB
+Kubernetes Operator simply as “the Operator.” Use the Operator to simplify backup, scaling, and
+upgrades of KurrentDB clusters on Kubernetes.
 
 :::important
-The Operator is an Enterprise-only feature, please [contact us](https://www.kurrent.io/contact) for more information.
+The Operator is an Enterprise-only feature, please [contact us](https://www.kurrent.io/contact) for
+more information.
 :::
 
 ## Why run KurrentDB on Kubernetes?
 
-Kubernetes is the modern enterprise standard for deploying containerized applications at scale. The Operator streamlines deployment and management of KurrentDB clusters.
+Kubernetes is the modern enterprise standard for deploying containerized applications at scale. The
+Operator streamlines deployment and management of KurrentDB clusters.
 
 ## Features
 
-* Deploy single-node or multi-node clusters
-* Back up and restore clusters
+* Deploy single-node or multi-node KurrentDB clusters, even across multiple Kubernetes clusters
+* Back up and restore KurrentDB clusters
 * Automate backups with a schedule and retention policies
+* Automatically detect and load TLS certificate updates
+* Configure KurrentDB initial users and passwords
 * Perform rolling upgrades and update configurations
 
-### New in 1.4.0
+### New in 1.5.0
 
-* Support configurable traffic strategies for each of server-server and client-server traffic.  This
-  enables the use of LetsEncrypt certificates without creating Ingresses, for example.  See
-  [Traffic Strategies][ts] for details.
-* Support backup scheduling and retention policies.  There is a new [KurrentDBBackupSchedule][bs]
-  CRD with a CronJob-like syntax.  There are also two mechanisms for configuring retention policies:
-  a `.keep` count on `KurrentDBBackupSchedule`, and a new `.ttl` on `KurrentDBBackup`.
-* Support standalone read-only replicas pointed at a remote cluster.  This enables advanced
-  topologies like a having your quorum nodes in one region and a read-only replica in a distant
-  region.  See [Deploying Standalone Read-Only Replicas][ror] for an example.
-* Support template strings in some extra metadata for child resources of the `KurrentDB` object.
-  This allows, for example, to annotate each of the automatically created LoadBalancers with unique
-  external-dns annotations.  See [KurrentDBExtraMetadataSpec][em] for details.
+* Support Archiver nodes.  Archiver nodes are a KurrentDB feature that lets you offload your old,
+  less-frequently-accessed data into blob storage.  See [an example][arx].
+* Support for running KurrentDB pods under a specific `ServiceAccount`, to support IRSA access to
+  cloud storage for archiving.  See the [serviceAccountName setting][san] setting.
+* Management of initial user configuration.  The `admin` and `ops` passwords can be set on database
+  creation, as well as fully custom users.  See [an example of a secure deployment][usr].
+* Automatically detect TLS certificate updates and load them into the database with zero downtime.
+  With cert-manager (or any automated cert renewal system), certificate rotation now requires zero
+  administrator action.
+* Support multiple custom certificate authorities.  This supports migrating from one CA to another
+  without downtime, and also supports multi-kubernetes-cluster topologies with self-signed
+  certificates without having to transfer root CA private keys between clusters. See the
+  [certificateAuthoritySecret setting][sec].
+* Support 5-node clusters.  A 5-node cluster ensures that, even during a rolling restart, you can
+  still lose one node without risk of data loss.
+* Support telemetry opt-out.  See the [telemetryOptOut setting][tlm].
+* Support loadBalancerClass configuration.  See the [loadBalancerClass setting][lbs].
+* Support for non-`cluster.local` cluster domains (automatically detected).
+* Label pods with their current role in the KurrentDB cluster.  The label is updated after every
+  successful health check, which is about once every minute.
+* Support NodePort configuration.
+* Allow administrators to explicitly request configuration reloads, rolling restarts, or full
+  restarts of a KurrentDB cluster.  See the [Manually Triggering Reload or Restarts][trg] for
+  details.
 
-[ts]: ../operations/advanced-networking.md#traffic-strategy-options
-[bs]: resource-types.md#kurrentdbbackupschedulespec
-[ror]: ../operations/database-deployment.md#deploying-standalone-read-only-replicas
-[em]: resource-types.md#kurrentdbextrametadataspec
-
-### New in 1.4.1
-
-* Fix rolling restarts to be quorum-aware for extra data safety.
-* Add quorum-aware full restarts for changes that must be applied to all nodes at once, like adding
-  TLS.
-* Fix the `internodeTrafficStrategy: SplitDNS` setting to run correctly on more container runtimes.
-* Fix a hang caused adding to pod labels in `extraMetadata` after a KurrentDB was deployed.
-* Correctly enforce the immutability of the `sourceBackup` setting to prevent confusing behavior.
-* Fix the helm chart to prevent allowing two operator instances to briefly conflict during upgrades.
-
-### New in 1.4.2
-
-* Fix bug where deleting KurrentDBs with LoadBalancers enabled could leave dangling cloud resources.
-* Automatically grow PVC requested storage size to match the `restoreSize` of a VolumeSnapshot, when
-  starting new nodes from VolumeSnapshots.  This could happen when a user had SourceBackup set or
-  when adding new quorum nodes or read-only replicas to an existing cluster.
-* Allow extra metadata for resources deployed by the Helm chart.  See `values.yaml` in the Helm
-  chart for details.
-
-### New in 1.4.3
-
-* Officially support running in RedHat OpenShift clusters.
-* Support deploying through the Operator Lifecycle Manager (OLM) in addition to Helm.  OLM is the
-  recommended mechanism for deploying operators in OpenShift.
+[arx]: ../operations/database-deployment.md#three-node-insecure-cluster-with-archiving
+[san]: resource-types.md#kurrentdbspec
+[usr]: ../operations/database-deployment.md#three-node-secure-cluster-using-self-signed-certificates
+[sec]: resource-types.md#kurrentdbsecurity
+[tlm]: resource-types.md#kurrentdbspec
+[lbs]: resource-types.md#kurrentdbloadbalancer
+[trg]: ../operations/modify-deployments.md#manually-triggering-reload-or-restart
 
 ## Supported KurrentDB Versions
 
@@ -79,7 +75,6 @@ The Operator supports running the following major versions of KurrentDB:
 - v23.10+
 
 ## Supported Hardware Architectures
-
 The Operator is packaged for the following hardware architectures:
 - x86\_64
 - arm64
