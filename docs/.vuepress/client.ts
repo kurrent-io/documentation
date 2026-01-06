@@ -27,8 +27,6 @@ declare const __VERSIONS__: {
     }[]
 }
 
-const storageKey = "VUEPRESS_TAB_STORE";
-
 const clients = ":lang(dotnet|golang|java|node|python|rust)"
 
 const findMetaKey = (record: any[], key: string) => {
@@ -37,12 +35,12 @@ const findMetaKey = (record: any[], key: string) => {
     return data.name === key ? data.content : null;
 }
 
-const findMeta = (head, key) => {
+const findMeta = (head: any[], key: string) => {
     return head.map(x => findMetaKey(x, key)).find(x => x !== null);
 }
 
-const findEsMeta = (route) => {
-    const head = route.meta?._pageChunk?.data?.frontmatter?.head;
+const findEsMeta = (route: RouteLocationNormalized) => {
+    const head = (route.meta as any)?._pageChunk?.data?.frontmatter?.head;
     if (head === undefined) return;
     return {
         version: findMeta(head, "es:version"),
@@ -60,19 +58,86 @@ const reload = () => {
     }
 }
 
-const leave = (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    if (from.path !== to.path && typeof window !== "undefined") {
-        posthog.capture('$pageleave');
-    }
-}
+let cookiebotListenerRegistered = false;
 
-const {posthog} = usePostHog();
 
 export default defineClientConfig({
     layouts: {
         Layout: SidebarLayout
     },
     enhance({app, router, _}) {
+        const { hasConsent, posthog } = usePostHog();
+
+        const captureEvent = (event: string, properties?: Record<string, any>) => {
+            if (!hasConsent()) return;
+            try {
+                posthog.capture(event, properties);
+            } catch (error) {
+                console.error("Failed to capture PostHog event: ", event, error instanceof Error ? error.message : "Unknown error");
+            }
+        };
+
+        const handlePageLeave = (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+            if (from.path !== to.path) captureEvent("$pageleave");
+        };
+
+        const handlePageView = (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+            if (to.path === from.path || removeHtml(to.path) === removeHtml(from.path)) return;
+
+            const esData = findEsMeta(to);
+            captureEvent("$pageview", {
+                site: "docs",
+                version: esData?.version,
+                category: esData?.category,
+            });
+        };
+
+        const track404Page = (path: string) => {
+            if (typeof window === "undefined" || typeof document === "undefined") return;
+            setTimeout(() => {
+                if (typeof document === "undefined") return;
+                const errorCodeElement = document.querySelector("p.error-code");
+                const errorHintElement = document.querySelector("p.error-hint");
+                if (errorCodeElement && errorHintElement) {
+                captureEvent("page_not_found", {
+                    url: window.location.href,
+                    referrer: document.referrer,
+                    path,
+                    attemptedPath: path.replace(".html", ""),
+                });
+                }
+            }, 50);
+        };
+
+        router.afterEach((to, from) => {
+            if (typeof window === "undefined") return;
+            handlePageView(to, from);
+            track404Page(to.path);
+        });
+
+        router.beforeEach((to, from) => {
+            if (typeof window === "undefined") return;
+            handlePageLeave(to, from)
+        });
+
+        // Capture first pageview immediately after user accepts statistics cookies
+        if (typeof window !== "undefined" && !cookiebotListenerRegistered) {
+            cookiebotListenerRegistered = true;
+            window.addEventListener("CookiebotOnAccept", () => {
+                if (!hasConsent()) return;
+
+                const to = router.currentRoute.value;
+                const esData = findEsMeta(to);
+
+                captureEvent("$pageview", {
+                    site: "docs",
+                    version: esData?.version,
+                    category: esData?.category,
+                    });
+            });
+        }
+
+    
         app.component("CloudBanner", CloudBanner);
         app.component("ClientsGrid", ClientsGrid);
         app.component("KapaWidget", KapaWidget);
@@ -157,55 +222,10 @@ export default defineClientConfig({
         addFixedRoute("/server/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest", `/${__VERSIONS__.latest}/quick-start/`);
         addFixedRoute("/latest.html", `/${__VERSIONS__.latest}/quick-start/`);
-
-        router.afterEach((to, from) => {
-            if (typeof window === "undefined" || to.path === from.path || removeHtml(to.path) === removeHtml(from.path)) return;
-            const esData = findEsMeta(to);
-            posthog.capture('$pageview', {
-                site: "docs",
-                version: esData?.version,
-                category: esData?.category,
-            });
-            const a = window.analytics;
-            if (a) {
-                setTimeout(() => {
-                    a.page({
-                        site: "docs",
-                        url: window.location.origin + to.fullPath,
-                        title: to.meta.t,
-                        version: esData?.version,
-                        category: esData?.category,
-                    });
-                }, 1000);
-            }
-
-            // Check for 404 page after navigation completes
-            setTimeout(() => {
-                // Check for the specific elements with classes error-code and error-hint
-                const errorCodeElement = document.querySelector('p.error-code');
-                const errorHintElement = document.querySelector('p.error-hint');
-
-                // If both elements exist, we're on a 404 page
-                if (errorCodeElement && errorHintElement) {
-                    // Capture the 404 event in PostHog
-                    if (window && window.posthog) {
-                        window.posthog.capture("page_not_found", {
-                            url: window.location.href,
-                            referrer: document.referrer,
-                            path: to.path,
-                            attemptedPath: to.path.replace('.html', '')
-                        });
-                    }
-                }
-            }, 50);
-        });
-        router.beforeEach((to, from) => leave(to, from));
     },
+    
     setup() {
-        onMounted(() => {
-            const route = useRoute();
-            if (route.path !== "/") ;
-        });
+        onMounted(() => {});
 
     },
 });
