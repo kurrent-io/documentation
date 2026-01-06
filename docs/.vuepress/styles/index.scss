@@ -84,6 +84,10 @@ html[data-theme="dark"] #kapa-widget-portal {
   text-align: center;
 }
 
+#docsearch-container {
+  min-width: unset !important;
+}
+
 .DocSearch-Button-Keys {
   display: none;
 }
