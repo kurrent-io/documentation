@@ -1,7 +1,7 @@
 import "iconify-icon";
 import {onMounted} from "vue";
-import type {RouteLocationNormalized} from "vue-router";
-import {defineClientConfig, useRoute} from 'vuepress/client';
+import type {RouteLocation, RouteLocationNormalized} from "vue-router";
+import {defineClientConfig} from 'vuepress/client';
 import CloudBanner from "./components/CloudBanner.vue";
 import ClientsGrid from "./components/ClientsGrid.vue";
 import KapaWidget from './components/KapaWidget.vue';
@@ -49,14 +49,6 @@ const findEsMeta = (route: RouteLocationNormalized) => {
 }
 
 const removeHtml = (path: string) => path.replace(".html", "");
-
-const reload = () => {
-    if (typeof window !== "undefined") {
-        setTimeout(() => {
-            window.location.reload()
-        }, 200);
-    }
-}
 
 let cookiebotListenerRegistered = false;
 
@@ -143,18 +135,12 @@ export default defineClientConfig({
         app.component("KapaWidget", KapaWidget);
         app.component("UserFeedback", UserFeedback);
         const addFixedRoute = (from: string, to: string) => router.addRoute({
-            path: from, redirect: _ => {
-                reload();
-                return to;
-            }
+            path: from, redirect: to
         });
-        const addDynamicRoute = (from: string, calc: ((to: RouteLocationNormalized) => string)) =>
+        const addDynamicRoute = (from: string, calc: ((to: RouteLocation) => string)) =>
             router.addRoute({
                 path: from,
-                redirect: to => {
-                    reload();
-                    return calc(to);
-                }
+                redirect: to => calc(to)
             });
 
         // Router configuration
