@@ -12,7 +12,8 @@
         "version": "v26.0",
         "name": "release/v26.0",
         "relativePath": ["server"],
-        "startPage": "quick-start/"
+        "startPage": "quick-start/",
+        "lts": true
       },
       {
         "version": "v25.1",
