@@ -10,8 +10,6 @@
     "branches": [
       {
         "version": "v26.0",
-        "alias": "v26.0 RC",
-        "preview": true,
         "name": "release/v26.0",
         "relativePath": ["server"],
         "startPage": "quick-start/"
