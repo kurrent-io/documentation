@@ -8,6 +8,7 @@ import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import SidebarLayout from "./layouts/SidebarLayout.vue";
 import {usePostHog} from "./lib/usePosthog";
+import { useReoDev } from "./lib/useReoDev";
 
 declare const __VERSIONS__: {
     latest: string,
@@ -57,8 +58,9 @@ export default defineClientConfig({
     layouts: {
         Layout: SidebarLayout
     },
-    enhance({app, router, _}) {
+    enhance({app, router}) {
         const { hasConsent, posthog } = usePostHog();
+        useReoDev();
 
         const captureEvent = (event: string, properties?: Record<string, any>) => {
             if (!hasConsent()) return;
