@@ -8,6 +8,7 @@
     "declaration": false,
     "allowJs": true
   },
+  "files": ["docs/.vuepress/types/reodotdev.d.ts"],
   "include": ["**/.vuepress/**/*"],
   "exclude": ["node_modules", ".cache", ".temp", "dist"]
 }

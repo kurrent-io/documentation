@@ -59,6 +59,9 @@ importers:
       posthog-js:
         specifier: ^1.235.0
         version: 1.258.6
+      reodotdev:
+        specifier: ^1.0.0
+        version: 1.0.0
       sass-loader:
         specifier: ^16.0.5
         version: 16.0.5(sass@1.90.0)
@@ -4189,6 +4192,9 @@ packages:
 
   remark@15.0.1:
     resolution: {integrity: sha512-Eht5w30ruCXgFmxVUSlNWQ9iiimq07URKeFS3hNc8cUWy1llX4KDWfyEDZRycMc+znsN9Ux5/tJ/BFdgdOwA3A==}
+
+  reodotdev@1.0.0:
+    resolution: {integrity: sha512-wXe1vJucZjrhQL0SxOL9EvmJrtbMCIEGMdZX5lj/57n2T3UhBHZsAcM5TQASJ0T6ZBbrETRnMhH33bsbJeRO6Q==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -9861,6 +9867,8 @@ snapshots:
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
+
+  reodotdev@1.0.0: {}
 
   require-directory@2.1.1: {}
 
