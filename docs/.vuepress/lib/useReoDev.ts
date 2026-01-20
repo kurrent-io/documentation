@@ -21,11 +21,7 @@ function hasMarketingConsent(): boolean {
 function stopReoDev(): void {
   if (typeof window === "undefined" || typeof document === "undefined") return;
 
-  isInitialized = false;
-  reoInstance = null;
-  reoPromise = null;
-
-  // Clear LocalStorage (if any – guesswork – it's not clear what keys are used by Reo, if any)
+  // Best-effort cleanup: remove any localStorage keys that look Reo-related.
   try {
     Object.keys(localStorage).forEach((key) => {
       if (key.toLowerCase().includes("reo")) localStorage.removeItem(key);
@@ -34,7 +30,7 @@ function stopReoDev(): void {
     console.error("Error clearing LocalStorage");
   }
 
-  // Clear cookies containing 'reo' (if any – guesswork – it's not clear what cookies are used by Reo, if any)
+  // Best-effort cleanup: expire any cookies whose name contains "reo".
   try {
     const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
@@ -59,14 +55,18 @@ function stopReoDev(): void {
     console.error("Error stopping Reo");
   }
 
+  document.querySelectorAll('script[src*="reo.dev"]').forEach(el => el.remove());
+
+  isInitialized = false;
+  reoInstance = null;
+  reoPromise = null;
   window.Reo = undefined;
 }
 
 async function initializeReoDev(): Promise<void> {
   if (typeof window === "undefined") return;
   if (!hasMarketingConsent()) return;
-  if (isInitialized || reoInstance || reoPromise) return;
-
+  if (isInitialized || reoInstance || reoPromise || typeof window.Reo !== 'undefined') return;
 
   try {
     reoPromise = loadReoScript({ clientID: CLIENT_ID });
