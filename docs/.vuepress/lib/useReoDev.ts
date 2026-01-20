@@ -1,4 +1,5 @@
 import { loadReoScript } from "reodotdev";
+import { hasStatisticsConsent } from "./consent";
 
 let listenersRegistered = false;
 let isInitialized = false;
@@ -13,46 +14,47 @@ declare global {
 
 const CLIENT_ID = "f1c2b9fbebbf202";
 
-function hasMarketingConsent(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.Cookiebot?.consent?.marketing === true;
-}
-
 function stopReoDev(): void {
   if (typeof window === "undefined" || typeof document === "undefined") return;
 
-  // Best-effort cleanup: remove any localStorage keys that look Reo-related.
   try {
+    const reoPrefix = "__sec__"; 
     Object.keys(localStorage).forEach((key) => {
-      if (key.toLowerCase().includes("reo")) localStorage.removeItem(key);
+      if (key.startsWith(reoPrefix)) {
+        localStorage.removeItem(key);
+      }
     });
   } catch (_error) {
-    console.error("Error clearing LocalStorage");
+    console.error("Error clearing Reo LocalStorage");
   }
 
-  // Best-effort cleanup: expire any cookies whose name contains "reo".
   try {
     const cookies = document.cookie.split(";");
+    const expiry = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    
+    const domainParts = window.location.hostname.split('.');
+    const mainDomain = domainParts.length > 2 ? `.${domainParts.slice(-2).join('.')}` : '';
+
     for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i];
-      const eqPos = cookie.indexOf("=");
-      const name = eqPos > -1 ? cookie.slice(0, eqPos).trim() : cookie.trim();
-      if (name.toLowerCase().includes("reo")) {
-        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+      const name = cookies[i].split("=")[0].trim();
+      
+      if (name.startsWith("__sec__")) {
+        document.cookie = `${name}=;${expiry};path=/;`;
+        if (mainDomain) {
+          document.cookie = `${name}=;${expiry};path=/;domain=${mainDomain};`;
+        }
       }
     }
   } catch (_error) {
-    console.error("Error resetting Reo cookies expiry");
+    console.error("Error resetting Reo cookies");
   }
 
   const Reo: any = (window.Reo ?? reoInstance) as any;
   try {
     Reo?.unload?.();
     Reo?.reset?.();
-    Reo?.deleteCookieReo?.();
-    Reo?.deleteCookie?.();
   } catch (error) {
-    console.error("Error stopping Reo");
+    console.error("Error stopping Reo instance");
   }
 
   document.querySelectorAll('script[src*="reo.dev"]').forEach(el => el.remove());
@@ -65,7 +67,7 @@ function stopReoDev(): void {
 
 async function initializeReoDev(): Promise<void> {
   if (typeof window === "undefined") return;
-  if (!hasMarketingConsent()) return;
+  if (!hasStatisticsConsent()) return;
   if (isInitialized || reoInstance || reoPromise || typeof window.Reo !== 'undefined') return;
 
   try {
@@ -82,7 +84,7 @@ async function initializeReoDev(): Promise<void> {
 }
 
 function applyConsentState(): void {
-  if (hasMarketingConsent()) void initializeReoDev();
+  if (hasStatisticsConsent()) void initializeReoDev();
   else stopReoDev();
 }
 
@@ -103,7 +105,7 @@ export function useReoDev() {
   }
 
   return {
-    hasConsent: hasMarketingConsent,
+    hasConsent: hasStatisticsConsent,
     init: initializeReoDev,
   };
 }

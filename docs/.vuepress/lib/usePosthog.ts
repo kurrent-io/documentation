@@ -1,4 +1,5 @@
 import posthog from "posthog-js";
+import { hasStatisticsConsent } from "./consent";
 
 const POSTHOG_CONFIG = {
   apiKey: "phc_DeHBgHGersY4LmDlADnPrsCPOAmMO7QFOH8f4DVEVmD",
@@ -7,11 +8,6 @@ const POSTHOG_CONFIG = {
 
 let isInitialized = false;
 let listenersRegistered = false;
-
-function hasStatisticsConsent(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.Cookiebot?.consent?.statistics === true;
-}
 
 function initializePostHog(): void {
   if (isInitialized) return;
@@ -85,20 +81,4 @@ export function usePostHog() {
     posthog,
     hasConsent: hasStatisticsConsent,
   };
-}
-
-// Type declarations for Cookiebot
-declare global {
-  interface Window {
-    Cookiebot?: {
-      consent?: {
-        necessary?: boolean;
-        preferences?: boolean;
-        statistics?: boolean;
-        marketing?: boolean;
-      };
-      renew?: () => void;
-      withdraw?: () => void;
-    };
-  }
 }
