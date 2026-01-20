@@ -30,7 +30,9 @@ function stopReoDev(): void {
     Object.keys(localStorage).forEach((key) => {
       if (key.toLowerCase().includes("reo")) localStorage.removeItem(key);
     });
-  } catch (_error) {}
+  } catch (_error) {
+    console.error("Error clearing LocalStorage");
+  }
 
   // Clear cookies containing 'reo' (if any – guesswork – it's not clear what cookies are used by Reo, if any)
   try {
@@ -43,7 +45,9 @@ function stopReoDev(): void {
         document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
       }
     }
-  } catch (_error) {}
+  } catch (_error) {
+    console.error("Error resetting Reo cookies expiry");
+  }
 
   const Reo: any = (window.Reo ?? reoInstance) as any;
   try {
@@ -52,7 +56,7 @@ function stopReoDev(): void {
     Reo?.deleteCookieReo?.();
     Reo?.deleteCookie?.();
   } catch (error) {
-    console.error("Error stopping Reo: ", error);
+    console.error("Error stopping Reo");
   }
 
   window.Reo = undefined;
@@ -70,7 +74,7 @@ async function initializeReoDev(): Promise<void> {
     reoInstance.init({ clientID: CLIENT_ID });
     isInitialized = true;
   } catch (error) {
-    console.error("Error loading Reo", error);
+    console.error("Error loading Reo");
     reoInstance = null;
   } finally {
     reoPromise = null;
