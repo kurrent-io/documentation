@@ -120,22 +120,55 @@ const getLatestVersionForSection = (section: string): string | null => {
  * Gets the docsearch:version content for a page.
  * @param section The section path.
  * @param currentVersion The current version string from the path.
- * @returns The version content string (e.g., "v1.2,latest" or "v1.1").
+ * @returns The version content string (e.g., "v1.2,latest" or "v1.1" or "v1.0,legacy").
  */
 const getDocSearchVersionContent = (section: string, currentVersion: string | null): string | null => {
   if (!currentVersion) {
     return null;
   }
 
+  const isLegacy = section.includes("legacy");
+  let versionContent = currentVersion;
+
   // Check if this is the latest version
   const latestVersion = getLatestVersionForSection(section);
   if (latestVersion && currentVersion === latestVersion) {
     // If it's the latest, include both the version and "latest"
-    return `${currentVersion},latest`;
+    versionContent = `${currentVersion},latest`;
   }
 
-  // Otherwise, just return the current version
-  return currentVersion;
+  // If the section contains "legacy", append "legacy" to the version
+  if (isLegacy) {
+    versionContent = `${versionContent},legacy`;
+  }
+
+  return versionContent;
+};
+
+/**
+ * Maps a section path to a docsearch product name.
+ * @param section The section path (e.g., "clients/dotnet", "server").
+ * @returns The product name for docsearch (e.g., "dotnet_sdk", "js_sdk", "server") or null if not in the list.
+ */
+const getDocSearchProduct = (section: string): string | null => {
+  return match(section)
+    .with("clients/dotnet", () => "dotnet_sdk")
+    .with("clients/golang", () => "golang_sdk")
+    .with("clients/java", () => "java_sdk")
+    .with("clients/node", () => "js_sdk")
+    .with("clients/python", () => "python_sdk")
+    .with("clients/rust", () => "rust_sdk")
+    .with("clients/dotnet/legacy", () => "dotnet_sdk")
+    .with("clients/golang/legacy", () => "golang_sdk")
+    .with("clients/java/legacy", () => "java_sdk")
+    .with("clients/node/legacy", () => "js_sdk")
+    .with("clients/python/legacy", () => "python_sdk")
+    .with("clients/rust/legacy", () => "rust_sdk")
+    .with("clients/tcp/dotnet", () => "dotnet_sdk_tcp")
+    .with("cloud", () => "cloud")
+    .with("server/kubernetes-operator", () => "kubernetes_operator")
+    .with("server", () => "server")
+    .otherwise(() => null);
 };
 
 export const seoPlugin: SeoPluginOptions = {
@@ -177,6 +210,7 @@ export const seoPlugin: SeoPluginOptions = {
    *      <meta name="es:version" content="v1.0" />
    *      <meta name="docsearch:version" content="v1.0,v1.1,v1.2" />
    *      <meta name="docsearch:language" content="en" />
+   *      <meta name="docsearch:product" content="dotnet_sdk" />
    * 
    * If it's a legacy or tcp client, it will be labelled as "Legacy"
    */
@@ -216,6 +250,12 @@ export const seoPlugin: SeoPluginOptions = {
     // Add DocSearch meta tags
     // Add language tag (defaulting to "en")
     head.push(["meta", { name: "docsearch:language", content: "en" }]);
+
+    // Add product tag (only if section is in the list)
+    const product = getDocSearchProduct(section);
+    if (product) {
+      head.push(["meta", { name: "docsearch:product", content: product }]);
+    }
 
     // Add version tag with current version (and "latest" if applicable)
     const docSearchVersion = getDocSearchVersionContent(section, version);
