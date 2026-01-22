@@ -2,6 +2,7 @@ import type { SeoPluginOptions } from "@vuepress/plugin-seo";
 import { match } from "ts-pattern";
 import type { App, HeadConfig, Page } from "vuepress";
 import { hostname } from "./shared";
+import { instance as versioning } from "../../lib/versioning";
 
 interface DocumentationPath {
   version: string | null;
@@ -59,6 +60,84 @@ const normalize = (str: string): string =>
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
+/**
+ * Maps a section path to a version group ID.
+ * @param section The section path (e.g., "server", "clients/dotnet").
+ * @returns The version group ID or null if not found.
+ */
+const getVersionGroupId = (section: string): string | null => {
+  // Special case for kubernetes-operator
+  if (section === "server/kubernetes-operator") {
+    return "kubernetes-operator";
+  }
+
+  // Try to find by basePath match
+  const versionGroup = versioning.all.find((v) => v.basePath === section);
+  if (versionGroup) {
+    return versionGroup.id;
+  }
+
+  // Try to match client sections to their version group IDs
+  const clientMatch = section.match(/^clients\/(\w+)/);
+  if (clientMatch) {
+    const clientName = clientMatch[1];
+    const clientId = `${clientName}-client`;
+    const versionGroup = versioning.all.find((v) => v.id === clientId);
+    if (versionGroup) {
+      return versionGroup.id;
+    }
+  }
+
+  return null;
+};
+
+/**
+ * Gets the latest version string for a given section.
+ * @param section The section path.
+ * @returns The latest version string, or null if not found.
+ */
+const getLatestVersionForSection = (section: string): string | null => {
+  const groupId = getVersionGroupId(section);
+  if (!groupId) {
+    return null;
+  }
+
+  const versionGroup = versioning.all.find((v) => v.id === groupId);
+  if (!versionGroup || !versionGroup.versions || versionGroup.versions.length === 0) {
+    return null;
+  }
+
+  // Find the first non-preview, non-excluded version (which is the latest)
+  const excludedVersions = EXCLUDED_VERSIONS[section] || [];
+  const latestVersion = versionGroup.versions.find(
+    v => v.version && !v.preview && !excludedVersions.includes(v.version)
+  );
+
+  return latestVersion?.version || null;
+};
+
+/**
+ * Gets the docsearch:version content for a page.
+ * @param section The section path.
+ * @param currentVersion The current version string from the path.
+ * @returns The version content string (e.g., "v1.2,latest" or "v1.1").
+ */
+const getDocSearchVersionContent = (section: string, currentVersion: string | null): string | null => {
+  if (!currentVersion) {
+    return null;
+  }
+
+  // Check if this is the latest version
+  const latestVersion = getLatestVersionForSection(section);
+  if (latestVersion && currentVersion === latestVersion) {
+    // If it's the latest, include both the version and "latest"
+    return `${currentVersion},latest`;
+  }
+
+  // Otherwise, just return the current version
+  return currentVersion;
+};
+
 export const seoPlugin: SeoPluginOptions = {
   hostname,
 
@@ -96,6 +175,8 @@ export const seoPlugin: SeoPluginOptions = {
    * Sets the following tags:
    * e.g. <meta name="es:category" content=".NET Client" />
    *      <meta name="es:version" content="v1.0" />
+   *      <meta name="docsearch:version" content="v1.0,v1.1,v1.2" />
+   *      <meta name="docsearch:language" content="en" />
    * 
    * If it's a legacy or tcp client, it will be labelled as "Legacy"
    */
@@ -131,5 +212,15 @@ export const seoPlugin: SeoPluginOptions = {
       .otherwise(() => normalize(section));
 
     head.push(["meta", { name: "es:category", content: category }]);
+
+    // Add DocSearch meta tags
+    // Add language tag (defaulting to "en")
+    head.push(["meta", { name: "docsearch:language", content: "en" }]);
+
+    // Add version tag with current version (and "latest" if applicable)
+    const docSearchVersion = getDocSearchVersionContent(section, version);
+    if (docSearchVersion) {
+      head.push(["meta", { name: "docsearch:version", content: docSearchVersion }]);
+    }
   }
 };

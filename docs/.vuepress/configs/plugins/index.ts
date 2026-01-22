@@ -7,16 +7,23 @@ import {hostname} from "./shared";
 import {redirect} from "./redirect";
 import type {SitemapPluginOptions} from "@vuepress/plugin-sitemap";
 
+const docsearch = {
+    apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
+    indexName: process.env.ALGOLIA_INDEX_NAME,
+    appId: process.env.ALGOLIA_APPLICATION_ID,
+    maxResultsPerGroup: 10,
+    indices: [
+        {
+            name: process.env.ALGOLIA_INDEX_NAME,
+        }
+    ]
+}
+
 export default {
     components: {
         components: ["Badge", "VPBanner", "VPCard", "VidStack"]
     },
-    docsearch: {
-        apiKey: process.env.ALGOLIA_SEARCH_API_KEY,
-        indexName: process.env.ALGOLIA_INDEX_NAME,
-        appId: process.env.ALGOLIA_APPLICATION_ID,
-        maxResultsPerGroup:10 
-    },
+    docsearch,
     seo: seoPlugin,
     sitemap: {
         hostname: hostname,
