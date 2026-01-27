@@ -60,8 +60,7 @@ export const searchInterceptor = `
               return send.apply(this, [modifiedData]);
             }
           } catch(e) {
-            // Silently fall through to original send if parsing fails
-            // (might be non-JSON data or malformed JSON)
+            console.error("Error modifying Algolia request");
           }
         }
         return send.apply(this, [data]);
