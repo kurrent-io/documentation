@@ -2,7 +2,7 @@ import type { SeoPluginOptions } from "@vuepress/plugin-seo";
 import { match } from "ts-pattern";
 import type { App, HeadConfig, Page } from "vuepress";
 import { hostname } from "./shared";
-import { instance as versioning } from "../../lib/versioning";
+import { instance as versioning, type Version as VersionGroup } from "../../lib/versioning";
 
 interface DocumentationPath {
   version: string | null;
@@ -65,7 +65,7 @@ const normalize = (str: string): string =>
  * @param section The section path (e.g., "server", "clients/dotnet", "server/kubernetes-operator").
  * @returns The version group or null if not found.
  */
-const findVersionGroup = (section: string): typeof versioning.all[0] | null => {
+const findVersionGroup = (section: string): VersionGroup | null => {
   // Special case for kubernetes-operator
   if (section === "server/kubernetes-operator") {
     return versioning.all.find((v) => v.id === "kubernetes-operator") || null;
