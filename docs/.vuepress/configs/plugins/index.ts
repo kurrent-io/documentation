@@ -12,11 +12,6 @@ const docsearch = {
     indexName: process.env.ALGOLIA_INDEX_NAME,
     appId: process.env.ALGOLIA_APPLICATION_ID,
     maxResultsPerGroup: 10,
-    indices: [
-        {
-            name: process.env.ALGOLIA_INDEX_NAME,
-        }
-    ]
 }
 
 export default {
