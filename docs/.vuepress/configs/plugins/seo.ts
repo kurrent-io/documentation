@@ -61,20 +61,20 @@ const normalize = (str: string): string =>
     .join(' ');
 
 /**
- * Maps a section path to a version group ID.
- * @param section The section path (e.g., "server", "clients/dotnet").
- * @returns The version group ID or null if not found.
+ * Finds the version group for a given section path.
+ * @param section The section path (e.g., "server", "clients/dotnet", "server/kubernetes-operator").
+ * @returns The version group or null if not found.
  */
-const getVersionGroupId = (section: string): string | null => {
+const findVersionGroup = (section: string): typeof versioning.all[0] | null => {
   // Special case for kubernetes-operator
   if (section === "server/kubernetes-operator") {
-    return "kubernetes-operator";
+    return versioning.all.find((v) => v.id === "kubernetes-operator") || null;
   }
 
   // Try to find by basePath match
-  const versionGroup = versioning.all.find((v) => v.basePath === section);
-  if (versionGroup) {
-    return versionGroup.id;
+  const byBasePath = versioning.all.find((v) => v.basePath === section);
+  if (byBasePath) {
+    return byBasePath;
   }
 
   // Try to match client sections to their version group IDs
@@ -82,10 +82,7 @@ const getVersionGroupId = (section: string): string | null => {
   if (clientMatch) {
     const clientName = clientMatch[1];
     const clientId = `${clientName}-client`;
-    const versionGroup = versioning.all.find((v) => v.id === clientId);
-    if (versionGroup) {
-      return versionGroup.id;
-    }
+    return versioning.all.find((v) => v.id === clientId) || null;
   }
 
   return null;
@@ -97,13 +94,8 @@ const getVersionGroupId = (section: string): string | null => {
  * @returns The latest version string, or null if not found.
  */
 const getLatestVersionForSection = (section: string): string | null => {
-  const groupId = getVersionGroupId(section);
-  if (!groupId) {
-    return null;
-  }
-
-  const versionGroup = versioning.all.find((v) => v.id === groupId);
-  if (!versionGroup || !versionGroup.versions || versionGroup.versions.length === 0) {
+  const versionGroup = findVersionGroup(section);
+  if (!versionGroup?.versions?.length) {
     return null;
   }
 
@@ -127,22 +119,18 @@ const getDocSearchVersionContent = (section: string, currentVersion: string | nu
     return null;
   }
 
-  const isLegacy = section.includes("legacy");
-  let versionContent = currentVersion;
-
-  // Check if this is the latest version
+  const parts: string[] = [currentVersion];
   const latestVersion = getLatestVersionForSection(section);
+  
   if (latestVersion && currentVersion === latestVersion) {
-    // If it's the latest, include both the version and "latest"
-    versionContent = `${currentVersion},latest`;
+    parts.push("latest");
   }
 
-  // If the section contains "legacy", append "legacy" to the version
-  if (isLegacy) {
-    versionContent = `${versionContent},legacy`;
+  if (section.includes("legacy")) {
+    parts.push("legacy");
   }
 
-  return versionContent;
+  return parts.join(",");
 };
 
 /**
@@ -257,7 +245,7 @@ export const seoPlugin: SeoPluginOptions = {
       head.push(["meta", { name: "docsearch:product", content: product }]);
     }
 
-    // Add version tag with current version (and "latest" if applicable)
+    // Add version tag with current version
     const docSearchVersion = getDocSearchVersionContent(section, version);
     if (docSearchVersion) {
       head.push(["meta", { name: "docsearch:version", content: docSearchVersion }]);

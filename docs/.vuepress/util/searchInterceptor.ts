@@ -42,14 +42,12 @@ export const searchInterceptor = `
   }
 
   // Intercept XMLHttpRequest (XHR)
-  // Service workers won't work here because they only intercept fetch(), not XMLHttpRequest
   const proxied = window.XMLHttpRequest.prototype.open;
   window.XMLHttpRequest.prototype.open = function(method, url) {
     const urlString = typeof url === 'string' ? url : url.toString();
     if (urlString.includes('algolia.net')) {
       const send = this.send;
       this.send = function(data) {
-        // Only process if data is a string (JSON payload)
         if (typeof data === 'string' && data.trim()) {
           try {
             const body = JSON.parse(data);
