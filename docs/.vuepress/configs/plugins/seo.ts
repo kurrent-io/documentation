@@ -115,20 +115,15 @@ const getLatestVersionForSection = (section: string): string | null => {
  * @returns The version content string (e.g., "v1.2,latest" or "v1.1" or "v1.0,legacy").
  */
 const getDocSearchVersionContent = (section: string, currentVersion: string | null): string | null => {
-  if (!currentVersion) {
-    return null;
-  }
+  if (!currentVersion) return null;
 
   const parts: string[] = [currentVersion];
   const latestVersion = getLatestVersionForSection(section);
-  
-  if (latestVersion && currentVersion === latestVersion) {
-    parts.push("latest");
-  }
 
-  if (section.includes("legacy")) {
-    parts.push("legacy");
-  }
+  if (latestVersion && currentVersion === latestVersion) parts.push("latest");
+
+  const isLegacy = ["legacy", "tcp"].some(seg => section.split("/").includes(seg));
+  if (isLegacy) parts.push("legacy");
 
   return parts.join(",");
 };
