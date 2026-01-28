@@ -2,6 +2,7 @@ import type { SeoPluginOptions } from "@vuepress/plugin-seo";
 import { match } from "ts-pattern";
 import type { App, HeadConfig, Page } from "vuepress";
 import { hostname } from "./shared";
+import { instance as versioning, type Version as VersionGroup } from "../../lib/versioning";
 
 interface DocumentationPath {
   version: string | null;
@@ -59,6 +60,100 @@ const normalize = (str: string): string =>
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 
+/**
+ * Finds the version group for a given section path.
+ * @param section The section path (e.g., "server", "clients/dotnet", "server/kubernetes-operator").
+ * @returns The version group or null if not found.
+ */
+const findVersionGroup = (section: string): VersionGroup | null => {
+  // Special case for kubernetes-operator
+  if (section === "server/kubernetes-operator") {
+    return versioning.all.find((v) => v.id === "kubernetes-operator") || null;
+  }
+
+  // Try to find by basePath match
+  const byBasePath = versioning.all.find((v) => v.basePath === section);
+  if (byBasePath) {
+    return byBasePath;
+  }
+
+  // Try to match client sections to their version group IDs
+  const clientMatch = section.match(/^clients\/(\w+)/);
+  if (clientMatch) {
+    const clientName = clientMatch[1];
+    const clientId = `${clientName}-client`;
+    return versioning.all.find((v) => v.id === clientId) || null;
+  }
+
+  return null;
+};
+
+/**
+ * Gets the latest version string for a given section.
+ * @param section The section path.
+ * @returns The latest version string, or null if not found.
+ */
+const getLatestVersionForSection = (section: string): string | null => {
+  const versionGroup = findVersionGroup(section);
+  if (!versionGroup?.versions?.length) {
+    return null;
+  }
+
+  // Find the first non-preview, non-excluded version (which is the latest)
+  const excludedVersions = EXCLUDED_VERSIONS[section] || [];
+  const latestVersion = versionGroup.versions.find(
+    v => v.version && !v.preview && !excludedVersions.includes(v.version)
+  );
+
+  return latestVersion?.version || null;
+};
+
+/**
+ * Gets the docsearch:version content for a page.
+ * @param section The section path.
+ * @param currentVersion The current version string from the path.
+ * @returns The version content string (e.g., "v1.2,latest" or "v1.1" or "v1.0,legacy").
+ */
+const getDocSearchVersionContent = (section: string, currentVersion: string | null): string | null => {
+  if (!currentVersion) return null;
+
+  const parts: string[] = [currentVersion];
+  const latestVersion = getLatestVersionForSection(section);
+
+  if (latestVersion && currentVersion === latestVersion) parts.push("latest");
+
+  const isLegacy = ["legacy", "tcp"].some(seg => section.split("/").includes(seg));
+  if (isLegacy) parts.push("legacy");
+
+  return parts.join(",");
+};
+
+/**
+ * Maps a section path to a docsearch product name.
+ * @param section The section path (e.g., "clients/dotnet", "server").
+ * @returns The product name for docsearch (e.g., "dotnet_sdk", "js_sdk", "server") or null if not in the list.
+ */
+const getDocSearchProduct = (section: string): string | null => {
+  return match(section)
+    .with("clients/dotnet", () => "dotnet_sdk")
+    .with("clients/golang", () => "golang_sdk")
+    .with("clients/java", () => "java_sdk")
+    .with("clients/node", () => "js_sdk")
+    .with("clients/python", () => "python_sdk")
+    .with("clients/rust", () => "rust_sdk")
+    .with("clients/dotnet/legacy", () => "dotnet_sdk")
+    .with("clients/golang/legacy", () => "golang_sdk")
+    .with("clients/java/legacy", () => "java_sdk")
+    .with("clients/node/legacy", () => "js_sdk")
+    .with("clients/python/legacy", () => "python_sdk")
+    .with("clients/rust/legacy", () => "rust_sdk")
+    .with("clients/tcp/dotnet", () => "dotnet_sdk_tcp")
+    .with("cloud", () => "cloud")
+    .with("server/kubernetes-operator", () => "kubernetes_operator")
+    .with("server", () => "server")
+    .otherwise(() => null);
+};
+
 export const seoPlugin: SeoPluginOptions = {
   hostname,
 
@@ -96,6 +191,9 @@ export const seoPlugin: SeoPluginOptions = {
    * Sets the following tags:
    * e.g. <meta name="es:category" content=".NET Client" />
    *      <meta name="es:version" content="v1.0" />
+   *      <meta name="docsearch:version" content="v1.0,v1.1,v1.2" />
+   *      <meta name="docsearch:language" content="en" />
+   *      <meta name="docsearch:product" content="dotnet_sdk" />
    * 
    * If it's a legacy or tcp client, it will be labelled as "Legacy"
    */
@@ -131,5 +229,21 @@ export const seoPlugin: SeoPluginOptions = {
       .otherwise(() => normalize(section));
 
     head.push(["meta", { name: "es:category", content: category }]);
+
+    // Add DocSearch meta tags
+    // Add language tag (defaulting to "en")
+    head.push(["meta", { name: "docsearch:language", content: "en" }]);
+
+    // Add product tag (only if section is in the list)
+    const product = getDocSearchProduct(section);
+    if (product) {
+      head.push(["meta", { name: "docsearch:product", content: product }]);
+    }
+
+    // Add version tag with current version
+    const docSearchVersion = getDocSearchVersionContent(section, version);
+    if (docSearchVersion) {
+      head.push(["meta", { name: "docsearch:version", content: docSearchVersion }]);
+    }
   }
 };

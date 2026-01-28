@@ -14,6 +14,9 @@ import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
 import {llmsPlugin} from '@vuepress/plugin-llms'
+import fs from 'fs';
+
+const searchInterceptor = fs.readFileSync(path.join(__dirname, 'util/searchInterceptor.js'), 'utf8');
 
 
 dotenv.config({path: path.join(__dirname, '..', '..', '.algolia', '.env')});
@@ -104,6 +107,8 @@ export default defineUserConfig({
             'data-project-logo': '/logo-white.png',
             'data-user-analytics-cookie-enabled': false,
         }],
+
+        ["script", {}, searchInterceptor],
 
         // CSS override to hide the modal mask and wrapper entirely
         ['style', {}, `

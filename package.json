@@ -36,7 +36,7 @@
     "@segment/analytics-next": "^1.79.0",
     "@vuepress/bundler-vite": "^2.0.0-rc.23",
     "@vuepress/helper": "^2.0.0-rc.110",
-    "@vuepress/plugin-docsearch": "^2.0.0-rc.110",
+    "@vuepress/plugin-docsearch": "2.0.0-rc.121",
     "@vuepress/plugin-notice": "^2.0.0-rc.110",
     "@vuepress/plugin-seo": "^2.0.0-rc.110",
     "@vuepress/plugin-sitemap": "^2.0.0-rc.110",
