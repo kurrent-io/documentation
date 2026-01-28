@@ -14,7 +14,9 @@ import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
 import {llmsPlugin} from '@vuepress/plugin-llms'
-import { searchInterceptor } from "./util/searchInterceptor";
+import fs from 'fs';
+
+const searchInterceptor = fs.readFileSync(path.join(__dirname, 'util/searchInterceptor.js'), 'utf8');
 
 
 dotenv.config({path: path.join(__dirname, '..', '..', '.algolia', '.env')});
