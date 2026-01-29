@@ -16,8 +16,6 @@ interface ExtendedPageData extends Record<string, unknown> {
 }
 
 const pageData = usePageData<ExtendedPageData>();
-
-console.log(pageData.value.versions)
 const route = useRoute()
 
 /**

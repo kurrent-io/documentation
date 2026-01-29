@@ -348,3 +348,6 @@ docs/.vuepress/dist/
 config.ts.*.mjs
 
 docs/clients/grpc/**/* 
+
+# package managers specific files
+package-lock.json
