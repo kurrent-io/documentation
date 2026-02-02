@@ -14,6 +14,7 @@ import {linkCheckPlugin} from "./markdown/linkCheck";
 import {replaceLinkPlugin} from "./markdown/replaceLink";
 import {importCodePlugin} from "./markdown/xode/importCodePlugin";
 import {llmsPlugin} from '@vuepress/plugin-llms'
+import {getLlmsPluginOptions} from "./configs/llms";
 import fs from 'fs';
 
 const searchInterceptor = fs.readFileSync(path.join(__dirname, 'util/searchInterceptor.js'), 'utf8');
@@ -123,5 +124,5 @@ export default defineUserConfig({
         "@theme-hope/components/BreadCrumb": path.resolve(__dirname, "./components/breadCrumb.ts"),
         "@theme-hope/modules/info/components/TOC": path.resolve(__dirname, "./components/TocWithFeedback.ts"),
     },
-    plugins: [llmsPlugin()],
+    plugins: [llmsPlugin(getLlmsPluginOptions(ver))],
 });
