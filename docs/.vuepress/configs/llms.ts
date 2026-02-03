@@ -310,9 +310,10 @@ export function getLlmsPluginOptions(versioning: Versioning) {
   const latestServer = versioning.latest; // e.g. "server/v26.0"
   const latestServerPrefix = `/${latestServer}/`;
   const opGroup = versioning.versions.find((v) => v.id === "kubernetes-operator");
-  const latestOperatorPrefix = opGroup
-    ? `/${opGroup.basePath}/${opGroup.versions[0].path}/`
-    : "";
+  const latestOperatorPrefix =
+    opGroup && opGroup.versions.length > 0
+      ? `/${opGroup.basePath}/${opGroup.versions[0].path}/`
+      : "";
 
   // --- Overview: home, getting-started intro and key pages ---
   const overview: TemplateGetter = (pages, state) => {
