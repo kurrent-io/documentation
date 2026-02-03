@@ -539,7 +539,7 @@ export function getLlmsPluginOptions(versioning: Versioning) {
    */
   const CURATED_TEMPLATE = `# Kurrent Docs – Human-Readable Index for AI (llms.txt)
 
-Kurrent is the event-native data platform (database formerly known as EventStoreDB), built for event sourcing, CQRS, and event-driven architecture. This file points to the most important documentation sections for KurrentDB, ordered by importance for understanding and using KurrentDB. These links reflect authoritative, up-to-date docs from docs.kurrent.io.
+KurrentDB is the event-native stream database for event sourcing, CQRS, and event-driven architecture. In this documentation set, use "EventStoreDB" when referring to EventStoreDB ≤ 24.x content and "KurrentDB" for 25.0+ content. This file points to the most important documentation sections, ordered by importance for understanding and using KurrentDB. These links reflect authoritative, up-to-date docs from docs.kurrent.io.
 
 For exhaustive coverage (all documentation pages in one file), use \`llms-full.txt\` at the same base URL (e.g. \`${baseUrl}/llms-full.txt\`). LLMs and tooling that need the complete list of docs can fetch that file instead.
 
