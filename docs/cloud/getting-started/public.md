@@ -3,7 +3,7 @@ title: Public Access Clusters
 order: 2
 ---
 
-With Kurrent Cloud, provisioning KurrentDB clusters with public access on dedicated infrastructure is simple.
+With Kurrent Cloud, provisioning KurrentDB clusters with public access is simple.
 
 Pre-requisites:
 - You have an organization registered in Cloud console
@@ -22,12 +22,6 @@ In the Kurrent Cloud console, go to the [project context](../../introduction.md#
 ![Cluster name](images/new-cluster-name.png)
 
 Provide a descriptive name for the cluster in the **Cluster name** field.
-
-### Infrastructure type
-
-![Infrastructure type](images/infra-type-dedicated.png)
-
-Select the `Dedicated` infrastructure type.
 
 ### Network
 

@@ -38,12 +38,6 @@ Click on the **New cluster** button to begin the cluster creation process.
 
 Provide a descriptive name for the cluster in the **Cluster name** field.
 
-### Infrastructure type
-
-![Infrastructure type](../images/infra-type-dedicated.png)
-
-Select the `Dedicated` infrastructure type.
-
 ### Network
 
 ![Create a network](images/azure/azure-new-cluster-network.png)

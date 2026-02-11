@@ -19,4 +19,4 @@ You can use any of those tools to automate any operation accessible from the con
 [cloud console tokens]:https://console.kurrent.cloud/authentication-tokens
 [cloud console organizations]:https://console.kurrent.cloud/organizations
 [pulumi]: https://www.pulumi.com/registry/packages/eventstorecloud/
-[terraform]: https://registry.terraform.io/providers/EventStore/eventstorecloud/latest
+[terraform]: https://registry.terraform.io/providers/kurrent-io/kurrentcloud/latest

@@ -10,7 +10,7 @@ This step-by-step tutorial guides you through configuring and deploying a **Kafk
 #### Prerequisites:
 
 * A KurrentDB cluster with an active license key.  
-  * This tutorial uses a cluster provisioned on a [Public Network](https://docs.kurrent.io/cloud/dedicated/networking/public-network.html) of [Kurrent Cloud](https://docs.kurrent.io/cloud/introduction.html)  
+  * This tutorial uses a cluster provisioned on a [Public Network](/cloud/networking/public-network.html) of [Kurrent Cloud](/cloud/introduction.html)  
 * A [Confluent Cloud](http://confluent.cloud) Kafka cluster with an API key that can write to a topic (e.g., `loans`).  
 * Basic command-line knowledge (e.g., using `curl` for API requests).  
 * Access to KurrentDB UI and Confluent Cloud UI to monitor events.

@@ -1,7 +1,7 @@
 ---
 dir:
     link: true
-    order: 1
+    order: 2
 ---
 
 # Getting started
@@ -14,7 +14,7 @@ Clusters can be provisioned with public access enabled or restrict access to pri
 
 ### Public access
 
-For public access, the provisioning process is straightforward. You can go to the Clusters screen and click on the **New cluster** button. From there, select **Dedicated** as the infrastructure type. A Network and IP Access List will be created and the cluster will be deployed.
+For public access, the provisioning process is straightforward. You can go to the Clusters screen and click on the **New cluster** button. Fill in the form values, then a network and IP Access List will be created and the cluster will be deployed.
 
 See the [Public Access Clusters](public.md) guide to get started.
 
