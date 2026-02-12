@@ -28,7 +28,7 @@ We have a [replication tool](guides/migration.md), which is available now. It ha
 
 ## KurrentDB features unavailable in Kurrent Cloud
 
-The following features are available with local KurrentDB server deployments only and are not available in Kurrent Cloud:
+The following features are available with self-managed KurrentDB server deployments only and are not available in Kurrent Cloud:
 
 * Archiving  
 * Direct access to configuration  
