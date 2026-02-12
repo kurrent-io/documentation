@@ -13,26 +13,7 @@ Not using Kurrent Cloud and want to learn more? Find more information and sign u
 
 As a customer of Kurrent Cloud, you get access to the [Cloud console](https://console.kurrent.cloud), where you can provision and manage KurrentDB clusters, backup and restore your data, and establish the connection between Kurrent Cloud networks and your own cloud infrastructure.
 
-Kurrent Cloud operations can be automated using the [Terraform provider](https://github.com/kurrent-io/terraform-provider-eventstorecloud), [Pulumi provider](https://www.pulumi.com/registry/packages/eventstorecloud/), and the [CLI tool](https://github.com/kurrent-io/esc) which is built on top of the same API.
-
-## What is dedicated infrastructure?
-
-With this option, KurrentDB clusters are hosted on dedicated compute infrastructure, ensuring that all resources are exclusively allocated to you. This setup is ideal for running production workloads that demand consistent performance and guaranteed resource availability.
-
-## KurrentDB features unavailable in Kurrent Cloud
-
-The following features are available with local KurrentDB server deployments only and are not available in Kurrent Cloud:
-
-* Archiving  
-* Direct access to configuration  
-* Encryption at rest  
-* LDAP authentication  
-* Logs download  
-* OAuth authentication  
-* OpenTelemetry exporter  
-* Read-only replicas  
-* Redaction  
-* x.509 user certificates
+Kurrent Cloud operations can be automated using the [Terraform provider](https://github.com/kurrent-io/terraform-provider-kurrentcloud), [Pulumi provider](https://www.pulumi.com/registry/packages/eventstorecloud/), and the [CLI tool](https://github.com/kurrent-io/esc) which is built on top of the same API.
 
 ## Cloud quick start
 
@@ -102,4 +83,4 @@ Within the project context, you can manage project clusters, backups, networks, 
 
 ### Provision a cluster
 
-You are now ready to start provisioning cloud resources with Kurrent Cloud. Please proceed to the [Getting Started guide](dedicated/getting-started/README.md) to learn how to provision your first cluster.
+You are now ready to start provisioning cloud resources with Kurrent Cloud. Please proceed to the [Getting Started guide](getting-started/README.md) to learn how to provision your first cluster.

@@ -26,6 +26,21 @@ We don't support switching clusters from private to publicly accessible or vice 
 
 We have a [replication tool](guides/migration.md), which is available now. It has certain limitations, especially with performance. Get in touch, so we can help you to analyse your setup and requirements, before we can recommend using the replication tool.
 
+## KurrentDB features unavailable in Kurrent Cloud
+
+The following features are available with self-managed KurrentDB server deployments only and are not available in Kurrent Cloud:
+
+* Archiving  
+* Direct access to configuration  
+* Encryption at rest  
+* LDAP authentication  
+* Logs download  
+* OAuth authentication  
+* OpenTelemetry exporter  
+* Read-only replicas  
+* Redaction  
+* x.509 user certificates
+
 ## Performance
 
 #### Do you have indicative performance benchmarks for the offered cluster sizes?
@@ -203,6 +218,42 @@ If the cluster DNS name resolves using an external DNS server, but your local DN
 - On a home network, routers typically configure clients to use the DNS servers provided by your Internet provider, which could be blocking such queries
     - You can reconfigure your router to configure clients on your network to use public DNS servers like `1.1.1.1` or `8.8.8.8`
     - You can also change the DNS configuration of your local machine to use public DNS servers like `1.1.1.1` or `8.8.8.8`
+
+### Cluster Creation Failed: Azure Capacity Constraints
+
+#### What Happened
+
+Your cluster creation failed because Azure returned an error that the specific virtual machine SKU required for the instance size you requested lacks sufficient capacity in that region for your subscription.
+
+#### Why This Happens
+
+Each Kurrent Cloud customer is assigned a dedicated Azure subscription. Azure VM SKU availability varies based on:
+
+- **Subscription-level capacity**: Azure allocates capacity per subscription, and some SKUs may not be available for all subscriptions in all regions.
+- **Regional capacity**: Certain VM sizes may be temporarily or permanently constrained in specific regions due to high demand.
+- **Availability zone constraints**: Some SKUs may be available in a region but not in all availability zones.
+
+This is an Azure platform limitation, not a Kurrent Cloud issue.
+
+#### Quick Workarounds
+
+1. **Try a different instance size**: Select a different instance size when creating the cluster. If you requested a specific size (e.g., `F1`), try an alternative (e.g., `C4`).
+
+2. **Try a different topology**: If you requested a three-node cluster, consider whether a single-node cluster would work for development/testing purposes.
+
+3. **Try a different region**: Create the cluster in a different Azure region where the desired virtual machine type may have available capacity.
+
+#### If You Need a Specific Configuration
+
+If your use case requires a specific configuration in a specific region:
+
+1. **Contact Kurrent Cloud Support**: Let us know the exact instance type, topology, and region you need.
+2. **We will request capacity from Microsoft**: Our team can submit a capacity request to Azure on your behalf. Note that fulfillment depends on Azure capacity availability and there is no guaranteed timeline.
+3. **Monitor for updates**: We will notify you once the capacity becomes available or if alternative options are recommended.
+
+#### Deleting the Failed Cluster
+
+The failed cluster will be in a `Defunct` state. You can delete it through the Kurrent Cloud console or CLI to clean up the resource.
 
 ## Operational characteristics of Kurrent Cloud
 
