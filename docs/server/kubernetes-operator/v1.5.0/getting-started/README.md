@@ -70,7 +70,7 @@ Operator streamlines deployment and management of KurrentDB clusters.
 ## Supported KurrentDB Versions
 
 The Operator supports running the following major versions of KurrentDB:
-- v26.0
+- v26.x
 - v25.x
 - v24.x
 - v23.10+
