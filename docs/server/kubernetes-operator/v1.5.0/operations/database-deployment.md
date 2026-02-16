@@ -59,7 +59,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -98,7 +98,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -174,7 +174,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -270,7 +270,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -379,7 +379,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -479,7 +479,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -527,7 +527,7 @@ spec:
     - mydb-2-qn.kurrent.test:2113
   readOnlyReplicas:
     replicas: 2
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -577,7 +577,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -628,7 +628,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   configuration:
     RunProjections: all
     StartStandardProjections: true
