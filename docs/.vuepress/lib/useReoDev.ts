@@ -93,9 +93,7 @@ function setupConsentListeners(): void {
   if (listenersRegistered) return;
   listenersRegistered = true;
 
-  window.addEventListener("CookiebotOnAccept", applyConsentState);
-  window.addEventListener("CookiebotOnDecline", applyConsentState);
-  window.addEventListener("CookiebotOnConsentReady", applyConsentState);
+  window.addEventListener("consent_status", applyConsentState);
 }
 
 export function useReoDev() {

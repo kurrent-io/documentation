@@ -48,19 +48,7 @@ function setupConsentListeners(): void {
   if (listenersRegistered) return;
   listenersRegistered = true;
 
-  window.addEventListener("CookiebotOnAccept", () => {
-    if (hasStatisticsConsent()) {
-      resumeTracking();
-    } else {
-      stopTracking();
-    }
-  });
-
-  window.addEventListener("CookiebotOnDecline", () => {
-    stopTracking();
-  });
-
-  window.addEventListener("CookiebotOnConsentReady", () => {
+  window.addEventListener("consent_status", () => {
     if (hasStatisticsConsent()) {
       resumeTracking();
     } else {

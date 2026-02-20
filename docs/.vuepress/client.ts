@@ -7,6 +7,7 @@ import ClientsGrid from "./components/ClientsGrid.vue";
 import KapaWidget from './components/KapaWidget.vue';
 import UserFeedback from './components/TocWithFeedback';
 import SidebarLayout from "./layouts/SidebarLayout.vue";
+import { initConsent } from "./lib/consent";
 import {usePostHog} from "./lib/usePosthog";
 import { useReoDev } from "./lib/useReoDev";
 
@@ -51,7 +52,7 @@ const findEsMeta = (route: RouteLocationNormalized) => {
 
 const removeHtml = (path: string) => path.replace(".html", "");
 
-let cookiebotListenerRegistered = false;
+let usercentricsListenerRegistered = false;
 
 
 export default defineClientConfig({
@@ -59,6 +60,7 @@ export default defineClientConfig({
         Layout: SidebarLayout
     },
     enhance({app, router}) {
+        initConsent();
         const { hasConsent, posthog } = usePostHog();
         useReoDev();
 
@@ -114,10 +116,10 @@ export default defineClientConfig({
             handlePageLeave(to, from)
         });
 
-        // Capture first pageview immediately after user accepts statistics cookies
-        if (typeof window !== "undefined" && !cookiebotListenerRegistered) {
-            cookiebotListenerRegistered = true;
-            window.addEventListener("CookiebotOnAccept", () => {
+        // Capture first pageview when user accepts (statistics) consent
+        if (typeof window !== "undefined" && !usercentricsListenerRegistered) {
+            usercentricsListenerRegistered = true;
+            window.addEventListener("consent_status", () => {
                 if (!hasConsent()) return;
 
                 const to = router.currentRoute.value;
@@ -127,7 +129,7 @@ export default defineClientConfig({
                     site: "docs",
                     version: esData?.version,
                     category: esData?.category,
-                    });
+                });
             });
         }
 
