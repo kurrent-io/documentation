@@ -115,8 +115,7 @@ export function initConsent(): void {
 }
 
 /**
- * Checks if the user has given consent for statistics cookies.
- * Used for analytics tools like PostHog and Reo.dev.
+ * Checks if the user has given consent for the statistics category.
  * Returns the cached value; ensure initConsent() has been called (e.g. from client enhance).
  */
 export function hasStatisticsConsent(): boolean {
@@ -128,7 +127,25 @@ export function hasStatisticsConsent(): boolean {
 }
 
 /**
- * Returns whether the marketing category has consent (for optional future use).
+ * Returns whether the functional category has consent.
+ * Used for PostHog (analytics).
+ */
+export function hasFunctionalConsent(): boolean {
+  if (!ucInstance || typeof window === "undefined") return false;
+  try {
+    const categories = ucInstance.getCategoriesBaseInfo();
+    const functional = categories.find(
+      (cat) => (cat.slug?.toLowerCase() ?? "") === "functional"
+    );
+    return functional?.services?.some((s) => s.consent?.status === true) ?? false;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Returns whether the marketing category has consent.
+ * Used for Reo.dev.
  */
 export function hasMarketingConsent(): boolean {
   if (!ucInstance || typeof window === "undefined") return false;

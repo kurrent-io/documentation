@@ -1,5 +1,5 @@
 import posthog from "posthog-js";
-import { hasStatisticsConsent } from "./consent";
+import { hasFunctionalConsent } from "./consent";
 
 const POSTHOG_CONFIG = {
   apiKey: "phc_DeHBgHGersY4LmDlADnPrsCPOAmMO7QFOH8f4DVEVmD",
@@ -49,7 +49,7 @@ function setupConsentListeners(): void {
   listenersRegistered = true;
 
   window.addEventListener("consent_status", () => {
-    if (hasStatisticsConsent()) {
+    if (hasFunctionalConsent()) {
       resumeTracking();
     } else {
       stopTracking();
@@ -60,13 +60,13 @@ function setupConsentListeners(): void {
 export function usePostHog() {
   if (typeof window !== "undefined") {
     setupConsentListeners();
-    if (hasStatisticsConsent()) {
+    if (hasFunctionalConsent()) {
       initializePostHog();
     }
   }
 
   return {
     posthog,
-    hasConsent: hasStatisticsConsent,
+    hasConsent: hasFunctionalConsent,
   };
 }

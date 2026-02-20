@@ -1,5 +1,5 @@
 import { loadReoScript } from "reodotdev";
-import { hasStatisticsConsent } from "./consent";
+import { hasMarketingConsent } from "./consent";
 
 let listenersRegistered = false;
 let isInitialized = false;
@@ -67,7 +67,7 @@ function stopReoDev(): void {
 
 async function initializeReoDev(): Promise<void> {
   if (typeof window === "undefined") return;
-  if (!hasStatisticsConsent()) return;
+  if (!hasMarketingConsent()) return;
   if (isInitialized || reoInstance || reoPromise || typeof window.Reo !== 'undefined') return;
 
   try {
@@ -84,7 +84,7 @@ async function initializeReoDev(): Promise<void> {
 }
 
 function applyConsentState(): void {
-  if (hasStatisticsConsent()) void initializeReoDev();
+  if (hasMarketingConsent()) void initializeReoDev();
   else stopReoDev();
 }
 
@@ -103,7 +103,7 @@ export function useReoDev() {
   }
 
   return {
-    hasConsent: hasStatisticsConsent,
+    hasConsent: hasMarketingConsent,
     init: initializeReoDev,
   };
 }
