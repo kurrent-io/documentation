@@ -1,5 +1,5 @@
 import { loadReoScript } from "reodotdev";
-import { hasStatisticsConsent } from "./consent";
+import { hasMarketingConsent } from "./consent";
 
 let listenersRegistered = false;
 let isInitialized = false;
@@ -67,7 +67,7 @@ function stopReoDev(): void {
 
 async function initializeReoDev(): Promise<void> {
   if (typeof window === "undefined") return;
-  if (!hasStatisticsConsent()) return;
+  if (!await hasMarketingConsent()) return;
   if (isInitialized || reoInstance || reoPromise || typeof window.Reo !== 'undefined') return;
 
   try {
@@ -84,8 +84,13 @@ async function initializeReoDev(): Promise<void> {
 }
 
 function applyConsentState(): void {
-  if (hasStatisticsConsent()) void initializeReoDev();
-  else stopReoDev();
+  hasMarketingConsent().then((consented) => {
+    if (consented) {
+      void initializeReoDev();
+    } else {
+      stopReoDev();
+    }
+  });
 }
 
 function setupConsentListeners(): void {
@@ -93,9 +98,13 @@ function setupConsentListeners(): void {
   if (listenersRegistered) return;
   listenersRegistered = true;
 
-  window.addEventListener("CookiebotOnAccept", applyConsentState);
-  window.addEventListener("CookiebotOnDecline", applyConsentState);
-  window.addEventListener("CookiebotOnConsentReady", applyConsentState);
+  window.addEventListener("UC_CONSENT", () => {
+    applyConsentState();
+  });
+
+  window.addEventListener("UC_UI_INITIALIZED", () => {
+    applyConsentState();
+  });
 }
 
 export function useReoDev() {
@@ -105,7 +114,7 @@ export function useReoDev() {
   }
 
   return {
-    hasConsent: hasStatisticsConsent,
+    hasConsent: hasMarketingConsent,
     init: initializeReoDev,
   };
 }
