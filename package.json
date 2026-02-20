@@ -13,7 +13,6 @@
     "@rollup/plugin-alias": "^6.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/markdown-it": "^14.1.1",
-    "@types/usercentrics-browser-ui": "^3.28.1",
     "@vuepress/plugin-llms": "2.0.0-rc.121",
     "degit": "2.8.4",
     "del": "5.1.0",

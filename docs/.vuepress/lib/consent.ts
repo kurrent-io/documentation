@@ -1,5 +1,3 @@
-import Usercentrics from "@usercentrics/cmp-browser-sdk";
-
 const USERCENTRICS_SETTINGS_ID = "ArWRikBAz-iKhj";
 
 /** Slugs/names used in Usercentrics for the statistics/analytics category */
@@ -10,20 +8,23 @@ function isStatisticsCategory(slugOrName: string): boolean {
   return STATISTICS_CATEGORY_NAMES.some((n) => lower.includes(n));
 }
 
-let ucInstance: InstanceType<typeof Usercentrics> | null = null;
+/** SDK instance; only set in browser after dynamic import to avoid SSR "location is not defined" */
+let ucInstance: { getCategoriesBaseInfo: () => Array<{ slug?: string; name?: string; label?: string; services?: Array<{ consent?: { status?: boolean } }> }> } | null = null;
 let initPromise: Promise<void> | null = null;
 
 /**
  * Initializes the Usercentrics SDK in read-only mode (suppressCmpDisplay: true).
- * The banner is shown by the loader script in the page head; we use the SDK to read consent
- * and listen for consent_status (fired when user saves in the banner).
+ * SDK is imported dynamically so it never runs in Node (VuePress SSR).
  */
-function ensureUC(): Promise<InstanceType<typeof Usercentrics>> {
+function ensureUC(): Promise<typeof ucInstance> {
   if (ucInstance) return Promise.resolve(ucInstance);
-  if (initPromise) return initPromise.then(() => ucInstance!);
+  if (initPromise) return initPromise.then(() => ucInstance);
 
   initPromise = (async () => {
     if (typeof window === "undefined") return;
+    const { default: Usercentrics } = await import(
+      "@usercentrics/cmp-browser-sdk"
+    );
     const UC = new Usercentrics(USERCENTRICS_SETTINGS_ID, {
       suppressCmpDisplay: true,
     });
@@ -31,7 +32,7 @@ function ensureUC(): Promise<InstanceType<typeof Usercentrics>> {
     ucInstance = UC;
   })();
 
-  return initPromise.then(() => ucInstance!);
+  return initPromise.then(() => ucInstance);
 }
 
 /** Cached result for sync getters; updated after init and on consent_status event */

@@ -108,9 +108,6 @@ importers:
       '@types/markdown-it':
         specifier: ^14.1.1
         version: 14.1.2
-      '@types/usercentrics-browser-ui':
-        specifier: ^3.28.1
-        version: 3.28.1
       '@vuepress/plugin-llms':
         specifier: 2.0.0-rc.121
         version: 2.0.0-rc.121(typescript@5.9.2)(vuepress@2.0.0-rc.26(@vuepress/bundler-vite@2.0.0-rc.26(@types/node@24.10.9)(sass@1.97.3)(stylus@0.56.0)(typescript@5.9.2))(typescript@5.9.2)(vue@3.5.27(typescript@5.9.2)))
@@ -1739,9 +1736,6 @@ packages:
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
-
-  '@types/usercentrics-browser-ui@3.28.1':
-    resolution: {integrity: sha512-JZINzpvg6EghX6rQnioW8ZN1To4uFeW6NByaytyGkmtytqEHtVbWr+WFZVG2GBylvqLWb+VQ+ezjixZAaUgDbg==}
 
   '@types/uuid@8.3.4':
     resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
@@ -6567,8 +6561,6 @@ snapshots:
   '@types/trusted-types@2.0.7': {}
 
   '@types/unist@3.0.3': {}
-
-  '@types/usercentrics-browser-ui@3.28.1': {}
 
   '@types/uuid@8.3.4': {}
 
