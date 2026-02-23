@@ -127,5 +127,5 @@ highlights:
         details: Manage your Kurrent installation with a graphical user interface
         link: /server/v25.0/features/admin-ui.html
 
-footer: Copyright © 2025 Kurrent, Inc
+footer: Copyright © 2026 Kurrent, Inc
 ---
