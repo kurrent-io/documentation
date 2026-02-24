@@ -565,7 +565,7 @@ For exhaustive coverage (all documentation pages in one file), use \`llms-full.t
 
 ---
 
-## Configuration
+## Configuration (KurrentDB Server)
 {configuration}
 
 ---
@@ -590,12 +590,12 @@ For exhaustive coverage (all documentation pages in one file), use \`llms-full.t
 
 ---
 
-## Connectors Sinks
+## Connectors Sinks (KurrentDB Server)
 {connectorsSinks}
 
 ---
 
-## Kubernetes Operator
+## Kubernetes Operator (KurrentDB Server)
 {kubernetesOperator}
 
 ---
@@ -610,7 +610,7 @@ For exhaustive coverage (all documentation pages in one file), use \`llms-full.t
 
 ---
 
-## Release Notes / Changelog
+## Release Notes / Changelog (KurrentDB Server)
 {releaseNotes}
 
 ---
