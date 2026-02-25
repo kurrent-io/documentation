@@ -1,24 +1,47 @@
-// Type declarations for Cookiebot
+// Usercentrics Browser UI API (getServices was removed; use getServicesBaseInfo)
+// https://usercentrics.com/docs/web/features/v2/browser_ui_api/browser_ui_api/#getservices
+
 declare global {
   interface Window {
-    Cookiebot?: {
-      consent?: {
-        necessary?: boolean;
-        preferences?: boolean;
-        statistics?: boolean;
-        marketing?: boolean;
-      };
-      renew?: () => void;
-      withdraw?: () => void;
+    UC_UI?: {
+      getServicesBaseInfo?: () => Promise<Array<{
+        id: string;
+        categorySlug: string;
+        consent: { status: boolean };
+      }>>;
+      isInitialized?: () => boolean;
     };
   }
 }
 
-/**
- * Checks if the user has given consent for statistics cookies.
- * This is used for analytics tools like PostHog and Reo.dev.
- */
-export function hasStatisticsConsent(): boolean {
+async function hasConsentForCategory(categorySlug: string): Promise<boolean> {
   if (typeof window === "undefined") return false;
-  return window.Cookiebot?.consent?.statistics === true;
+  const ui = window.UC_UI;
+  
+  if (!ui?.getServicesBaseInfo) {
+    return false;
+  }
+
+  try {
+    const services = await ui.getServicesBaseInfo();
+    
+    if (!Array.isArray(services)) return false;
+    
+    return services.some(
+      (s) => s.categorySlug.toLowerCase() === categorySlug.toLowerCase() && s.consent?.status === true
+    );
+  } catch (e) {
+    console.error("[Consent] Error checking consent:", e);
+    return false;
+  }
+}
+
+/** PostHog uses the functional category in Usercentrics. */
+export function hasFunctionalConsent(): Promise<boolean> {
+  return hasConsentForCategory("functional");
+}
+
+/** Reo.dev uses the marketing category in Usercentrics. */
+export function hasMarketingConsent(): Promise<boolean> {
+  return hasConsentForCategory("marketing");
 }

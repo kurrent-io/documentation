@@ -1,5 +1,5 @@
 import posthog from "posthog-js";
-import { hasStatisticsConsent } from "./consent";
+import { hasFunctionalConsent } from "./consent";
 
 const POSTHOG_CONFIG = {
   apiKey: "phc_DeHBgHGersY4LmDlADnPrsCPOAmMO7QFOH8f4DVEVmD",
@@ -48,37 +48,35 @@ function setupConsentListeners(): void {
   if (listenersRegistered) return;
   listenersRegistered = true;
 
-  window.addEventListener("CookiebotOnAccept", () => {
-    if (hasStatisticsConsent()) {
+  const applyConsent = async () => {
+    if (await hasFunctionalConsent()) {
       resumeTracking();
     } else {
       stopTracking();
     }
+  };
+
+  window.addEventListener("UC_CONSENT", () => {
+    applyConsent();
   });
 
-  window.addEventListener("CookiebotOnDecline", () => {
-    stopTracking();
-  });
-
-  window.addEventListener("CookiebotOnConsentReady", () => {
-    if (hasStatisticsConsent()) {
-      resumeTracking();
-    } else {
-      stopTracking();
-    }
+  window.addEventListener("UC_UI_INITIALIZED", () => {
+    applyConsent();
   });
 }
 
 export function usePostHog() {
   if (typeof window !== "undefined") {
     setupConsentListeners();
-    if (hasStatisticsConsent()) {
-      initializePostHog();
-    }
+    hasFunctionalConsent().then((consented) => {
+      if (consented) {
+        initializePostHog();
+      }
+    });
   }
 
   return {
     posthog,
-    hasConsent: hasStatisticsConsent,
+    hasConsent: hasFunctionalConsent,
   };
 }

@@ -51,7 +51,7 @@ const findEsMeta = (route: RouteLocationNormalized) => {
 
 const removeHtml = (path: string) => path.replace(".html", "");
 
-let cookiebotListenerRegistered = false;
+let usercentricsConsentListenerRegistered = false;
 
 
 export default defineClientConfig({
@@ -62,8 +62,8 @@ export default defineClientConfig({
         const { hasConsent, posthog } = usePostHog();
         useReoDev();
 
-        const captureEvent = (event: string, properties?: Record<string, any>) => {
-            if (!hasConsent()) return;
+        const captureEvent = async (event: string, properties?: Record<string, any>) => {
+            if (!await hasConsent()) return;
             try {
                 posthog.capture(event, properties);
             } catch (error) {
@@ -114,21 +114,21 @@ export default defineClientConfig({
             handlePageLeave(to, from)
         });
 
-        // Capture first pageview immediately after user accepts statistics cookies
-        if (typeof window !== "undefined" && !cookiebotListenerRegistered) {
-            cookiebotListenerRegistered = true;
-            window.addEventListener("CookiebotOnAccept", () => {
-                if (!hasConsent()) return;
-
+        // Capture first pageview when consent is given (UC_CONSENT) or when CMP is ready with existing consent (UC_UI_INITIALIZED)
+        if (typeof window !== "undefined" && !usercentricsConsentListenerRegistered) {
+            usercentricsConsentListenerRegistered = true;
+            const capturePageViewOnConsent = async () => {
+                if (!await hasConsent()) return;
                 const to = router.currentRoute.value;
                 const esData = findEsMeta(to);
-
                 captureEvent("$pageview", {
                     site: "docs",
                     version: esData?.version,
                     category: esData?.category,
-                    });
-            });
+                });
+            };
+            window.addEventListener("UC_CONSENT", capturePageViewOnConsent);
+            window.addEventListener("UC_UI_INITIALIZED", capturePageViewOnConsent);
         }
 
     

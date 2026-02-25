@@ -81,20 +81,11 @@ export default defineUserConfig({
     },
     theme: hopeTheme(themeOptions, {custom: true}),
     head: [
-        // Cookiebot banner
+        // Usercentrics CMP
         ['script', {
-            id: 'Cookiebot',
-            src: 'https://consent.cookiebot.com/uc.js',
-            'data-cbid': 'ee971b30-e872-46e8-b421-706ef26d9dcc',
-            'data-blockingmode': 'manual',
-            type: 'text/javascript',
-        }],
-
-        // Cookiebot declaration
-        ['script', {
-            id: 'CookieDeclaration',
-            src: 'https://consent.cookiebot.com/ee971b30-e872-46e8-b421-706ef26d9dcc/cd.js',
-            type: 'text/javascript',
+            id: 'usercentrics-cmp',
+            src: 'https://web.cmp.usercentrics.eu/ui/loader.js',
+            'data-settings-id': 'ArWRikBAz-iKhj',
             async: true,
         }],
 
