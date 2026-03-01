@@ -55,7 +55,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   sourceBackup: kurrentdb-cluster-backup
   resources:
     requests:
