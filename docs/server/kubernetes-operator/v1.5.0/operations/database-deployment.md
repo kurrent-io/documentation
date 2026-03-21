@@ -45,7 +45,7 @@ The following `KurrentDB` resource type defines a single node cluster with the f
 
 - The database will be deployed in the `kurrent` namespace with the name `kurrentdb-cluster`
 - Security is not enabled
-- KurrentDB version 25.0.0 will be used
+- KurrentDB v26.x will be used
 - 1 vCPU will be requested as the minimum (upper bound is unlimited)
 - 1 GB of memory will be used
 - 512 MB of storage will be allocated for the data disk
@@ -59,7 +59,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -98,7 +98,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -174,7 +174,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -270,7 +270,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -379,7 +379,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -479,7 +479,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -527,7 +527,7 @@ spec:
     - mydb-2-qn.kurrent.test:2113
   readOnlyReplicas:
     replicas: 2
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -577,7 +577,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 3
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   resources:
     requests:
       cpu: 1000m
@@ -628,7 +628,7 @@ metadata:
   namespace: kurrent
 spec:
   replicas: 1
-  image: docker.kurrent.io/kurrent-latest/kurrentdb:25.1.0
+  image: docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1
   configuration:
     RunProjections: all
     StartStandardProjections: true

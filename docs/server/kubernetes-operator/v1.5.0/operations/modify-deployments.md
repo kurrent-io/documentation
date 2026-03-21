@@ -23,7 +23,7 @@ To update the specification of a `KurrentDB` instance, simply issue a patch comm
 ### Container Image
 
 ```bash
-kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"image": "docker.kurrent.io/kurrent-latest/kurrentdb:25.0.0"}}'
+kubectl -n kurrent patch kurrentdb kurrentdb-cluster --type=merge -p '{"spec":{"image": "docker.kurrent.io/kurrent-latest/kurrentdb:26.0.1"}}'
 ```
 
 ### Memory
