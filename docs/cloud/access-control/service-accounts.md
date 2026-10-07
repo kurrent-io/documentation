@@ -153,6 +153,18 @@ account credentials from version 3.1.0: set the `client_id` and
 `ESC_CLIENT_SECRET` environment variables) to the values from the service
 account's [Authentication](#authentication) tab.
 
-The [Pulumi](../automation/pulumi.md) provider does not yet accept service
-account credentials and is still configured with a token. See the
-[Automations](../automation/README.md) section for each provider's setup.
+The [Pulumi](../automation/pulumi.md) provider (`kurrentcloud`) supports
+service account credentials from version 0.3.0: set the `clientId` and
+`clientSecret` provider options, or the same `ESC_CLIENT_ID` and
+`ESC_CLIENT_SECRET` environment variables:
+
+```bash
+pulumi config set kurrentcloud:clientId <client-id>
+pulumi config set --secret kurrentcloud:clientSecret <client-secret>
+```
+
+In both providers, service account credentials take priority over a `token`
+when both are set. The older `eventstorecloud` Pulumi package accepts only a
+token; [migrate to `kurrentcloud`](../automation/pulumi.md#migrating-from-eventstorecloud)
+to use a service account. See the [Automations](../automation/README.md)
+section for each provider's setup.
